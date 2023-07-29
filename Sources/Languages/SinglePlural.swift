@@ -106,7 +106,12 @@ public struct SinglePlural<A> {
 public extension SinglePlural where A == Translated<String> {
     static let parties:Self = .init(single: .init(dutch: "Partij", english: "Party"), plural: .init(dutch: "Partijen", english: "Parties"))
     
+    @available(*, deprecated, message: ".init(dutch:english)")
     init(english:String, dutch:String? = nil){
+        self = .init(Translated<String>.init(dutch: dutch, english: english))
+    }
+    
+    init(dutch:String? = nil, english:String){
         self = .init(Translated<String>.init(dutch: dutch, english: english))
     }
     
