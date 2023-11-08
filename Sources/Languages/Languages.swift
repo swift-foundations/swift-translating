@@ -312,9 +312,14 @@ public let all:[Language] = Language.allCases
 
 public extension Locale {
     static var autoupdatingLanguage:Languages.Language {
+        
+        print(Self.autoupdatingCurrent.identifier)
+        
         switch Self.autoupdatingCurrent.identifier {
         case "nl_NL": return .dutch
-        default: fatalError()
+        case "en_EN": return .english
+        case "euro(en_001@rg=nlzzzz": return .english
+        default: return .english
         }
     }
 }
