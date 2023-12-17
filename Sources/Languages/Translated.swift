@@ -17,9 +17,6 @@ public extension TranslatedString {
     static let questionmark:Self = .init("?")
 }
 
-
-
-
 public struct Translated<A> {
     public let dutch:A
     public let english:A

@@ -3,40 +3,65 @@
 
 import PackageDescription
 
+extension String {
+    static let languages:Self = "Languages"
+    static let dependencies:Self = "Dependencies"
+    
+}
+
 extension Target.Dependency {
-    static let dependencies:Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let dependencies:Self = .product(
+        name: .dependencies,
+        package: "swift-dependencies"
+    )
+    
+    static let languages:Self = .target(name: .languages)
 }
 
 let package = Package(
-    name: "Languages",
-    platforms: [.macOS(.v10_15), .iOS(.v13)],
+    name: .languages,
+    platforms: [
+        .macOS(
+            .v10_15
+        ),
+        .iOS(
+            .v13
+        )
+    ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "Languages",
-            targets: ["Languages"]),
-        .library(
-            name: "LanguageClient",
-            targets: ["LanguageClient"]),
+            name: .languages,
+            targets: [
+                .languages
+            ]
+        )
+//        .library(
+//            name: "LanguageClient",
+//            targets: ["LanguageClient"]
+//        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0")
+        .package(
+            url: "https://github.com/pointfreeco/swift-dependencies",
+            from: "1.1.5"
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "Languages",
-            dependencies: []),
-        .target(
-            name: "LanguageClient",
-            dependencies: ["Languages", .dependencies]),
-        .testTarget(
-            name: "LanguageClient.Tests",
+            name: .languages,
             dependencies: [
-                "Languages",
-                "LanguageClient"
+                .dependencies
+            ]
+        ),
+        .testTarget(
+            name: .languages + "Tests",
+            dependencies: [
+                .languages
             ]
         )
     ]
 )
+

@@ -9,7 +9,9 @@ import Foundation
 
 public extension Languages.Language {
     var new:String { TranslatedString.new(self) }
+    
     var date:String { TranslatedString.date(self) }
+    
     var subject:String { TranslatedString.subject(self) }
     
     var `continue`:String { TranslatedString.continue(self) }
@@ -27,6 +29,7 @@ public extension Languages.Language {
     var language:String { TranslatedString.language(self) }
     
     var title:String { TranslatedString.title(self) }
+    
     var name:String { TranslatedString.name(self) }
     
     var delete:String { TranslatedString.delete(self) }
@@ -50,43 +53,24 @@ public extension Languages.Language {
     var textColor:String { TranslatedString.textColor(self) }
     
     var backgroundColor:String { TranslatedString.backgroundColor(self) }
+    
     var choose_true_or_false:String { TranslatedString.choose_true_or_false(self) }
     
-    var answer:String {
-        TranslatedString.answer(self)
-    }
-    var agree:String {
-        TranslatedString.agree(self)
-    }
+    var answer:String { TranslatedString.answer(self) }
     
-    var disagree:String {
-        TranslatedString.disagree(self)
-    }
+    var agree:String { TranslatedString.agree(self) }
     
-   
+    var disagree:String { TranslatedString.disagree(self) }
     
-    var gender:String {
-        TranslatedString.gender(self)
-    }
+    var gender:String { TranslatedString.gender(self) }
     
+    var compact:String { TranslatedString.compact(self) }
     
-    var compact:String {
-        TranslatedString.compact(self)
-    }
+    var complete:String { TranslatedString.complete(self) }
     
-    var complete:String {
-        TranslatedString.complete(self)
-    }
+    var your_name:String { TranslatedString.your_name(self) }
     
-    var your_name:String {
-        TranslatedString.your_name(self)
-    }
+    var your_gender:String { TranslatedString.your_gender(self) }
     
-    var your_gender:String {
-        TranslatedString.your_gender(self)
-    }
-    
-    var select_an_option:String {
-        TranslatedString.select_an_option(self)
-    }
+    var select_an_option:String { TranslatedString.select_an_option(self) }
 }
