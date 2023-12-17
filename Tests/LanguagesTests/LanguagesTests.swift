@@ -7,12 +7,12 @@ import Dependencies
 
 final class LanguagesTests: XCTestCase {
     func testExample() {
-        @Dependency(\.languages) var languages
+        @Dependency(\.language) var language
         
-        XCTAssert(languages == .english)
+        XCTAssert(language == .english)
         
         
-        XCTAssert(languages == .dutch)
+        XCTAssert(language == .dutch)
         
         
         

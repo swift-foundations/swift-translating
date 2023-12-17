@@ -9,7 +9,7 @@ import Foundation
 import Dependencies
 
 extension DependencyValues {
-    public var languages: Language {
+    public var language: Language {
         get { self[Language.self] }
         set { self[Language.self] = newValue }
     }
