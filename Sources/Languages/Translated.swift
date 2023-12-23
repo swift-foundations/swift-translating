@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Dependencies
 
 public typealias TranslatedString = Translated<String>
 
@@ -1222,7 +1223,8 @@ public func +(_ lhs:Translated<String>, _ rhs:Translated<String>)->Translated<St
 
 extension Translated:CustomStringConvertible where A == String {
     public var description: String {
-        self.callAsFunction(language: .english)
+        @Dependency(\.language) var language
+        return self.callAsFunction(language: language)
     }
 }
 
