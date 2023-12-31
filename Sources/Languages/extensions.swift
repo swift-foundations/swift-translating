@@ -30,7 +30,7 @@ public extension Languages.Language {
     
     var title:String { TranslatedString.title(self) }
     
-    var name:String { TranslatedString.name(self) }
+//    var name:String { TranslatedString.name(self) }
     
     var delete:String { TranslatedString.delete(self) }
     

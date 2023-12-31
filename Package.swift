@@ -19,7 +19,7 @@ extension Target.Dependency {
 }
 
 let package = Package(
-    name: .languages,
+    name: "languages",
     platforms: [
         .macOS(
             .v10_15
@@ -36,16 +36,9 @@ let package = Package(
                 .languages
             ]
         )
-//        .library(
-//            name: "LanguageClient",
-//            targets: ["LanguageClient"]
-//        ),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/pointfreeco/swift-dependencies",
-            from: "1.1.5"
-        )
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

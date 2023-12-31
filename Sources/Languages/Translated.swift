@@ -28,7 +28,7 @@ public struct Translated<A> {
     public let french:A
     public let german:A
     public let hindi:A
-    public let irish:A
+//    public let irish:A
     public let italian:A
     public let japanese:A
     public let javanese:A
@@ -637,7 +637,7 @@ public struct Translated<A> {
         self.french = all(.french)
         self.german = all(.german)
         self.hindi = all(.hindi)
-        self.irish = all(.irish)
+//        self.irish = all(.irish)
         self.indonesian = all(.indonesian)
         self.italian = all(.italian)
         self.japanese = all(.japanese)
@@ -845,7 +845,7 @@ public struct Translated<A> {
             german: transform(self.german),
             hindi: transform(self.hindi),
             indonesian: transform(self.indonesian),
-            irish: transform(self.irish),
+//            irish: transform(self.irish),
             italian: transform(self.italian),
             japanese: transform(self.japanese),
             javanese: transform(self.javanese),
@@ -879,7 +879,7 @@ public struct Translated<A> {
             german: transform(german).german,
             hindi: transform(hindi).hindi,
             indonesian: transform(indonesian).indonesian,
-            irish: transform(irish).irish,
+//            irish: transform(irish).irish,
             italian: transform(italian).italian,
             japanese: transform(japanese).japanese,
             javanese: transform(javanese).javanese,
@@ -935,7 +935,7 @@ public extension Translated {
         self.german = german ?? english
         self.hindi = hindi ?? english
         self.indonesian = indonesian ?? english
-        self.irish = irish ?? english
+//        self.irish = irish ?? english
         self.italian = italian ?? english
         self.japanese = japanese ?? english
         self.javanese = javanese ?? indonesian ?? english
