@@ -23,4 +23,4 @@ if [ -z "$BITBUCKET_AUTH_TOKEN" ]; then
     exit 1
 fi
 
-sed -i "s#git@bitbucket\.com:#https://$BITBUCKET_USER:$BITBUCKET_AUTH_TOKEN@bitbucket.com/#g" Package.swift
+sed -i "s#git@bitbucket\.org:#https://$BITBUCKET_USER:$BITBUCKET_AUTH_TOKEN@bitbucket.org/#g" Package.swift
