@@ -1,25 +1,22 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 extension String {
     static let languages:Self = "Languages"
-    static let dependencies:Self = "Dependencies"
-    
 }
 
 extension Target.Dependency {
-    static let dependencies:Self = .product(
-        name: .dependencies,
-        package: "swift-dependencies"
-    )
-    
+    static let dependencies:Self = .product(name: "Dependencies", package: "swift-dependencies")
+}
+
+extension Target.Dependency {
     static let languages:Self = .target(name: .languages)
 }
 
 let package = Package(
-    name: "languages",
+    name: "swift-language",
     platforms: [
         .macOS(
             .v10_15
