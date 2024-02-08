@@ -3,15 +3,9 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+.build/
 .swiftpm
 Package.resolved
-.DS_Store
-/.build
-/Packages
-/*.xcodeproj
-xcuserdata/
-DerivedData/
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 
 # Node artifact files
 node_modules/
@@ -59,7 +53,4 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
-
-
 
