@@ -19,7 +19,7 @@ public struct SinglePlural<A> {
         }
     }
     
-    public var preferred:Variant
+    public var preferred: Variant
     
 
     public var enkelvoud:A { single }
@@ -32,7 +32,7 @@ public struct SinglePlural<A> {
         }
     }
     
-    public enum Variant:String, Codable, Hashable {
+    public enum Variant:String, Codable, Hashable, Sendable {
         case single
         case plural
     }
@@ -181,3 +181,4 @@ public extension SinglePlural where A == Translated<String> {
 extension SinglePlural:Equatable where A:Equatable {}
 extension SinglePlural:Hashable where A:Hashable {}
 extension SinglePlural:Codable where A:Codable {}
+extension SinglePlural:Sendable where A:Sendable {}

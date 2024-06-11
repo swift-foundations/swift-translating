@@ -4,7 +4,7 @@ import Foundation
 //    public static var current:Language = .english
 //}
 
-public enum Language: String, CaseIterable, Hashable, Equatable, Codable {
+public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendable {
     case arabic = "ar"
     case bengali = "bn"
     case chinese = "zh"
@@ -217,7 +217,10 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable {
 
 public extension Language {
     
-    static let title:SinglePlural<Translated<String>> = .init(single: .init(dutch: "Taal", english: "Language"), plural: .init(dutch: "Talen", english: "Languages"))
+    static let title:SinglePlural<Translated<String>> = .init(
+        single: .init(dutch: "Taal", english: "Language"),
+        plural: .init(dutch: "Talen", english: "Languages")
+    )
     
     enum LabelLength:String, Hashable, Equatable, Codable {
         case short, normal

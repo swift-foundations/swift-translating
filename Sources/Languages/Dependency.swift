@@ -16,6 +16,6 @@ extension DependencyValues {
 }
 
 extension Language: DependencyKey {
-    public static var liveValue: Self = .english
-    public static var testValue: Self = .english
+    public static let liveValue: Self = .english
+    public static let testValue: Self = .english
 }
