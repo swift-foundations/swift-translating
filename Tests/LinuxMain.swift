@@ -1,7 +1,7 @@
-//import XCTest
+// import XCTest
 //
-//import LanguagesTests
+// import LanguagesTests
 //
-//var tests = [XCTestCaseEntry]()
-//tests += LanguagesTests.allTests()
-//XCTMain(tests)
+// var tests = [XCTestCaseEntry]()
+// tests += LanguagesTests.allTests()
+// XCTMain(tests)

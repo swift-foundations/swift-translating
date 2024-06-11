@@ -1,8 +1,8 @@
 import Foundation
 
-//extension Language {
+// extension Language {
 //    public static var current:Language = .english
-//}
+// }
 
 public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendable {
     case arabic = "ar"
@@ -57,7 +57,7 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case caEnglish = "en-ca"
 //    case chamorro = "ch"
 //    case chechen = "ce"
-//////case chichewa, chewa, nyanja = "ny"
+////// case chichewa, chewa, nyanja = "ny"
 //
 //    case chuvash = "cv"
 //    case cornish = "kw"
@@ -66,7 +66,7 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case croatian = "hr"
 //    case czech = "cs"
 //
-//////case divehi, dhivehi, maldivian = "dv"
+////// case divehi, dhivehi, maldivian = "dv"
 //
 //    case dzongkha = "dz"
 //
@@ -77,7 +77,7 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case fijian = "fj"
 //    case finnish = "fi"
 //
-////////case fula, fulah, pulaar, pular = "ff"
+//////// case fula, fulah, pulaar, pular = "ff"
 //    case galician = "gl"
 //    case gaelicScottish = "gd"
 //    case georgian = "ka"
@@ -95,13 +95,13 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case icelandic = "is"
 //    case ido = "io"
 //    case igbo = "ig"
-    
+
 //    case interlingua = "ia"
 //    case interlingue = "ie"
 //    case inuktitut = "iu"
 //    case inupiak = "ik"
 //
-////case kalaallisut, greenlandic = "kl"
+//// case kalaallisut, greenlandic = "kl"
 //    case kannada = "kn"
 //    case kanuri = "kr"
 //    case kashmiri = "ks"
@@ -123,7 +123,7 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case lingala = "ln"
 //    case lithuanian = "lt"
 //    case lugaKatanga = "lu"
-////case luganda, ganda = "lg"
+//// case luganda, ganda = "lg"
 //    case luxembourgish = "lb"
 //    case manx = "gv"
 //    case macedonian = "mk"
@@ -144,15 +144,15 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case norwegian = "no"
 //    case norwegianBokmål = "nb"
 //    case norwegianNynorsk = "nn"
-////case nuosu, sichuanYi = "ii"
+//// case nuosu, sichuanYi = "ii"
 //    case occitan = "oc"
 //    case ojibwe = "oj"
-////case oldChurchSlavonic, oldBulgarian = "cu"
+//// case oldChurchSlavonic, oldBulgarian = "cu"
 //    case oriya = "or"
 //    case oromo = "om"
 //    case ossetian = "os"
 //    case pāli = "pi"
-////case pashto, pushto = "ps"
+//// case pashto, pushto = "ps"
 //    case persian = "fa"
 //
 //    case punjabi = "pa"
@@ -206,29 +206,28 @@ public enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendab
 //    case wolof = "wo"
 //    case westernFrisian = "fy"
 //    case xhosa = "xh"
-////case yiddish = "yi, ji"
+//// case yiddish = "yi, ji"
 //    case yoruba = "yo"
-////case zhuang, chuang = "za"
+//// case zhuang, chuang = "za"
 //    case zulu = "zu"
-    
+
 //    case xDefault = "x-default"
 }
 
-
 public extension Language {
-    
-    static let title:SinglePlural<Translated<String>> = .init(
+
+    static let title: SinglePlural<Translated<String>> = .init(
         single: .init(dutch: "Taal", english: "Language"),
         plural: .init(dutch: "Talen", english: "Languages")
     )
-    
-    enum LabelLength:String, Hashable, Equatable, Codable {
+
+    enum LabelLength: String, Hashable, Equatable, Codable {
         case short, normal
     }
-    
-    var label:Translated<String> { label(.normal) }
-    
-    var name:Translated<String> {
+
+    var label: Translated<String> { label(.normal) }
+
+    var name: Translated<String> {
         switch self {
         case .arabic: .init(
             arabic: "عربي",
@@ -339,10 +338,9 @@ public extension Language {
         )
         }
     }
-    
-    func label(_ length:LabelLength = .normal)->Translated<String> {
-        
-        
+
+    func label(_ length: LabelLength = .normal) -> Translated<String> {
+
         switch length {
         case .short: .init(self.rawValue)
         case .normal: self.name
@@ -351,18 +349,17 @@ public extension Language {
 }
 
 public extension [Language] {
-    func sort()->Self {
+    func sort() -> Self {
         self.sorted { language1, language2 in
             language1.label()(language1) < language2.label()(language2)
         }
     }
 }
 
-public let all:[Language] = Language.allCases
-
+public let all: [Language] = Language.allCases
 
 public extension Locale {
-    static var autoupdatingLanguage:Languages.Language {
+    static var autoupdatingLanguage: Languages.Language {
         switch Self.autoupdatingCurrent.identifier {
         case "nl_NL": return .dutch
         case "en_EN": return .english
@@ -374,30 +371,30 @@ public extension Locale {
 
 public extension String {
     static func translated(
-        dutch:String? = nil,
-        english:String,
-        french:String? = nil,
-        german:String? = nil,
-        spanish:String? = nil,
-        language:Languages.Language
+        dutch: String? = nil,
+        english: String,
+        french: String? = nil,
+        german: String? = nil,
+        spanish: String? = nil,
+        language: Languages.Language
     ) -> String {
-        Translated<String>.init(dutch: dutch, english: english, french: french, german: german, spanish:spanish)(language)
+        Translated<String>(dutch: dutch, english: english, french: french, german: german, spanish: spanish)(language)
     }
-    
+
     init(
-        dutch:String? = nil,
-        english:String,
-        french:String? = nil,
-        german:String? = nil,
-        spanish:String? = nil,
-        language:Languages.Language
-    ){
-        self = Translated<String>.init(dutch: dutch, english: english, french: french, german: german, spanish:spanish)(language)
+        dutch: String? = nil,
+        english: String,
+        french: String? = nil,
+        german: String? = nil,
+        spanish: String? = nil,
+        language: Languages.Language
+    ) {
+        self = Translated<String>(dutch: dutch, english: english, french: french, german: german, spanish: spanish)(language)
     }
 }
 
 //
-//public extension Language {
+// public extension Language {
 //    init(locale: Locale) {
 //        switch locale.language {
 //        case "af": self = .default
@@ -1341,5 +1338,5 @@ public extension String {
 //        case "zu_ZA": self = .default
 //        }
 //    }
-//}
+// }
 //

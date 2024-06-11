@@ -5,43 +5,43 @@
 //  Created by Coen ten Thije Boonkkamp on 13/12/2020.
 //
 
-import Foundation
 import Dependencies
+import Foundation
 
 public typealias TranslatedString = Translated<String>
 
 public extension TranslatedString {
-    static let space:Self = .init(" ")
-    static let period:Self = .init(".")
-    static let comma:Self = .init(",")
-    static let semicolon:Self = .init(";")
-    static let questionmark:Self = .init("?")
+    static let space: Self = .init(" ")
+    static let period: Self = .init(".")
+    static let comma: Self = .init(",")
+    static let semicolon: Self = .init(";")
+    static let questionmark: Self = .init("?")
 }
 
 public struct Translated<A> {
-    public let dutch:A
-    public let english:A
-    public let arabic:A
-    public let bengali:A
-    public let chinese:A
-    public let danish:A
-    public let french:A
-    public let german:A
-    public let hindi:A
+    public let dutch: A
+    public let english: A
+    public let arabic: A
+    public let bengali: A
+    public let chinese: A
+    public let danish: A
+    public let french: A
+    public let german: A
+    public let hindi: A
 //    public let irish:A
-    public let italian:A
-    public let japanese:A
-    public let javanese:A
-    public let korean:A
-    public let polish:A
-    public let portuguese:A
-    public let romanian:A
-    public let russian:A
-    public let slovak:A
-    public let slovenian:A
-    public let spanish:A
-    public let swedish:A
-    public let turkish:A
+    public let italian: A
+    public let japanese: A
+    public let javanese: A
+    public let korean: A
+    public let polish: A
+    public let portuguese: A
+    public let romanian: A
+    public let russian: A
+    public let slovak: A
+    public let slovenian: A
+    public let spanish: A
+    public let swedish: A
+    public let turkish: A
 //    public let abkhazian:A
 //    public let afar:A
 //    public let afrikaans:A
@@ -104,7 +104,7 @@ public struct Translated<A> {
 //    public let icelandic:A
 //    public let ido:A
 //    public let igbo:A
-    public let indonesian:A
+    public let indonesian: A
 //    public let interlingua:A
 //    public let interlingue:A
 //    public let inuktitut:A
@@ -213,12 +213,11 @@ public struct Translated<A> {
 //    public let yoruba:A
 //    public let zulu:A
 //
-    
-    public var engels:A { english }
-    public var nederlands:A { dutch }
-    public var nl:A { dutch }
-    
-    
+
+    public var engels: A { english }
+    public var nederlands: A { dutch }
+    public var nl: A { dutch }
+
 //    func all()->[A] {
 //        [
 ////            abkhazian,
@@ -402,25 +401,24 @@ public struct Translated<A> {
 ////            zulu
 //        ]
 //    }
-    
-    
-    public func callAsFunction(with language:Languages.Language)->A {
+
+    public func callAsFunction(with language: Languages.Language) -> A {
         callAsFunction(language: language)
     }
-    
-    public func callAsFunction(in language:Languages.Language)->A {
+
+    public func callAsFunction(in language: Languages.Language) -> A {
         callAsFunction(language: language)
     }
-    
-    public func callAsFunction(for language:Languages.Language)->A {
+
+    public func callAsFunction(for language: Languages.Language) -> A {
         callAsFunction(language: language)
     }
-    
-    public func test()->A{
+
+    public func test() -> A {
         fatalError()
     }
-    
-    public func callAsFunction(language:Languages.Language)->A {
+
+    public func callAsFunction(language: Languages.Language) -> A {
         switch language {
         case .dutch: return dutch
         case .english: return english
@@ -610,24 +608,21 @@ public struct Translated<A> {
 //        case .zulu: return zulu
         }
     }
-    
-    public func callAsFunction(_ language:Languages.Language)->A {
+
+    public func callAsFunction(_ language: Languages.Language) -> A {
         callAsFunction(language: language)
     }
-    
+
     public init(
-        _ all:A
-    ){
+        _ all: A
+    ) {
         self.init(english: all)
     }
-    
+
     public init(
-        _ all:(Languages.Language)->A
-    ){
-        
-        
-        
-        
+        _ all: (Languages.Language) -> A
+    ) {
+
         self.dutch = all(.dutch)
         self.english = all(.english)
         self.arabic = all(.arabic)
@@ -826,15 +821,14 @@ public struct Translated<A> {
 //        self.yoruba = all(.yoruba)
 //        self.zulu = all(.zulu)
     }
-    
-    
-    public func map<B>(_ transform:(A)->B)->Translated<B> {
+
+    public func map<B>(_ transform: (A) -> B) -> Translated<B> {
 //        return Translated<B>.init(
 //            dutch: transform(self.dutch),
 //            english: transform(english)
 //        )
-        
-        return Translated<B>.init(
+
+        return Translated<B>(
             arabic: transform(self.arabic),
             bengali: transform(self.bengali),
             chinese: transform(self.chinese),
@@ -861,13 +855,13 @@ public struct Translated<A> {
             turkish: transform(self.turkish)
         )
     }
-    
-    public func flatMap<B>(_ transform:(A)->Translated<B>)->Translated<B> {
+
+    public func flatMap<B>(_ transform: (A) -> Translated<B>) -> Translated<B> {
 //        return .init(
 //            dutch: transform(dutch).dutch,
 //            english: transform(english).english
 //        )
-        
+
         return .init(
             arabic: transform(arabic).arabic,
             bengali: transform(bengali).bengali,
@@ -899,31 +893,31 @@ public struct Translated<A> {
 
 public extension Translated {
     init(
-        arabic:A? = nil,
-        bengali:A? = nil,
-        chinese:A? = nil,
-        danish:A? = nil,
-        dutch:A? = nil,
-        english:A,
-        french:A? = nil,
-        german:A? = nil,
-        greenlandic:A? = nil,
-        hindi:A? = nil,
-        indonesian:A? = nil,
-        irish:A? = nil,
-        italian:A? = nil,
-        japanese:A? = nil,
-        javanese:A? = nil,
-        korean:A? = nil,
-        polish:A? = nil,
-        portuguese:A? = nil,
-        romanian:A? = nil,
-        russian:A? = nil,
-        slovak:A? = nil,
-        slovenian:A? = nil,
-        spanish:A? = nil,
-        swedish:A? = nil,
-        turkish:A? = nil
+        arabic: A? = nil,
+        bengali: A? = nil,
+        chinese: A? = nil,
+        danish: A? = nil,
+        dutch: A? = nil,
+        english: A,
+        french: A? = nil,
+        german: A? = nil,
+        greenlandic: A? = nil,
+        hindi: A? = nil,
+        indonesian: A? = nil,
+        irish: A? = nil,
+        italian: A? = nil,
+        japanese: A? = nil,
+        javanese: A? = nil,
+        korean: A? = nil,
+        polish: A? = nil,
+        portuguese: A? = nil,
+        romanian: A? = nil,
+        russian: A? = nil,
+        slovak: A? = nil,
+        slovenian: A? = nil,
+        spanish: A? = nil,
+        swedish: A? = nil,
+        turkish: A? = nil
     ) {
         self.english = english
         self.dutch = dutch ?? english
@@ -1126,98 +1120,93 @@ public extension Translated {
 //        self.xhosa = xhosa ?? english
 //        self.yoruba = yoruba ?? english
 //        self.zulu = zulu ?? english
-        
+
     }
 }
 
-//public extension Translated where A == String {
+// public extension Translated where A == String {
 //    func contains(_ string:String) -> Bool {
 //        self.all().map{ $0.lowercased() }.map { $0.contains(string.lowercased()) }.contains(true)
 ////            || self.any
 //    }
-//}
+// }
 
+// extension Translated:StringProtocol where A:StringProtocol {}
 
-//extension Translated:StringProtocol where A:StringProtocol {}
-
-extension Translated:Codable where A:Codable {}
-extension Translated:Sendable where A:Sendable {}
-extension Translated:Equatable where A:Equatable {}
-extension Translated:Hashable where A:Hashable {}
-extension Translated:Comparable where A:Comparable {
+extension Translated: Codable where A: Codable {}
+extension Translated: Sendable where A: Sendable {}
+extension Translated: Equatable where A: Equatable {}
+extension Translated: Hashable where A: Hashable {}
+extension Translated: Comparable where A: Comparable {
     public static func < (lhs: Translated<A>, rhs: Translated<A>) -> Bool {
         lhs.dutch < rhs.dutch
     }
 }
 
 public extension Array {
-    func translated<A>(to language:Languages.Language)->[A] where Self == [Translated<A>] {
-        self.map{ $0(language) }
+    func translated<A>(to language: Languages.Language) -> [A] where Self == [Translated<A>] {
+        self.map { $0(language) }
     }
 }
 
 public extension Translated {
-    func translated(to language:Languages.Language)->A  {
+    func translated(to language: Languages.Language) -> A {
         self(language)
     }
 }
 
 extension Translated where A == String {
     static func +(lhs: Self, rhs: String) -> Self {
-        return Translated<String>.init(dutch: lhs(.dutch) + rhs, english: lhs(.english) + rhs)
+        return Translated<String>(dutch: lhs(.dutch) + rhs, english: lhs(.english) + rhs)
     }
-    
+
     static func +(lhs: String, rhs: Self) -> Self {
-        return Translated<String>.init(dutch: lhs + rhs(.dutch), english: lhs + rhs(.english))
+        return Translated<String>(dutch: lhs + rhs(.dutch), english: lhs + rhs(.english))
     }
 }
 
-
 public extension String {
-    var any:Self {
+    var any: Self {
         if let first = self.first {
-            if Set<String>.consonents.contains(String(first)) {return "an \(self)"}
-            else { return "a \(self)" }
+            if Set<String>.consonents.contains(String(first)) {return "an \(self)"} else { return "a \(self)" }
         }
         return self
     }
 }
 
 public extension Translated where A == String {
-    var any:Self {
+    var any: Self {
         .init(
-            
+
             dutch: "een \(dutch)",
             english: {
                 if let first = english.first {
-                    if Set<String>.consonents.contains(String(first)) {return "an \(english)"}
-                    else { return "a \(english)" }
+                    if Set<String>.consonents.contains(String(first)) {return "an \(english)"} else { return "a \(english)" }
                 }
                 return english
             }()
         )
     }
-    
-    var the:Self {
+
+    var the: Self {
         .init(
-            
+
             dutch: "de \(dutch)", english: "the \(english)"
         )
     }
 }
 
 extension Set where Element == String {
-    static let consonents:Self = [
+    static let consonents: Self = [
         "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"
     ]
 }
 
-
-public func +(_ lhs:Translated<String>, _ rhs:Translated<String>)->Translated<String> {
-    return Translated<String>.init(dutch: lhs(in: .dutch) + rhs(in: .dutch), english: lhs(in: .english) + rhs(in: .english))
+public func +(_ lhs: Translated<String>, _ rhs: Translated<String>) -> Translated<String> {
+    return Translated<String>(dutch: lhs(in: .dutch) + rhs(in: .dutch), english: lhs(in: .english) + rhs(in: .english))
 }
 
-extension Translated:CustomStringConvertible where A == String {
+extension Translated: CustomStringConvertible where A == String {
     public var description: String {
         @Dependency(\.language) var language
         return self.callAsFunction(language: language)
@@ -1228,61 +1217,61 @@ extension Translated: ExpressibleByUnicodeScalarLiteral where A == String {
     public init(unicodeScalarLiteral value: String) {
         self.init(value)
     }
-    
+
     public typealias UnicodeScalarLiteralType = String
-    
+
 }
 
 extension Translated: ExpressibleByExtendedGraphemeClusterLiteral where A == String {
     public typealias ExtendedGraphemeClusterLiteralType = String
-    
+
 }
 
-extension Translated:ExpressibleByStringLiteral & ExpressibleByStringInterpolation where A == String {
-    public init(stringLiteral:String) {
+extension Translated: ExpressibleByStringLiteral & ExpressibleByStringInterpolation where A == String {
+    public init(stringLiteral: String) {
         self.init(stringLiteral)
     }
 }
 
 public extension Translated where A == String {
-    static let empty:Self = .init("")
+    static let empty: Self = .init("")
 }
 
 public extension Translated where A == String {
-    
-    var isEmpty:Bool {
+
+    var isEmpty: Bool {
         self.english.isEmpty && self.dutch.isEmpty
     }
-    
-    var capitalized:Self {
+
+    var capitalized: Self {
         self.map(\.capitalized)
     }
-    
-    func capitalized(with locale: Locale? = nil)->Self {
-        self.map{ $0.capitalized(with: locale) }
+
+    func capitalized(with locale: Locale? = nil) -> Self {
+        self.map { $0.capitalized(with: locale) }
     }
 
-    func uppercased(with locale: Locale? = nil)->Self {
-        self.map{ $0.uppercased(with: locale) }
+    func uppercased(with locale: Locale? = nil) -> Self {
+        self.map { $0.uppercased(with: locale) }
     }
-    
+
     @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
-    func capitalizedFirstLetter()->Self {
+    func capitalizedFirstLetter() -> Self {
         self.capitalizingFirstLetter()
     }
-    
-    func capitalizingFirstLetter()->Self {
-        
+
+    func capitalizingFirstLetter() -> Self {
+
         self.map { $0.prefix(1).capitalized + $0.dropFirst() }
     }
-    
-    func firstLetter(_ closure:(String)->String)->Self {
-        
+
+    func firstLetter(_ closure: (String) -> String) -> Self {
+
         self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
-        
+
     }
-    
-    func lowercased(with locale: Locale? = nil)->Self {
+
+    func lowercased(with locale: Locale? = nil) -> Self {
         self.map { $0.lowercased(with: locale) }
     }
 }
@@ -1290,9 +1279,9 @@ public extension Translated where A == String {
 public extension Translated {
     @available(*, deprecated, message: "Dutch should precede English")
     init(
-        english:A,
+        english: A,
         dutch: A
-    ){
+    ) {
         self.init(dutch: dutch, english: english)
     }
 }

@@ -7,5 +7,5 @@
 
 import Foundation
 public protocol TranslatedCustomStringConvertable {
-    var translatedDescription:TranslatedString { get }
+    var translatedDescription: TranslatedString { get }
 }

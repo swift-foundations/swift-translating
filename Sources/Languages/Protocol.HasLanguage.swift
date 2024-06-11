@@ -8,15 +8,15 @@
 import Foundation
 
 public protocol HasLanguage {
-    var language:Languages.Language { get }
+    var language: Languages.Language { get }
 }
 
-//extension Language:HasLanguage {
+// extension Language:HasLanguage {
 //    public var language: Language { self }
-//}
+// }
 
 extension Languages.Language {
-    public var locale:Locale {
+    public var locale: Locale {
         switch self {
         case .english: return .init(identifier: "US_us")
         case .dutch: return .init(identifier: "NL_nl")
@@ -31,7 +31,7 @@ extension Languages.Language {
 }
 
 public extension Languages.Language {
-    static func preferredLanguageForUser()->Self {
+    static func preferredLanguageForUser() -> Self {
 
         if let language = Locale.preferredLanguages.first {
             switch language {
@@ -42,12 +42,10 @@ public extension Languages.Language {
             case "nl-NL", "nl": return .dutch
             default: return .english
             }
-            
-            
+
         } else {
             return .english
         }
-        
-        
+
     }
 }

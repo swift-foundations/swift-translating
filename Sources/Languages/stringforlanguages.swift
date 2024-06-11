@@ -9,24 +9,24 @@
 import Foundation
 
 extension Languages.Language {
-    
+
     public func callAsFunction<A>(
-        dutch:A? = nil,
-        arabic:A? = nil,
-        chinese:A? = nil,
-        danish:A? = nil,
-        english:A,
-        french:A? = nil,
-        german:A? = nil,
-        italian:A? = nil,
-        japanese:A? = nil,
-        korean:A? = nil,
-        portuguese:A? = nil,
-        russian:A? = nil,
-        spanish:A? = nil,
-        swedish:A? = nil,
-        turkish:A? = nil
-    )->A {
+        dutch: A? = nil,
+        arabic: A? = nil,
+        chinese: A? = nil,
+        danish: A? = nil,
+        english: A,
+        french: A? = nil,
+        german: A? = nil,
+        italian: A? = nil,
+        japanese: A? = nil,
+        korean: A? = nil,
+        portuguese: A? = nil,
+        russian: A? = nil,
+        spanish: A? = nil,
+        swedish: A? = nil,
+        turkish: A? = nil
+    ) -> A {
         switch self {
         case .english: return english
         case .dutch: return dutch ?? english
@@ -46,32 +46,31 @@ extension Languages.Language {
         default: return english
         }
     }
-    
-    public func callAsFunction<A>(_ all:A)->A {
+
+    public func callAsFunction<A>(_ all: A) -> A {
         all
     }
 }
 
-
 extension Languages.Language {
     @available(*, deprecated, message: "Dutch should precede English")
     public func callAsFunction<A>(
-        english:A,
-        dutch:A? = nil,
-        arabic:A? = nil,
-        chinese:A? = nil,
-        danish:A? = nil,
-        french:A? = nil,
-        german:A? = nil,
-        italian:A? = nil,
-        japanese:A? = nil,
-        korean:A? = nil,
-        portuguese:A? = nil,
-        russian:A? = nil,
-        spanish:A? = nil,
-        swedish:A? = nil,
-        turkish:A? = nil
-    )->A {
+        english: A,
+        dutch: A? = nil,
+        arabic: A? = nil,
+        chinese: A? = nil,
+        danish: A? = nil,
+        french: A? = nil,
+        german: A? = nil,
+        italian: A? = nil,
+        japanese: A? = nil,
+        korean: A? = nil,
+        portuguese: A? = nil,
+        russian: A? = nil,
+        spanish: A? = nil,
+        swedish: A? = nil,
+        turkish: A? = nil
+    ) -> A {
         switch self {
         case .english: return english
         case .dutch: return dutch ?? english

@@ -4,15 +4,15 @@
 import PackageDescription
 
 extension String {
-    static let languages:Self = "Languages"
+    static let languages: Self = "Languages"
 }
 
 extension Target.Dependency {
-    static let dependencies:Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
 }
 
 extension Target.Dependency {
-    static let languages:Self = .target(name: .languages)
+    static let languages: Self = .target(name: .languages)
 }
 
 let package = Package(
@@ -55,4 +55,3 @@ let package = Package(
     ],
     swiftLanguageVersions: [.version("6")]
 )
-

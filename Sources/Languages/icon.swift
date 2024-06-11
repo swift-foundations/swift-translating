@@ -7,9 +7,8 @@
 
 import Foundation
 
-
 public extension Language {
-    var icon:String {
+    var icon: String {
         switch self {
         case .dutch: return "🇳🇱"
         case .english: return "🇺🇸"
