@@ -1140,14 +1140,10 @@ public extension Translated {
 
 //extension Translated:StringProtocol where A:StringProtocol {}
 
-extension Translated:Codable where A:Codable {
-    
-}
-
+extension Translated:Codable where A:Codable {}
+extension Translated:Sendable where A:Sendable {}
 extension Translated:Equatable where A:Equatable {}
-
 extension Translated:Hashable where A:Hashable {}
-
 extension Translated:Comparable where A:Comparable {
     public static func < (lhs: Translated<A>, rhs: Translated<A>) -> Bool {
         lhs.dutch < rhs.dutch
