@@ -52,6 +52,5 @@ let package = Package(
                 .languages
             ]
         )
-    ],
-    swiftLanguageVersions: [.version("6")]
+    ]
 )
