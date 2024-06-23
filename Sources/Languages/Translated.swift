@@ -8,15 +8,7 @@
 import Dependencies
 import Foundation
 
-public typealias TranslatedString = Translated<String>
 
-public extension TranslatedString {
-    static let space: Self = .init(" ")
-    static let period: Self = .init(".")
-    static let comma: Self = .init(",")
-    static let semicolon: Self = .init(";")
-    static let questionmark: Self = .init("?")
-}
 
 public struct Translated<A> {
     public let dutch: A
@@ -1123,6 +1115,8 @@ public extension Translated {
 
     }
 }
+
+
 
 // public extension Translated where A == String {
 //    func contains(_ string:String) -> Bool {

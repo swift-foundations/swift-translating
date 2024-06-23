@@ -1,19 +1,11 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Coen ten Thije Boonkkamp on 19/06/2020.
 //
 
 import Foundation
-
-public protocol HasLanguage {
-    var language: Languages.Language { get }
-}
-
-// extension Language:HasLanguage {
-//    public var language: Language { self }
-// }
 
 extension Languages.Language {
     public var locale: Locale {
@@ -32,7 +24,7 @@ extension Languages.Language {
 
 public extension Languages.Language {
     static func preferredLanguageForUser() -> Self {
-
+        
         if let language = Locale.preferredLanguages.first {
             switch language {
             case "en", "en-US", "en-UK": return .english
@@ -42,10 +34,9 @@ public extension Languages.Language {
             case "nl-NL", "nl": return .dutch
             default: return .english
             }
-
+            
         } else {
             return .english
         }
-
     }
 }

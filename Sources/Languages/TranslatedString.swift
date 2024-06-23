@@ -7,6 +7,16 @@
 
 import Foundation
 
+public typealias TranslatedString = Translated<String>
+
+public extension TranslatedString {
+    static let space: Self = .init(String.space)
+    static let period: Self = .init(String.period)
+    static let comma: Self = .init(String.comma)
+    static let semicolon: Self = .init(String.semicolon)
+    static let questionmark: Self = .init(String.questionmark)
+}
+
 public extension TranslatedString {
 
     static let male: Self = .init(
