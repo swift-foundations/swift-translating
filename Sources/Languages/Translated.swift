@@ -8,8 +8,6 @@
 import Dependencies
 import Foundation
 
-
-
 public struct Translated<A> {
     public let dutch: A
     public let english: A
@@ -1115,8 +1113,6 @@ public extension Translated {
 
     }
 }
-
-
 
 // public extension Translated where A == String {
 //    func contains(_ string:String) -> Bool {
