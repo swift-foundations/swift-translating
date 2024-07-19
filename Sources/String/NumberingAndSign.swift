@@ -134,7 +134,7 @@ public func numbered2(for items: [String], for int: Int? = nil) -> [String] {
     return linebreak
 }
 
-public enum List: String, Hashable {
+public enum ListSeparator: String, Hashable {
     case and
     case or
     case individual
@@ -148,7 +148,7 @@ extension Array where Element == String {
         return signs(for: self, with: string)
     }
 
-    public func signed(for language: Language, _ andOr: List? = .and) -> Self {
+    public func signed(for language: Language, _ andOr: ListSeparator? = .and) -> Self {
 
         switch andOr {
         case .and:
