@@ -9,6 +9,7 @@ import Dependencies
 import Foundation
 import Language
 import Translated
+import TranslatedString
 
 extension DependencyValues {
     public var language: Language {
@@ -35,5 +36,14 @@ extension Translated: Comparable where A: Comparable {
         @Dependency(\.language) var language
 
         return lhs(language) < rhs(language)
+    }
+}
+
+extension Translated<String> {
+    public func slug(language: Language = {
+        @Dependency(\.language) var language
+        return language
+    }()) -> String {
+        self.english.slug()
     }
 }

@@ -118,7 +118,9 @@ let package = Package.language(
             name: .dependency,
             dependencies: [
                 .language,
+                .string,
                 .translated,
+                .translatedString,
                 .dependencies
             ]
         ),
