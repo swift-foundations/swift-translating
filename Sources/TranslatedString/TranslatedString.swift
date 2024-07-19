@@ -9,6 +9,7 @@ import Foundation
 import Language
 import String
 import Translated
+import ToolKit
 
 public typealias TranslatedString = Translated<String>
 
@@ -423,22 +424,6 @@ public extension TranslatedString {
         self.map(\.questionmark)
     }
 }
-
-//
-//extension Date.Time {
-//    public func description() -> TranslatedString {
-//        switch self {
-//        case let .seconds(int): return int.seconds
-//        case let .hours(int): return int.hours
-//        case let .minutes(int): return int.minutes
-//        case let .days(int): return int.days
-//        case let .weeks(int): return int.weeks
-//        case let .months(int): return int.months
-//        case let .years(int): return int.years
-//        }
-//    }
-//}
-
 
 public extension ClosedRange<Int>  {
     func description() -> TranslatedString {

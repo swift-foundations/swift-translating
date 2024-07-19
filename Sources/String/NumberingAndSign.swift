@@ -56,16 +56,6 @@ public extension HasDateStyle {
 //    var locale:Locale { .autoupdatingCurrent }
 }
 
-// public extension Optional where Wrapped == Date {
-//    func description<Environment:HasDateStyle>(environment:Environment)->String {
-//        if let unwrapped = self {
-//            return unwrapped.description(environment: environment)
-//        } else {
-//            return "____________________"
-//        }
-//    }
-// }
-
 public extension Array where Element == String {
      func numberedAndSigned() -> Self {
         return numberedAndSigned(for: self)

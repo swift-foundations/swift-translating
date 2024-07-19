@@ -27,11 +27,12 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let toolkit: Self = .product(name: "ToolKit", package: "toolkit")
 }
 
 extension [Target.Dependency] {
     static let shared: Self = [
-        
+        .toolkit
     ]
 }
 
@@ -48,7 +49,7 @@ extension Package {
         return Package(
             name: "swift-language",
             platforms: [
-                .macOS(.v10_15),
+                .macOS(.v13),
                 .iOS(.v13)
             ],
             products: [
@@ -73,7 +74,7 @@ extension Package {
             ].flatMap { $0 },
             dependencies: [
                 .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
-//                .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
+                .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
             ],
             targets: [
                 [
