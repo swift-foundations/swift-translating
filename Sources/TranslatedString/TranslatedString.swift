@@ -9,8 +9,6 @@ import Foundation
 import Language
 import String
 import Translated
-import Dependencies
-
 
 public typealias TranslatedString = Translated<String>
 
@@ -404,20 +402,6 @@ public extension TranslatedString {
     }
 }
 
-
-
-
-
-
-// public extension Int {
-//    var hours:TranslatedString {
-//        self > 1 ? .init(english: "\(self) hours", dutch: "\(self) uren") : .init(english: "\(self) hour", dutch: "\(self) uur")
-//    }
-// }
-
-
-
-
 public extension TranslatedString {
     var period: Self {
         self.map(\.period)
@@ -439,4 +423,3 @@ public extension TranslatedString {
         self.map(\.questionmark)
     }
 }
-
