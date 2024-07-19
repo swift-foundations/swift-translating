@@ -7,6 +7,7 @@
 
 import Foundation
 import Language
+import Locale
 
 extension String {
     public static let period: Self = "."
@@ -375,3 +376,24 @@ extension String {
 
 
 
+
+
+public extension Numeric {
+
+    func number_in_writing(
+        locale: Locale
+    ) -> String {
+        Self.number_in_writing(getal: self, locale: locale)
+    }
+
+
+    static func number_in_writing(
+        getal: Self,
+        locale: Locale
+    ) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .spellOut
+        formatter.locale = locale
+        return formatter.string(for: getal)!
+    }
+}

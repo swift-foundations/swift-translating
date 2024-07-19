@@ -10,23 +10,9 @@ import Language
 import Translated
 import TranslatedString
 
-extension SinglePlural where A == String {
-    func `for`(_ int: Int) -> A {
-        if int == 1 {
-            return .init("\(int) ") + self.single
-        } else {
-            return .init("\(int) ") + self.plural
-        }
-    }
-}
 
-extension Int {
-    func translations(_ translations: Translated<SinglePlural<String>>) -> TranslatedString {
-        translations.map { singlePlural in
-            singlePlural.for(self)
-        }
-    }
-}
+
+
 
 public extension Translated<SinglePlural<String>> {
     static let year: Self = .init(
@@ -135,3 +121,32 @@ public extension Optional<Int> {
     }
 }
 
+
+
+private extension Int {
+    func timeUnitString(single: TranslatedString, multiple: TranslatedString) -> TranslatedString {
+        if self == 1 {
+            return .init("\(self) ") + single
+        } else {
+            return .init("\(self) ") + multiple
+        }
+    }
+}
+
+extension SinglePlural where A == String {
+    func `for`(_ int: Int) -> A {
+        if int == 1 {
+            return .init("\(int) ") + self.single
+        } else {
+            return .init("\(int) ") + self.plural
+        }
+    }
+}
+
+extension Int {
+    func translations(_ translations: Translated<SinglePlural<String>>) -> TranslatedString {
+        translations.map { singlePlural in
+            singlePlural.for(self)
+        }
+    }
+}

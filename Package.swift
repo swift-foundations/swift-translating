@@ -4,7 +4,7 @@
 import PackageDescription
 
 extension String {
-    static let Languages: Self = "Languages"
+    static let languages: Self = "Languages"
 
     static let language: Self = "Language"
     static let dependency: Self = "Language Dependency"
@@ -31,6 +31,7 @@ extension Target.Dependency {
 
 extension [Target.Dependency] {
     static let shared: Self = [
+        
     ]
 }
 
@@ -53,14 +54,14 @@ extension Package {
             products: [
                 [
                     .library(
-                        name: "Language",
-                        targets: ["Exports"]
+                        name: .languages,
+                        targets: [.languages]
                     )
                 ],
                 [
                     .library(
-                        name: "Languages",
-                        targets: ["Exports"]
+                        name: .language,
+                        targets: [.languages]
                     )
                 ],
                 names.map { target in
@@ -71,12 +72,13 @@ extension Package {
                 }
             ].flatMap { $0 },
             dependencies: [
-                .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
+                .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
+//                .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
             ],
             targets: [
                 [
                     .target(
-                        name: "Exports",
+                        name: "Languages",
                         dependencies: [
                             .language,
                             .dependency,
@@ -141,7 +143,8 @@ let package = Package.language(
         (
             name: .string,
             dependencies: [
-                .language
+                .language,
+                .locale,
             ]
         ),
         (

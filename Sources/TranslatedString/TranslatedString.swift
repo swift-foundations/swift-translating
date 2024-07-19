@@ -292,10 +292,8 @@ public extension TranslatedString {
         german: "Hintergrundfarbe",
         spanish: "Color de fondo"
     )
-}
-
-extension TranslatedString {
-    public var any: Self {
+    
+    var any: Self {
         .init(
 
             dutch: "een \(dutch)",
@@ -308,13 +306,15 @@ extension TranslatedString {
         )
     }
 
-    public var the: Self {
+    var the: Self {
         .init(
-
-            dutch: "de \(dutch)", english: "the \(english)"
+            dutch: "de \(dutch)",
+            english: "the \(english)"
         )
     }
 }
+
+
 
 //
 // extension TranslatedString {
@@ -421,5 +421,29 @@ public extension TranslatedString {
 
     var questionmark: Self {
         self.map(\.questionmark)
+    }
+}
+
+//
+//extension Date.Time {
+//    public func description() -> TranslatedString {
+//        switch self {
+//        case let .seconds(int): return int.seconds
+//        case let .hours(int): return int.hours
+//        case let .minutes(int): return int.minutes
+//        case let .days(int): return int.days
+//        case let .weeks(int): return int.weeks
+//        case let .months(int): return int.months
+//        case let .years(int): return int.years
+//        }
+//    }
+//}
+
+
+public extension ClosedRange<Int>  {
+    func description() -> TranslatedString {
+        .init(
+            dutch: "\(self.lowerBound) tot en met \(self.upperBound)", english: "\(self.lowerBound) up to and including \(self.upperBound)"
+        )
     }
 }
