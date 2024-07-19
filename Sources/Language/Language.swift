@@ -4,6 +4,8 @@ import Foundation
 //    public static var current:Language = .english
 // }
 
+public typealias _Language = Language
+
 public indirect enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendable {
     case arabic = "ar"
     case bengali = "bn"
