@@ -11,6 +11,14 @@ import Language
 public struct Translated<A> {
     public var `default`: A
     internal var dictionary: [Language: A]
+    
+    internal init(
+        `default`: A,
+        dictionary: [Language : A]
+    ) {
+        self.default = `default`
+        self.dictionary = dictionary
+    }
 }
 
 extension Translated {
