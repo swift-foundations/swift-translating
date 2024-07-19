@@ -31,45 +31,10 @@ extension Date {
         dateFormatter.dateStyle = dateStyle
         dateFormatter.timeStyle = timeStyle
 
-        fatalError()
-        
-//        
-//        return .init { language in
-//            dateFormatter
-//                return dateFormatter.string(from: self)
-//        }
-        
-        //        return .init(
-        //            dutch: {dateFormatter.locale = Language.dutch.locale; return dateFormatter.string(from: self)}(),
-        //            english: {dateFormatter.locale = Language.english.locale; return dateFormatter.string(from: self)}()
-        //        )
-
-//        return .init(
-//            //            arabic: { dateFormatter.locale = Language.arabic.locale; return dateFormatter.string(from: self) } (),
-//            //            bengali: { dateFormatter.locale = Language.bengali.locale; return dateFormatter.string(from: self) } (),
-//            //            chinese: { dateFormatter.locale = Language.chinese.locale; return dateFormatter.string(from: self) } (),
-//            //            danish: { dateFormatter.locale = Language.danish.locale; return dateFormatter.string(from: self) } (),
-//            dutch: { dateFormatter.locale = Language.dutch.locale; return dateFormatter.string(from: self) }(),
-//            english: { dateFormatter.locale = Language.english.locale; return dateFormatter.string(from: self) }(),
-//            french: { dateFormatter.locale = Language.french.locale; return dateFormatter.string(from: self) }(),
-//            german: { dateFormatter.locale = Language.german.locale; return dateFormatter.string(from: self) }(),
-//            //            hindi: { dateFormatter.locale = Language.hindi.locale; return dateFormatter.string(from: self) } (),
-//            //            indonesian: { dateFormatter.locale = Language.indonesian.locale; return dateFormatter.string(from: self) } (),
-//            //            irish: { dateFormatter.locale = Language.irish.locale; return dateFormatter.string(from: self) } (),
-//            //            italian: { dateFormatter.locale = Language.italian.locale; return dateFormatter.string(from: self) } (),
-//            //            japanese: { dateFormatter.locale = Language.japanese.locale; return dateFormatter.string(from: self) } (),
-//            //            javanese: { dateFormatter.locale = Language.javanese.locale; return dateFormatter.string(from: self) } (),
-//            //            korean: { dateFormatter.locale = Language.korean.locale; return dateFormatter.string(from: self) } (),
-//            //            polish: { dateFormatter.locale = Language.polish.locale; return dateFormatter.string(from: self) } (),
-//            //            portuguese: { dateFormatter.locale = Language.portuguese.locale; return dateFormatter.string(from: self) } (),
-//            //            romanian: { dateFormatter.locale = Language.romanian.locale; return dateFormatter.string(from: self) } (),
-//            //            russian: { dateFormatter.locale = Language.russian.locale; return dateFormatter.string(from: self) } (),
-//            //            slovak: { dateFormatter.locale = Language.slovak.locale; return dateFormatter.string(from: self) } (),
-//            //            slovenian: { dateFormatter.locale = Language.slovenian.locale; return dateFormatter.string(from: self) } (),
-//            spanish: { dateFormatter.locale = Language.spanish.locale; return dateFormatter.string(from: self) }()
-//            //            swedish: { dateFormatter.locale = Language.swedish.locale; return dateFormatter.string(from: self) } (),
-//            //            turkish: { dateFormatter.locale = Language.turkish.locale; return dateFormatter.string(from: self) } ()
-//        )
+        return .init { language in
+            dateFormatter.locale = language.locale
+            return dateFormatter.string(from: self)
+        }
     }
 }
 
