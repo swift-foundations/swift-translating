@@ -131,7 +131,9 @@ let package = Package.language(
         (
             name: .singlePlural,
             dependencies: [
-                .language
+                .language,
+                .translated,
+                .translatedString
             ]
         ),
         (
