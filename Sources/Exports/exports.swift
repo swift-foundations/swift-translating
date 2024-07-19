@@ -6,3 +6,10 @@
 //
 
 @_exported import Language
+@_exported import Language_Dependency
+@_exported import Locale
+@_exported import SinglePlural
+@_exported import String
+@_exported import Translated
+@_exported import TranslatedString
+
