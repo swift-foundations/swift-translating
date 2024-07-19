@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Languages.Language {
+extension Language {
     public var locale: Locale {
         switch self {
         case .english: return .init(identifier: "US_us")
@@ -22,7 +22,7 @@ extension Languages.Language {
     }
 }
 
-public extension Languages.Language {
+public extension Language {
     static func preferredLanguageForUser() -> Self {
 
         if let language = Locale.preferredLanguages.first {

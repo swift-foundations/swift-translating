@@ -4,53 +4,138 @@
 import PackageDescription
 
 extension String {
-    static let languages: Self = "Languages"
+    static let Languages: Self = "Languages"
+    
+    static let language: Self = "Language"
+    static let dependency: Self = "Language Dependency"
+    static let locale: Self = "Locale"
+    static let singlePlural: Self = "SinglePlural"
+    static let string: Self = "String"
+    static let translated: Self = "Translated"
+    static let translatedString: Self = "TranslatedString"
+}
+
+extension Target.Dependency {
+    static let language: Self = .target(name: .language)
+    static let dependency: Self = .target(name: .dependency)
+    static let locale: Self = .target(name: .locale)
+    static let singlePlural: Self = .target(name: .singlePlural)
+    static let string: Self = .target(name: .string)
+    static let translated: Self = .target(name: .translated)
+    static let translatedString: Self = .target(name: .translatedString)
 }
 
 extension Target.Dependency {
     static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
 }
 
-extension Target.Dependency {
-    static let languages: Self = .target(name: .languages)
+extension [Target.Dependency] {
+    static let shared: Self = [
+//        .languages,
+//        .money,
+//        .percent,
+//        .html,
+//        .toolkit,
+    ]
+    
 }
 
-let package = Package(
-    name: "swift-language",
-    platforms: [
-        .macOS(
-            .v10_15
-        ),
-        .iOS(
-            .v13
-        )
-    ],
-    products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
-        .library(
-            name: .languages,
+
+extension Package {
+    static func language(
+        targets: [(
+            name: String,
+            dependencies: [Target.Dependency]
+        )]
+    ) -> Package {
+        
+        let names = targets.map(\.name)
+        
+        return Package(
+            name: "swift-language",
+            platforms: [
+                .macOS(.v10_15),
+                .iOS(.v13)
+            ],
+            products: [
+                [
+                    .library(
+                        name: "DocumentTemplates",
+                        targets: names
+                    )
+                ],
+                names.map { target in
+                    Product.library(
+                        name: "\(target)",
+                        targets: ["\(target)"]
+                    )
+                }
+            ].flatMap{ $0
+            },
+            dependencies: [
+                .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
+            ],
             targets: [
-                .languages
-            ]
+                targets.map { document in
+                    Target.target(
+                        name: "\(document.name)",
+                        dependencies: .shared + [] + document.dependencies
+                    )
+                },
+                targets.map { document in
+                    Target.testTarget(
+                        name: "\(document.name)Tests",
+                        dependencies: [.init(stringLiteral: document.name)]
+                    )
+                }
+            ].flatMap { $0 }
         )
-    ],
-    dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-        .target(
-            name: .languages,
+    }
+}
+
+let package = Package.language(
+    targets: [       
+        (
+            name: .language,
             dependencies: [
-                .dependencies
+            
             ]
         ),
-        .testTarget(
-            name: .languages + "Tests",
+        (
+            name: .dependency,
             dependencies: [
-                .languages
+            
             ]
-        )
+        ),
+        (
+            name: .locale,
+            dependencies: [
+            
+            ]
+        ),
+        (
+            name: .singlePlural,
+            dependencies: [
+            
+            ]
+        ),
+        (
+            name: .string,
+            dependencies: [
+            
+            ]
+        ),
+        (
+            name: .translated,
+            dependencies: [
+            
+            ]
+        ),
+        (
+            name: .translatedString,
+            dependencies: [
+            
+            ]
+        ),
     ]
 )

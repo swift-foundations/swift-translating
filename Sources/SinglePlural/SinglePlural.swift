@@ -175,3 +175,14 @@ extension SinglePlural: Equatable where A: Equatable {}
 extension SinglePlural: Hashable where A: Hashable {}
 extension SinglePlural: Codable where A: Codable {}
 extension SinglePlural: Sendable where A: Sendable {}
+
+
+public extension Language {
+    
+    static let title: SinglePlural<Translated<String>> = .init(
+        single: .init(dutch: "Taal", english: "Language"),
+        plural: .init(dutch: "Talen", english: "Languages")
+    )
+}
+
+
