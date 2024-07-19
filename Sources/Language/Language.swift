@@ -211,4 +211,3 @@ public indirect enum Language: String, CaseIterable, Hashable, Equatable, Codabl
 // case zhuang, chuang = "za"
     case zulu = "zu"
 }
-

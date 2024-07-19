@@ -22,7 +22,6 @@ extension Language: DependencyKey {
     public static let testValue: Self = .english
 }
 
-
 extension Translated: CustomStringConvertible where A == String {
     public var description: String {
         @Dependency(\.language) var language
@@ -30,12 +29,11 @@ extension Translated: CustomStringConvertible where A == String {
     }
 }
 
-
 extension Translated: Comparable where A: Comparable {
     public static func < (lhs: Translated<A>, rhs: Translated<A>) -> Bool {
-        
+
         @Dependency(\.language) var language
-        
+
         return lhs(language) < rhs(language)
     }
 }

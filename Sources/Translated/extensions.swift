@@ -10,7 +10,7 @@ import Language
 
 extension Translated {
     public func map<B>(_ transform: (A) -> B) -> Translated<B> {
-        Translated<B>.init(
+        Translated<B>(
             default: transform(self.default),
             dictionary: self.dictionary.mapValues(transform)
         )
@@ -38,15 +38,15 @@ extension Translated {
     public func callAsFunction(language: Language) -> A {
         self.dictionary[language] ?? self.default
     }
-    
+
     public func callAsFunction(with language: Language) -> A {
         callAsFunction(language: language)
     }
-    
+
     public func callAsFunction(in language: Language) -> A {
         callAsFunction(language: language)
     }
-    
+
     public func callAsFunction(for language: Language) -> A {
         callAsFunction(language: language)
     }
@@ -60,15 +60,15 @@ extension Sequence {
     public func callAsFunction<A>(language: Language) -> [A] where Element == Translated<A> {
         self.map { $0(language) }
     }
-    
+
     public func callAsFunction<A>(with language: Language) -> [A] where Element == Translated<A> {
         callAsFunction(language: language)
     }
-    
+
     public func callAsFunction<A>(in language: Language) -> [A] where Element == Translated<A> {
         callAsFunction(language: language)
     }
-    
+
     public func callAsFunction<A>(for language: Language) -> [A] where Element == Translated<A> {
         callAsFunction(language: language)
     }

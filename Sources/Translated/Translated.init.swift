@@ -20,11 +20,11 @@ extension Translated {
     public init(
         _ all: (Language) -> A
     ) {
-        
+
         self.default = all(.english)
         self.dictionary = [:]
         for language in Language.allCases {
-            self.dictionary = [language:all(language)]
+            self.dictionary = [language: all(language)]
         }
     }
 }
@@ -395,6 +395,3 @@ extension Translated {
         self.dictionary[.zulu] = zulu
     }
 }
-
-
-

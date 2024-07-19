@@ -5,7 +5,7 @@ import PackageDescription
 
 extension String {
     static let Languages: Self = "Languages"
-    
+
     static let language: Self = "Language"
     static let dependency: Self = "Language Dependency"
     static let locale: Self = "Locale"
@@ -31,15 +31,8 @@ extension Target.Dependency {
 
 extension [Target.Dependency] {
     static let shared: Self = [
-//        .languages,
-//        .money,
-//        .percent,
-//        .html,
-//        .toolkit,
     ]
-    
 }
-
 
 extension Package {
     static func language(
@@ -48,9 +41,9 @@ extension Package {
             dependencies: [Target.Dependency]
         )]
     ) -> Package {
-        
+
         let names = targets.map(\.name)
-        
+
         return Package(
             name: "swift-language",
             platforms: [
@@ -70,7 +63,7 @@ extension Package {
                         targets: ["\(target)"]
                     )
                 }
-            ].flatMap{ $0 },
+            ].flatMap { $0 },
             dependencies: [
                 .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
             ],
@@ -85,11 +78,11 @@ extension Package {
                             .singlePlural,
                             .string,
                             .translated,
-                            .translatedString,
+                            .translatedString
                         ]
                     )
                 ],
-                
+
                 targets.map { document in
                     Target.target(
                         name: "\(document.name)",
@@ -108,11 +101,11 @@ extension Package {
 }
 
 let package = Package.language(
-    targets: [       
+    targets: [
         (
             name: .language,
             dependencies: [
-            
+
             ]
         ),
         (
@@ -152,7 +145,7 @@ let package = Package.language(
             dependencies: [
                 .language,
                 .translated,
-                .string,
+                .string
             ]
         )
     ]

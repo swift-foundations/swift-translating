@@ -16,9 +16,6 @@ extension String {
     public static let questionmark: Self = "?"
 }
 
-
-
-
 extension String {
     public var any: Self {
         if let first = self.first {
@@ -27,9 +24,6 @@ extension String {
         return self
     }
 }
-
-
-
 
 extension Set where Element == String {
     public static let consonents: Self = [

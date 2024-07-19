@@ -1,10 +1,9 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Coen ten Thije Boonkkamp on 13/12/2020.
 //
-
 
 import Foundation
 import Language
@@ -12,6 +11,17 @@ import Language
 public struct Translated<A> {
     public var `default`: A
     internal var dictionary: [Language: A]
+}
+
+extension Translated {
+    public subscript(language: Language) -> A {
+        get {
+            dictionary[language] ?? self.default
+        }
+        set {
+            dictionary[language] = newValue
+        }
+    }
 }
 
 extension Translated {
@@ -1632,3 +1642,28 @@ extension Translated: Codable where A: Codable {}
 extension Translated: Sendable where A: Sendable {}
 extension Translated: Equatable where A: Equatable {}
 extension Translated: Hashable where A: Hashable {}
+
+extension Translated<String> {
+    public static func +(lhs: Translated<String>, rhs: Translated<String>) -> Translated<String> {
+        let allKeys = Set(lhs.dictionary.keys).union(rhs.dictionary.keys)
+
+        let newTranslations = Dictionary(uniqueKeysWithValues: allKeys.map { key in
+            (key, (lhs.dictionary[key] ?? "") + (rhs.dictionary[key] ?? ""))
+        })
+
+        return Translated<String>(
+            default: lhs.default + rhs.default,
+            dictionary: newTranslations
+        )
+    }
+
+    public static func +(lhs: Translated<String>, rhs: String) -> Translated<String> {
+        let newTranslations = lhs.dictionary.mapValues { $0 + rhs }
+        return Translated<String>(default: lhs.default, dictionary: newTranslations)
+    }
+
+    public static func +(lhs: String, rhs: Translated<String>) -> Translated<String> {
+        let newTranslations = rhs.dictionary.mapValues { lhs + $0 }
+        return Translated<String>(default: rhs.default, dictionary: newTranslations)
+    }
+}

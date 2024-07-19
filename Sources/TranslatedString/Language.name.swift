@@ -8,7 +8,6 @@
 import Foundation
 import Language
 
-
 extension TranslatedString {
     public init(_ language: Language) {
         switch language {

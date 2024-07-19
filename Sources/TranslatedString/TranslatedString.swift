@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import Translated
-import String
 import Language
+import String
+import Translated
 
 public typealias TranslatedString = Translated<String>
-
 
 public extension TranslatedString {
     static let space: Self = .init(String.space)
@@ -28,10 +27,6 @@ public extension [Language] {
         }
     }
 }
-
-
-
-
 
 public extension TranslatedString {
 
@@ -299,9 +294,8 @@ public extension TranslatedString {
     )
 }
 
-
-public extension TranslatedString {
-    var any: Self {
+extension TranslatedString {
+    public var any: Self {
         .init(
 
             dutch: "een \(dutch)",
@@ -314,7 +308,7 @@ public extension TranslatedString {
         )
     }
 
-    var the: Self {
+    public var the: Self {
         .init(
 
             dutch: "de \(dutch)", english: "the \(english)"
@@ -322,29 +316,28 @@ public extension TranslatedString {
     }
 }
 
-
-extension TranslatedString {
-    static func +(lhs: Self, rhs: String) -> Self {
-        return TranslatedString.init(
-            dutch: lhs(.dutch) + rhs,
-            english: lhs(.english) + rhs
-        )
-    }
-
-    static func +(lhs: String, rhs: Self) -> Self {
-        return TranslatedString(
-            dutch: lhs + rhs(.dutch),
-            english: lhs + rhs(.english)
-        )
-    }
-}
-
-
+//
+// extension TranslatedString {
+//    public static func +(lhs: TranslatedString, rhs: String) -> TranslatedString {
+//        var newTranslations = lhs.translations
+//        for (key, value) in newTranslations {
+//            newTranslations[key] = value + rhs
+//        }
+//        return TranslatedString(translations: newTranslations)
+//    }
+//    
+//    public static func +(lhs: String, rhs: TranslatedString) -> TranslatedString {
+//        var newTranslations = rhs.translations
+//        for (key, value) in newTranslations {
+//            newTranslations[key] = lhs + value
+//        }
+//        return TranslatedString(translations: newTranslations)
+//    }
+// }
 
 public func +(_ lhs: TranslatedString, _ rhs: TranslatedString) -> TranslatedString {
     return TranslatedString(dutch: lhs(in: .dutch) + rhs(in: .dutch), english: lhs(in: .english) + rhs(in: .english))
 }
-
 
 extension TranslatedString: ExpressibleByUnicodeScalarLiteral {
     public init(unicodeScalarLiteral value: String) {
@@ -366,11 +359,9 @@ extension TranslatedString: ExpressibleByStringLiteral & ExpressibleByStringInte
     }
 }
 
-
 public extension TranslatedString {
     static let empty: Self = .init("")
 }
-
 
 public extension TranslatedString {
 
