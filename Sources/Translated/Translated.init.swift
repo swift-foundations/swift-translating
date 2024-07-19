@@ -20,12 +20,8 @@ extension Translated {
     public init(
         _ all: (Language) -> A
     ) {
-
         self.default = all(.english)
-        self.dictionary = [:]
-        for language in Language.allCases {
-            self.dictionary = [language: all(language)]
-        }
+        self.dictionary = Dictionary(uniqueKeysWithValues: Language.allCases.map { ($0, all($0)) })
     }
 }
 
