@@ -57,6 +57,12 @@ extension Package {
                         targets: ["Exports"]
                     )
                 ],
+                [
+                    .library(
+                        name: "Languages",
+                        targets: ["Exports"]
+                    )
+                ],
                 names.map { target in
                     .library(
                         name: "\(target)",
