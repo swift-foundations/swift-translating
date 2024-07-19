@@ -4,12 +4,12 @@
 //
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
-
-import Foundation
 import Language
+public typealias _Language = Language
+import Foundation
 
 public extension Locale {
-    static var autoupdatingLanguage: Language {
+    static var autoupdatingLanguage: _Language {
         switch Self.autoupdatingCurrent.identifier {
         case "nl_NL": return .dutch
         case "en_EN": return .english

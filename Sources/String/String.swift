@@ -6,37 +6,33 @@
 //
 
 import Foundation
+import Language
 
-public extension String {
-    static let space: Self = " "
-    static let period: Self = "."
-    static let comma: Self = ","
-    static let semicolon: Self = ";"
-    static let questionmark: Self = "?"
+extension String {
+    public static let space: Self = " "
+    public static let period: Self = "."
+    public static let comma: Self = ","
+    public static let semicolon: Self = ";"
+    public static let questionmark: Self = "?"
 }
 
 
 
-public extension String {
-    static func translated(
-        dutch: String? = nil,
-        english: String,
-        french: String? = nil,
-        german: String? = nil,
-        spanish: String? = nil,
-        language: Languages.Language
-    ) -> String {
-        Translated<String>(dutch: dutch, english: english, french: french, german: german, spanish: spanish)(language)
-    }
 
-    init(
-        dutch: String? = nil,
-        english: String,
-        french: String? = nil,
-        german: String? = nil,
-        spanish: String? = nil,
-        language: Languages.Language
-    ) {
-        self = Translated<String>(dutch: dutch, english: english, french: french, german: german, spanish: spanish)(language)
+extension String {
+    public var any: Self {
+        if let first = self.first {
+            if Set<String>.consonents.contains(String(first)) {return "an \(self)"} else { return "a \(self)" }
+        }
+        return self
     }
+}
+
+
+
+
+extension Set where Element == String {
+    public static let consonents: Self = [
+        "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"
+    ]
 }

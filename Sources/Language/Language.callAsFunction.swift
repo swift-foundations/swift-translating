@@ -3,7 +3,7 @@
 //  Trust
 //
 //  Created by Coen ten Thije Boonkkamp on 11/06/2020.
-//  Copyright © 2020 LegalKit. All rights reserved.
+//  Copyright © 2020 Coen ten Thije Boonkkamp. All rights reserved.
 //
 
 import Foundation

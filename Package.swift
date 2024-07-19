@@ -60,22 +60,36 @@ extension Package {
             products: [
                 [
                     .library(
-                        name: "DocumentTemplates",
-                        targets: names
+                        name: "Language",
+                        targets: ["Exports"]
                     )
                 ],
                 names.map { target in
-                    Product.library(
+                    .library(
                         name: "\(target)",
                         targets: ["\(target)"]
                     )
                 }
-            ].flatMap{ $0
-            },
+            ].flatMap{ $0 },
             dependencies: [
                 .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
             ],
             targets: [
+                [
+                    .target(
+                        name: "Exports",
+                        dependencies: [
+                            .language,
+                            .dependency,
+                            .locale,
+                            .singlePlural,
+                            .string,
+                            .translated,
+                            .translatedString,
+                        ]
+                    )
+                ],
+                
                 targets.map { document in
                     Target.target(
                         name: "\(document.name)",
@@ -104,38 +118,42 @@ let package = Package.language(
         (
             name: .dependency,
             dependencies: [
-            
+                .language,
+                .translated,
+                .dependencies
             ]
         ),
         (
             name: .locale,
             dependencies: [
-            
+                .language
             ]
         ),
         (
             name: .singlePlural,
             dependencies: [
-            
+                .language
             ]
         ),
         (
             name: .string,
             dependencies: [
-            
+                .language
             ]
         ),
         (
             name: .translated,
             dependencies: [
-            
+                .language
             ]
         ),
         (
             name: .translatedString,
             dependencies: [
-            
+                .language,
+                .translated,
+                .string,
             ]
-        ),
+        )
     ]
 )

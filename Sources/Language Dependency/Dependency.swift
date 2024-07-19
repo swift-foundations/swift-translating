@@ -7,6 +7,8 @@
 
 import Dependencies
 import Foundation
+import Language
+import Translated
 
 extension DependencyValues {
     public var language: Language {
@@ -18,4 +20,22 @@ extension DependencyValues {
 extension Language: DependencyKey {
     public static let liveValue: Self = .english
     public static let testValue: Self = .english
+}
+
+
+extension Translated: CustomStringConvertible where A == String {
+    public var description: String {
+        @Dependency(\.language) var language
+        return self.callAsFunction(language: language)
+    }
+}
+
+
+extension Translated: Comparable where A: Comparable {
+    public static func < (lhs: Translated<A>, rhs: Translated<A>) -> Bool {
+        
+        @Dependency(\.language) var language
+        
+        return lhs(language) < rhs(language)
+    }
 }
