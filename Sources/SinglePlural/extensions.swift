@@ -9,7 +9,7 @@ import Foundation
 import Language
 import Translated
 import TranslatedString
-import ToolKit_Custom
+
 
 public extension Translated<SinglePlural<String>> {
     static let year: Self = .init(
@@ -69,7 +69,6 @@ public extension Translated<SinglePlural<String>> {
     )
 }
 
-
 public extension Int {
     var years: TranslatedString {
         self.translations(.year)
@@ -118,8 +117,6 @@ public extension Optional<Int> {
     }
 }
 
-
-
 private extension Int {
     func timeUnitString(single: TranslatedString, multiple: TranslatedString) -> TranslatedString {
         if self == 1 {
@@ -148,16 +145,16 @@ extension Int {
     }
 }
 
-extension Date.Time {
-    public func description() -> TranslatedString {
-        switch self {
-        case let .seconds(int): return int.seconds
-        case let .hours(int): return int.hours
-        case let .minutes(int): return int.minutes
-        case let .days(int): return int.days
-        case let .weeks(int): return int.weeks
-        case let .months(int): return int.months
-        case let .years(int): return int.years
-        }
-    }
-}
+//extension Date.Time {
+//    public func description() -> TranslatedString {
+//        switch self {
+//        case let .seconds(int): return int.seconds
+//        case let .hours(int): return int.hours
+//        case let .minutes(int): return int.minutes
+//        case let .days(int): return int.days
+//        case let .weeks(int): return int.weeks
+//        case let .months(int): return int.months
+//        case let .years(int): return int.years
+//        }
+//    }
+//}

@@ -120,11 +120,3 @@ extension SinglePlural: Sendable where A: Sendable {}
 public extension SinglePlural<TranslatedString> {
     static let empty: Self = .init(single: "", plural: "")
 }
-
-
-
-
-
-
-
-

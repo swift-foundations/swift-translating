@@ -195,7 +195,7 @@ extension Language {
 
 public extension Language {
     static func preferredLanguageForUser() -> Self {
-        
+
         if let language = Locale.preferredLanguages.first {
             switch language {
             case "en", "en-US", "en-UK": return .english
@@ -205,7 +205,7 @@ public extension Language {
             case "nl-NL", "nl": return .dutch
             default: return .english
             }
-            
+
         } else {
             return .english
         }

@@ -16,7 +16,7 @@ extension Date {
             english: "________________ __, 2021"
         )
     }
-    
+
     public func english(dateStyle: DateFormatter.Style = .long, timeStyle: DateFormatter.Style = .none) -> String {
         return self.description(dateStyle: dateStyle, timeStyle: timeStyle).english
     }
@@ -24,7 +24,6 @@ extension Date {
     public func dutch(dateStyle: DateFormatter.Style = .long, timeStyle: DateFormatter.Style = .none) -> String {
         return self.description(dateStyle: dateStyle, timeStyle: timeStyle).dutch
     }
-
 
     public func description(dateStyle: DateFormatter.Style = .long, timeStyle: DateFormatter.Style = .none) -> TranslatedString {
         let dateFormatter = DateFormatter()
@@ -38,7 +37,7 @@ extension Date {
     }
 }
 
-extension Date?  {
+extension Date? {
     public func description(dateStyle: DateFormatter.Style = .long, timeStyle: DateFormatter.Style = .none) -> TranslatedString {
 
         return .init { language in

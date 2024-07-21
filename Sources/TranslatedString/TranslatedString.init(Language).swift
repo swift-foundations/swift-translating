@@ -590,8 +590,8 @@ extension TranslatedString {
     }
 }
 
-public extension Language {
-    var name: TranslatedString {
+extension Language {
+    public var name: TranslatedString {
         return .init(self)
     }
 }

@@ -3,6 +3,13 @@
 
 import PackageDescription
 
+extension [Package.Dependency] {
+    static let `default`: Self = [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
+//        .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
+    ]
+}
+
 extension String {
     static let languages: Self = "Languages"
 
@@ -27,12 +34,12 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
-    static let toolkit: Self = .product(name: "ToolKit", package: "toolkit")
+//    static let toolkit: Self = .product(name: "ToolKit", package: "toolkit")
 }
 
 extension [Target.Dependency] {
     static let shared: Self = [
-        .toolkit
+//        .toolkit
     ]
 }
 
@@ -72,10 +79,7 @@ extension Package {
                     )
                 }
             ].flatMap { $0 },
-            dependencies: [
-                .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
-                .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
-            ],
+            dependencies: .default,
             targets: [
                 [
                     .target(
@@ -145,7 +149,7 @@ let package = Package.language(
             name: .string,
             dependencies: [
                 .language,
-                .locale,
+                .locale
             ]
         ),
         (

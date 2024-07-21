@@ -9,9 +9,59 @@ import Foundation
 import Language
 import String
 import Translated
-import ToolKit
 
 public typealias TranslatedString = Translated<String>
+
+public extension [Language] {
+    func sort() -> Self {
+        self.sorted { language1, langauge2 in
+            "\(language1)" < "\(langauge2)"
+        }
+    }
+}
+
+//
+// extension TranslatedString {
+//    public static func +(lhs: TranslatedString, rhs: String) -> TranslatedString {
+//        var newTranslations = lhs.translations
+//        for (key, value) in newTranslations {
+//            newTranslations[key] = value + rhs
+//        }
+//        return TranslatedString(translations: newTranslations)
+//    }
+//
+//    public static func +(lhs: String, rhs: TranslatedString) -> TranslatedString {
+//        var newTranslations = rhs.translations
+//        for (key, value) in newTranslations {
+//            newTranslations[key] = lhs + value
+//        }
+//        return TranslatedString(translations: newTranslations)
+//    }
+// }
+
+public func +(_ lhs: TranslatedString, _ rhs: TranslatedString) -> TranslatedString {
+    return TranslatedString(dutch: lhs(in: .dutch) + rhs(in: .dutch), english: lhs(in: .english) + rhs(in: .english))
+}
+
+extension TranslatedString: ExpressibleByUnicodeScalarLiteral {
+    public init(unicodeScalarLiteral value: String) {
+        self.init(value)
+    }
+
+    public typealias UnicodeScalarLiteralType = String
+
+}
+
+extension TranslatedString: ExpressibleByExtendedGraphemeClusterLiteral {
+    public typealias ExtendedGraphemeClusterLiteralType = String
+
+}
+
+extension TranslatedString: ExpressibleByStringLiteral & ExpressibleByStringInterpolation {
+    public init(stringLiteral: String) {
+        self.init(stringLiteral)
+    }
+}
 
 public extension TranslatedString {
     static let space: Self = .init(String.space)
@@ -21,11 +71,62 @@ public extension TranslatedString {
     static let questionmark: Self = .init(String.questionmark)
 }
 
-public extension [Language] {
-    func sort() -> Self {
-        self.sorted { language1, langauge2 in
-            "\(language1)" < "\(langauge2)"
-        }
+public extension TranslatedString {
+
+    var period: Self {
+        self.map(\.period)
+    }
+
+    var comma: Self {
+        self.map(\.comma)
+    }
+
+    var semicolon: Self {
+        self.map(\.semicolon)
+    }
+
+    var colon: Self {
+        self.map(\.colon)
+    }
+
+    var questionmark: Self {
+        self.map(\.questionmark)
+    }
+    
+    var isEmpty: Bool {
+        self.english.isEmpty && self.dutch.isEmpty
+    }
+
+    var capitalized: Self {
+        self.map(\.capitalized)
+    }
+
+    func capitalized(with locale: Locale? = nil) -> Self {
+        self.map { $0.capitalized(with: locale) }
+    }
+
+    func uppercased(with locale: Locale? = nil) -> Self {
+        self.map { $0.uppercased(with: locale) }
+    }
+
+    @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
+    func capitalizedFirstLetter() -> Self {
+        self.capitalizingFirstLetter()
+    }
+
+    func capitalizingFirstLetter() -> Self {
+
+        self.map { $0.prefix(1).capitalized + $0.dropFirst() }
+    }
+
+    func firstLetter(_ closure: (String) -> String) -> Self {
+
+        self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
+
+    }
+
+    func lowercased(with locale: Locale? = nil) -> Self {
+        self.map { $0.lowercased(with: locale) }
     }
 }
 
@@ -293,7 +394,7 @@ public extension TranslatedString {
         german: "Hintergrundfarbe",
         spanish: "Color de fondo"
     )
-    
+
     var any: Self {
         .init(
 
@@ -315,120 +416,7 @@ public extension TranslatedString {
     }
 }
 
-
-
-//
-// extension TranslatedString {
-//    public static func +(lhs: TranslatedString, rhs: String) -> TranslatedString {
-//        var newTranslations = lhs.translations
-//        for (key, value) in newTranslations {
-//            newTranslations[key] = value + rhs
-//        }
-//        return TranslatedString(translations: newTranslations)
-//    }
-//    
-//    public static func +(lhs: String, rhs: TranslatedString) -> TranslatedString {
-//        var newTranslations = rhs.translations
-//        for (key, value) in newTranslations {
-//            newTranslations[key] = lhs + value
-//        }
-//        return TranslatedString(translations: newTranslations)
-//    }
-// }
-
-public func +(_ lhs: TranslatedString, _ rhs: TranslatedString) -> TranslatedString {
-    return TranslatedString(dutch: lhs(in: .dutch) + rhs(in: .dutch), english: lhs(in: .english) + rhs(in: .english))
-}
-
-extension TranslatedString: ExpressibleByUnicodeScalarLiteral {
-    public init(unicodeScalarLiteral value: String) {
-        self.init(value)
-    }
-
-    public typealias UnicodeScalarLiteralType = String
-
-}
-
-extension TranslatedString: ExpressibleByExtendedGraphemeClusterLiteral {
-    public typealias ExtendedGraphemeClusterLiteralType = String
-
-}
-
-extension TranslatedString: ExpressibleByStringLiteral & ExpressibleByStringInterpolation {
-    public init(stringLiteral: String) {
-        self.init(stringLiteral)
-    }
-}
-
 public extension TranslatedString {
     static let empty: Self = .init("")
 }
 
-public extension TranslatedString {
-
-    var isEmpty: Bool {
-        self.english.isEmpty && self.dutch.isEmpty
-    }
-
-    var capitalized: Self {
-        self.map(\.capitalized)
-    }
-
-    func capitalized(with locale: Locale? = nil) -> Self {
-        self.map { $0.capitalized(with: locale) }
-    }
-
-    func uppercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.uppercased(with: locale) }
-    }
-
-    @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
-    func capitalizedFirstLetter() -> Self {
-        self.capitalizingFirstLetter()
-    }
-
-    func capitalizingFirstLetter() -> Self {
-
-        self.map { $0.prefix(1).capitalized + $0.dropFirst() }
-    }
-
-    func firstLetter(_ closure: (String) -> String) -> Self {
-
-        self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
-
-    }
-
-    func lowercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.lowercased(with: locale) }
-    }
-}
-
-public extension TranslatedString {
-    var period: Self {
-        self.map(\.period)
-    }
-
-    var comma: Self {
-        self.map(\.comma)
-    }
-
-    var semicolon: Self {
-        self.map(\.semicolon)
-    }
-
-    var colon: Self {
-        self.map(\.colon)
-    }
-
-    var questionmark: Self {
-        self.map(\.questionmark)
-    }
-}
-
-public extension ClosedRange<Int>  {
-    func description() -> TranslatedString {
-        .init(
-            dutch: "\(self.lowerBound) tot en met \(self.upperBound)", english: "\(self.lowerBound) up to and including \(self.upperBound)"
-        )
-    }
-}

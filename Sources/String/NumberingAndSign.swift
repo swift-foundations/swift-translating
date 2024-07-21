@@ -1,7 +1,6 @@
 import Foundation
 import Language
 
-
 public func signs(for items: [String]) -> [String] {
 
     var container: [String] = []
@@ -70,8 +69,6 @@ extension [String] {
         return linebreak
     }
 }
-
-
 
 public func signs(for items: [String], with sign: String = "and") -> [String] {
 
