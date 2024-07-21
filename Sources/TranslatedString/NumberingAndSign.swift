@@ -43,19 +43,8 @@ public func numbering(for items: [String]) -> [String] {
     return container.map { "\($0)" }
 }
 
-public protocol HasDateStyle {
-    var timeStyle: DateFormatter.Style { get }
-    var dateStyle: DateFormatter.Style { get }
-    var locale: Locale { get }
-}
 
-public extension HasDateStyle {
-    var timeStyle: DateFormatter.Style { .none }
-    var dateStyle: DateFormatter.Style { .long }
-//    var locale:Locale { .autoupdatingCurrent }
-}
-
-public extension Array where Element == String {
+public extension [String] {
      func numberedAndSigned() -> Self {
         return numberedAndSigned(for: self)
     }
@@ -127,7 +116,7 @@ public enum ListSeparator: String, Hashable {
     case individual
 }
 
-extension Array where Element == String {
+extension [String] {
     public func numberedAndSigned(for int: Int? = nil, with sign: String = "and") -> Self { numberedAndSigned2(for: self, for: int, with: sign) }
     public func numbered(for int: Int? = nil) -> Self { numbered2(for: self) }
 
@@ -141,109 +130,83 @@ extension Array where Element == String {
         case .and:
             return signs(
                 for: self,
-                with: language(
-                    dutch: "en",
-                    english: "and",
-                    french: "et",
-                    german: "und",
-                    italian: "e",
-                    spanish: "y"
-                )
+                with: TranslatedString.and(language)
             )
         case .individual: return signs(for: self, with: "")
         case .none: return self
         case .or:
             return signs(
                 for: self,
-                with: language(
-                    dutch: "of",
-                    english: "or",
-                    french: "ou",
-                    german: "oder",
-                    italian: "o",
-                    spanish: "o"
-                )
+                with: TranslatedString.or(language)
             )
         }
     }
 }
 
-//                string(
-//                for: language,
-//                dutch: {
-//                    switch andOr {
-//                    case .and: return "en"
-//                    case .or: return "of"
-//                    case .individual: return ""
-//                    }
-//                }(),
-//                english: {
-//                    switch andOr {
-//                    case .and: return "and"
-//                    case .or: return "or"
-//                    case .individual: return ""
-//                    }
-//                }()
-//            )
-
-public func memoize<T: Hashable, U>(work: @escaping ((T) -> U, T) -> U) -> (T) -> U {
-    var memo = [T: U]()
-
-    func wrap(x: T) -> U {
-        if let q = memo[x] { return q }
-        let r = work(wrap, x)
-        memo[x] = r
-        return r
-    }
-
-    return wrap
-}
-
-public func memoize<T: Hashable, U>(work: @escaping (T) -> U) -> (T) -> U {
-    var memo = [T: U]()
-
-    return { x in
-        if let q = memo[x] { return q }
-        let r = work(x)
-        memo[x] = r
-        return r
-    }
-}
-
-@dynamicMemberLookup
-public struct CoW<T> {
-    public init(_ value: T) {
-        _storage = Storage(value)
-    }
-    public subscript<V>(dynamicMember keyPath: WritableKeyPath<T, V>) -> V {
-        get { value[keyPath: keyPath] }
-        set { value[keyPath: keyPath] = newValue }
-    }
-    public var value: T {
-        get {
-            return _storage.value
-        }
-        set {
-            if isKnownUniquelyReferenced(&_storage) {
-                _storage.value = value
-            } else {
-                _storage = Storage(newValue)
-            }
+public extension Array where Element == TranslatedString {
+    func joined(separator: Array<String>.Separator) -> TranslatedString {
+        .init { language in
+            self.map{ $0(language) }.joined(separator: separator)(language)
         }
     }
-
-    private var _storage: Storage
-
-    private class Storage {
-        var value: T
-        init(_ value: T) {
-            self.value = value
+    
+    func joined(separator: String) -> TranslatedString {
+        .init { language in
+            self.map{ $0(language) }.joined(separator: separator)
         }
     }
 }
 
-extension CoW: Equatable where T: Equatable {
-    public static func == (lhs: CoW<T>, rhs: CoW<T>) -> Bool {
-        return lhs.value == rhs.value
+public extension [String] {
+    func joined(language: Language, separator: Array<String>.Separator) -> String {
+        self.map { TranslatedString($0) }.joined(separator: separator)(language)
     }
 }
+
+
+
+//        switch self.count {
+//        case ...0: return ""
+//        case 1: return .init(self.first!)
+//        case 2:
+//            switch separator {
+//            case .and:
+//                return .init(
+//                    dutch: "\(self.first ?? "") en \(self[1])",
+//                    english: "\(self.first ?? "") and \(self[1])"
+//                )
+//            case .or:
+//                return .init(
+//                    dutch: "\(self.first ?? "") of \(self[1])",
+//                    english: "\(self.first ?? "") or \(self[1])"
+//                )
+//            case .andOr:
+//                return .init(
+//                    dutch: "\(self.first ?? "") en/of \(self[1])",
+//                    english: "\(self.first ?? "") and/or \(self[1])"
+//                )
+//            }
+//        case 2...:
+//            let last = self.last!
+//            //            let x = self[0...self.count - 1]
+//            let rest = self.dropLast()
+//
+//            switch separator {
+//            case .and: return
+//                    .init(
+//                        dutch: rest.joined(separator: ", ") + ", en " + "\(last)",
+//                        english: rest.joined(separator: ", ") + ", and " + "\(last)"
+//                    )
+//            case .or: return
+//                    .init(
+//                        dutch: rest.joined(separator: ", ") + ", of " + "\(last)",
+//                        english: rest.joined(separator: ", ") + ", or " + "\(last)"
+//                    )
+//            case .andOr: return
+//                    .init(
+//                        dutch: rest.joined(separator: ", ") + ", en/of " + "\(last)",
+//                        english: rest.joined(separator: ", ") + ", and/or " + "\(last)"
+//                    )
+//            }
+//        default: fatalError()
+//        }
