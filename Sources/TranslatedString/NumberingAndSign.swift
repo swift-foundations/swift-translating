@@ -31,45 +31,52 @@ extension String {
     }
 }
 
-func linebreaker(for items: [String]) -> [String] {
-    return items.enumerated().map { (index, item) in
-        index + 1 == items.count ? item : "\(item)\n"
+extension String {
+    static func linebreaker(for string: String, index: Int, count: Int) -> String {
+        index + 1 == count ? string : "\(string)\n"
     }
 }
 
 extension [String] {
-    static func numbering(for items: [String], start: Int = 1) -> Self {
-        return items.enumerated().map { index, item in
-                .numbering(for: item, start: start, index: index)
+    static func linebreaker(for items: [String]) -> [String] {
+        return items.enumerated().map { (index, item) in
+            String.linebreaker(for: item, index: index, count: items.count)
         }
+    }
+    
+    func linebreaker() -> [String] {
+        [String].linebreaker(for: self)
+    }
+    
+}
+
+extension [String] {
+    static func formattedWithNumbers(for items: [String], start: Int = 1) -> Self {
+        return items.enumerated().map { index, item in
+                .formattedWithNumbers(for: item, start: start, index: index)
+        }
+    }
+    
+    public func formattedWithNumbers(start: Int = 1) -> Self {
+        return [String].formattedWithNumbers(for: self, start: start).linebreaker()
     }
 }
 
 extension String {
-    static func numbering(for string: String, start: Int = 1, index: Int) -> Self {
+    static func formattedWithNumbers(for string: String, start: Int = 1, index: Int) -> Self {
         "\(start + index).\t\(string)"
-    }
-}
-
-public extension [String] {
-    func numberedAndSigned() -> Self {
-        return [String].numberedAndSigned(for: self)
     }
 }
 
 extension [String] {
     public static func numberedAndSigned(for items: [String], start: Int = 1, with sign: String = "and") -> Self {
-        let numbered = [String].numbering(for: items, start: start)
+        let numbered = [String].formattedWithNumbers(for: items, start: start)
         let formatted = [String].formattedItems(for: numbered, with: sign)
         return linebreaker(for: formatted)
     }
     
-    public func numbered(start: Int = 1) -> Self {
-        return linebreaker(for: [String].numbering(for: self, start: start))
-    }
-    
-    public func signed(with sign: String = "and") -> Self {
-        return [String].formattedItems(for: self, with: sign)
+    func numberedAndSigned() -> Self {
+        return [String].numberedAndSigned(for: self)
     }
 }
 

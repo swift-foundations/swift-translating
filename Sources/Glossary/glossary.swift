@@ -26,12 +26,6 @@ public extension String {
 
 }
 
-
-
-
-
-
-
 public extension Array where Element == String {
 
     static let voornamenMeisjes: Self = [
