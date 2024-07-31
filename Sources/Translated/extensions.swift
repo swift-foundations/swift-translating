@@ -36,7 +36,8 @@ extension Translated {
 
 extension Translated {
     public func callAsFunction(language: Language) -> A {
-        self.dictionary[language] ?? self.default
+//        self.dictionary[language] ?? self.default
+        fatalError()
     }
 
     public func callAsFunction(with language: Language) -> A {

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "7367FF28-9C34-471A-BDA2-72785AF4B54D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "LocaleTests",
+        "name" : "LocaleTests"
+      }
+    }
+  ],
+  "version" : 1
+}

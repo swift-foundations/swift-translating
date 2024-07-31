@@ -4,15 +4,16 @@
 import PackageDescription
 
 extension [Package.Dependency] {
-    static let `default`: Self = [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
-//        .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
-    ]
+    static var `default`: Self {
+        [
+            .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
+    //        .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
+        ]
+    }
 }
 
 extension String {
     static let languages: Self = "Languages"
-
     static let language: Self = "Language"
     static let dependency: Self = "Language Dependency"
     static let locale: Self = "Locale"
@@ -23,24 +24,25 @@ extension String {
 }
 
 extension Target.Dependency {
-    static let language: Self = .target(name: .language)
-    static let dependency: Self = .target(name: .dependency)
-    static let locale: Self = .target(name: .locale)
-    static let singlePlural: Self = .target(name: .singlePlural)
-    static let string: Self = .target(name: .string)
-    static let translated: Self = .target(name: .translated)
-    static let translatedString: Self = .target(name: .translatedString)
+    static var language: Self { .target(name: .language) }
+    static var dependency: Self { .target(name: .dependency) }
+    static var locale: Self { .target(name: .locale) }
+    static var singlePlural: Self { .target(name: .singlePlural) }
+    static var string: Self { .target(name: .string) }
+    static var translated: Self { .target(name: .translated) }
+    static var translatedString: Self { .target(name: .translatedString) }
 }
 
 extension Target.Dependency {
-    static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
-//    static let toolkit: Self = .product(name: "ToolKit", package: "toolkit")
+    static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
 }
 
 extension [Target.Dependency] {
-    static let shared: Self = [
-//        .toolkit
-    ]
+    static var shared: Self {
+        [
+    //        .toolkit
+        ]
+    }
 }
 
 extension Package {
