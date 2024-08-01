@@ -14,7 +14,7 @@ extension Language {
     }
 }
 
-@available(macOS 13, *)
+@available(macOS 13, iOS 16, *)
 public extension Language {
     init(locale: Locale) {
         
