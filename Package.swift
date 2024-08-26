@@ -59,7 +59,7 @@ extension Package {
             name: "swift-language",
             platforms: [
                 .macOS(.v13),
-                .iOS(.v13)
+                .iOS(.v16)
             ],
             products: [
                 [

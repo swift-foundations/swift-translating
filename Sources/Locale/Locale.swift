@@ -8,14 +8,12 @@ import Language
 public typealias _Language = Language
 import Foundation
 
-@available(macOS 13, iOS 16, *)
 extension Language {
     static var autoupdatingCurrent: _Language {
         .init(locale: Locale.autoupdatingCurrent)
     }
 }
 
-@available(macOS 13, iOS 16, *)
 public extension Language {
     init(locale: Locale) {
         
