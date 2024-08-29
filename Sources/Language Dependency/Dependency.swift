@@ -44,6 +44,7 @@ extension Translated<String> {
         @Dependency(\.language) var language
         return language
     }()) -> String {
-        self(language).slug()
+//        self(language).slug()
+        self.english.slug()
     }
 }
