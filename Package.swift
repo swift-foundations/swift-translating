@@ -7,9 +7,9 @@ extension [Package.Dependency] {
     static var `default`: Self {
         [
             .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
-    //        .package(url: "https://github.com/tenthijeboonkkamp/toolkit.git", branch: "main")
         ]
     }
+    
 }
 
 extension String {
@@ -40,7 +40,7 @@ extension Target.Dependency {
 extension [Target.Dependency] {
     static var shared: Self {
         [
-    //        .toolkit
+            
         ]
     }
 }
