@@ -23,19 +23,19 @@ import TranslatedString
         default: return "Hello World"
         }
     }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
         #expect(translated.slug() == "hello-world")
     }
-    
+
     withDependencies {
         $0.language = .dutch
     } operation: {
         #expect(translated.slug() == "hallo-wereld")
     }
-    
+
     withDependencies {
         $0.language = .french
     } operation: {
@@ -51,7 +51,7 @@ import TranslatedString
         default: return "Test String"
         }
     }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
@@ -64,7 +64,7 @@ import TranslatedString
     let translated = Translated<String> { _ in
         "Hello! World@123 #Test"
     }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
@@ -76,7 +76,7 @@ import TranslatedString
     let translated = Translated<String> { _ in
         "  Hello World  "
     }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
@@ -88,7 +88,7 @@ import TranslatedString
     let translated = Translated<String> { _ in
         "Hello    World    Test"
     }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
@@ -98,7 +98,7 @@ import TranslatedString
 
 @Test func slugWithEmptyString() {
     let translated = Translated<String> { _ in "" }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
@@ -108,7 +108,7 @@ import TranslatedString
 
 @Test func slugWithOnlySpecialCharacters() {
     let translated = Translated<String> { _ in "!@#$%^&*()" }
-    
+
     withDependencies {
         $0.language = .english
     } operation: {
