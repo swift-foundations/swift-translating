@@ -10,7 +10,6 @@ import Language
 import Translated
 import TranslatedString
 
-
 public extension Translated<SinglePlural<String>> {
     static let year: Self = .init(
         dutch: .init(single: "jaar", plural: "jaren"),
@@ -145,7 +144,7 @@ extension Int {
     }
 }
 
-//extension Date.Time {
+// extension Date.Time {
 //    public func description() -> TranslatedString {
 //        switch self {
 //        case let .seconds(int): return int.seconds
@@ -157,4 +156,4 @@ extension Int {
 //        case let .years(int): return int.years
 //        }
 //    }
-//}
+// }

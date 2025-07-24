@@ -1,8 +1,6 @@
 import Foundation
 import Language
 
-import Foundation
-import Language
 import Translated
 
 extension [String] {
@@ -11,7 +9,7 @@ extension [String] {
             String.formatted(item, index: index, count: items.count, with: sign)
         }
     }
-    
+
     public func formattedItems(with sign: String = "and") -> [String] {
         Self.formattedItems(for: self, with: sign)
     }
@@ -43,11 +41,11 @@ extension [String] {
             String.linebreaker(for: item, index: index, count: items.count)
         }
     }
-    
+
     func linebreaker() -> [String] {
         [String].linebreaker(for: self)
     }
-    
+
 }
 
 extension [String] {
@@ -56,7 +54,7 @@ extension [String] {
                 .formattedWithNumbers(for: item, start: start, index: index)
         }
     }
-    
+
     public func formattedWithNumbers(start: Int = 1) -> Self {
         return [String].formattedWithNumbers(for: self, start: start).linebreaker()
     }
@@ -74,7 +72,7 @@ extension [String] {
         let formatted = [String].formattedItems(for: numbered, with: sign)
         return linebreaker(for: formatted)
     }
-    
+
     func numberedAndSigned() -> Self {
         return [String].numberedAndSigned(for: self)
     }
@@ -86,7 +84,7 @@ public extension [TranslatedString] {
             self.map { $0(language) }.joined(separator: separator)(language)
         }
     }
-    
+
     func joined(separator: String) -> TranslatedString {
         .init { language in
             self.map { $0(language) }.joined(separator: separator)
@@ -139,11 +137,10 @@ extension [String] {
     }
 }
 
-
-//import Foundation
-//import Language
+// import Foundation
+// import Language
 //
-//func signs(for items: [String]) -> [String] {
+// func signs(for items: [String]) -> [String] {
 //
 //    var container: [String] = []
 //
@@ -158,9 +155,9 @@ extension [String] {
 //        }
 //    }
 //    return container.reversed().map { "\($0)" }
-//}
+// }
 //
-//func linebreaker(for items: [String]) -> [String] {
+// func linebreaker(for items: [String]) -> [String] {
 //
 //    var container: [String] = []
 //
@@ -173,9 +170,9 @@ extension [String] {
 //    }
 //    return container.map { "\($0)" }
 //
-//}
+// }
 //
-//func numbering(for items: [String]) -> [String] {
+// func numbering(for items: [String]) -> [String] {
 //
 //    var container: [String] = []
 //
@@ -183,25 +180,25 @@ extension [String] {
 //        container.append("\(index + 1).\t\(item)")
 //    }
 //    return container.map { "\($0)" }
-//}
+// }
 //
 //
-//public extension [String] {
+// public extension [String] {
 //     func numberedAndSigned() -> Self {
 //        return numberedAndSigned(for: self)
 //    }
-//}
+// }
 //
-//extension [String] {
+// extension [String] {
 //    public func numberedAndSigned(for items: [String]) -> Self {
 //        let numbered = numbering(for: items.map { $0 })
 //        let signed = signs(for: numbered)
 //        let linebreak = linebreaker(for: signed)
 //        return linebreak
 //    }
-//}
+// }
 //
-//func signs(for items: [String], with sign: String = "and") -> [String] {
+// func signs(for items: [String], with sign: String = "and") -> [String] {
 //
 //    var container: [String] = []
 //
@@ -214,15 +211,15 @@ extension [String] {
 //        }
 //    }
 //    return container.reversed().map { "\($0)" }
-//}
+// }
 //
-//extension Array where Element: Hashable {
+// extension Array where Element: Hashable {
 //    public var set: Set<Element> {
 //        Set<Element>(self)
 //    }
-//}
+// }
 //
-//func numbering(for items: [String], for int: Int? = nil) -> [String] {
+// func numbering(for items: [String], for int: Int? = nil) -> [String] {
 //
 //    var container: [String] = []
 //
@@ -230,35 +227,35 @@ extension [String] {
 //        container.append("\(int != nil ? "\(int!)." : "")\(index + 1).\t\(item)")
 //    }
 //    return container.map { "\($0)" }
-//}
+// }
 //
-//public func numberedAndSigned(for items: [String], with sign: String = "and") -> [String] {
+// public func numberedAndSigned(for items: [String], with sign: String = "and") -> [String] {
 //    let numbered = numbering(for: items.map { $0 })
 //    let signed = signs(for: numbered, with: sign)
 //    let linebreak = linebreaker(for: signed)
 //    return linebreak
-//}
+// }
 //
-//private func numberedAndSigned2(for items: [String], for int: Int? = nil, with sign: String = "and") -> [String] {
+// private func numberedAndSigned2(for items: [String], for int: Int? = nil, with sign: String = "and") -> [String] {
 //    let numbered = numbering(for: items.map { $0 }, for: int)
 //    let signed = signs(for: numbered, with: sign)
 //    let linebreak = linebreaker(for: signed)
 //    return linebreak
-//}
+// }
 //
-//public func numbered2(for items: [String], for int: Int? = nil) -> [String] {
+// public func numbered2(for items: [String], for int: Int? = nil) -> [String] {
 //    let numbered = numbering(for: items.map { $0 }, for: int)
 //    let linebreak = linebreaker(for: numbered)
 //    return linebreak
-//}
+// }
 //
-//public enum ListSeparator: String, Hashable {
+// public enum ListSeparator: String, Hashable {
 //    case and
 //    case or
 //    case individual
-//}
+// }
 //
-//extension [String] {
+// extension [String] {
 //    public func numberedAndSigned(for int: Int? = nil, with sign: String = "and") -> Self { numberedAndSigned2(for: self, for: int, with: sign) }
 //    public func numbered(for int: Int? = nil) -> Self { numbered2(for: self) }
 //
@@ -283,9 +280,9 @@ extension [String] {
 //            )
 //        }
 //    }
-//}
+// }
 //
-//public extension Array where Element == TranslatedString {
+// public extension Array where Element == TranslatedString {
 //    func joined(separator: Array<String>.Separator) -> TranslatedString {
 //        .init { language in
 //            self.map{ $0(language) }.joined(separator: separator)(language)
@@ -297,13 +294,10 @@ extension [String] {
 //            self.map{ $0(language) }.joined(separator: separator)
 //        }
 //    }
-//}
+// }
 //
-//public extension [String] {
+// public extension [String] {
 //    func joined(language: Language, separator: Array<String>.Separator) -> String {
 //        self.map { TranslatedString($0) }.joined(separator: separator)(language)
 //    }
-//}
-
-
-
+// }

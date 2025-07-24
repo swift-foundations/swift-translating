@@ -92,7 +92,7 @@ public extension TranslatedString {
     var questionmark: Self {
         self.map(\.questionmark)
     }
-    
+
     var isEmpty: Bool {
         self.english.isEmpty && self.dutch.isEmpty
     }
@@ -419,4 +419,3 @@ public extension TranslatedString {
 public extension TranslatedString {
     static let empty: Self = .init("")
 }
-

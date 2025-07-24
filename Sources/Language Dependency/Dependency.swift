@@ -41,11 +41,12 @@ extension Translated: Comparable where A: Comparable {
 }
 
 extension Translated<String> {
-    public func slug(language: Language = {
-        @Dependency(\.language) var language
-        return language
-    }()) -> String {
-//        self(language).slug()
-        self.english.slug()
+    public func slug(
+        language: Language = {
+            @Dependency(\.language) var language
+            return language
+        }()
+    ) -> String {
+        self(language).slug()
     }
 }

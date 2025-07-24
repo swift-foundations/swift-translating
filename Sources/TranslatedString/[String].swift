@@ -9,14 +9,14 @@ import Foundation
 import Language
 
 public extension [String] {
-    
+
     static let alphabet: Self = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ]
-    
-    enum Separator : Sendable{
+
+    enum Separator: Sendable {
         case and
         case or
         case andOr
-        
+
         public static let orSeparator: Self = .or
     }
 }
@@ -27,11 +27,11 @@ public extension [String] {
             self.joined(separator: separator(language))
         }
     }
-    
+
 }
 
 extension TranslatedString {
-    public init(_ separator: [String].Separator){
+    public init(_ separator: [String].Separator) {
         fatalError()
     }
 }
@@ -54,4 +54,3 @@ public extension [String] {
         }
     }
 }
-

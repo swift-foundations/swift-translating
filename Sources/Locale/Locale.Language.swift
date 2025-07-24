@@ -7,9 +7,6 @@
 
 import Foundation
 
-
-
-
 public extension Locale {
     // Afrikaans
     static let af: Self = .init(identifier: "af")
@@ -18,7 +15,7 @@ public extension Locale {
     static let afrikaansNamibia: Self = .af_NA
     static let af_ZA: Self = .init(identifier: "af_ZA")
     static let afrikaansSouthAfrica: Self = .af_ZA
-    
+
     // Arabic
     static let ar: Self = .init(identifier: "ar")
     static let arabic: Self = .ar
@@ -78,19 +75,19 @@ public extension Locale {
     static let arabicTunisia: Self = .ar_TN
     static let ar_YE: Self = .init(identifier: "ar_YE")
     static let arabicYemen: Self = .ar_YE
-    
+
     // Akan
     static let ak: Self = .init(identifier: "ak")
     static let akan: Self = .ak
     static let ak_GH: Self = .init(identifier: "ak_GH")
     static let akanGhana: Self = .ak_GH
-    
+
     // Amharic
     static let am: Self = .init(identifier: "am")
     static let amharic: Self = .am
     static let am_ET: Self = .init(identifier: "am_ET")
     static let amharicEthiopia: Self = .am_ET
-    
+
     // Azerbaijani
     static let az: Self = .init(identifier: "az")
     static let azerbaijani: Self = .az
@@ -102,19 +99,19 @@ public extension Locale {
     static let azerbaijaniLatin: Self = .az_Latn
     static let az_Latn_AZ: Self = .init(identifier: "az_Latn_AZ")
     static let azerbaijaniLatinAzerbaijan: Self = .az_Latn_AZ
-    
+
     // Belarusian
     static let be: Self = .init(identifier: "be")
     static let belarusian: Self = .be
     static let be_BY: Self = .init(identifier: "be_BY")
     static let belarusianBelarus: Self = .be_BY
-    
+
     // Bulgarian
     static let bg: Self = .init(identifier: "bg")
     static let bulgarian: Self = .bg
     static let bg_BG: Self = .init(identifier: "bg_BG")
     static let bulgarianBulgaria: Self = .bg_BG
-    
+
     // Bengali
     static let bn: Self = .init(identifier: "bn")
     static let bengali: Self = .bn
@@ -122,7 +119,7 @@ public extension Locale {
     static let bengaliBangladesh: Self = .bn_BD
     static let bn_IN: Self = .init(identifier: "bn_IN")
     static let bengaliIndia: Self = .bn_IN
-    
+
     // Bosnian
     static let bs: Self = .init(identifier: "bs")
     static let bosnian: Self = .bs
@@ -134,7 +131,7 @@ public extension Locale {
     static let bosnianLatin: Self = .bs_Latn
     static let bs_Latn_BA: Self = .init(identifier: "bs_Latn_BA")
     static let bosnianLatinBosnia: Self = .bs_Latn_BA
-    
+
     // Catalan
     static let ca: Self = .init(identifier: "ca")
     static let catalan: Self = .ca
@@ -146,31 +143,31 @@ public extension Locale {
     static let catalanFrance: Self = .ca_FR
     static let ca_IT: Self = .init(identifier: "ca_IT")
     static let catalanItaly: Self = .ca_IT
-    
+
     // Chechen
     static let ce: Self = .init(identifier: "ce")
     static let chechen: Self = .ce
     static let ce_RU: Self = .init(identifier: "ce_RU")
     static let chechenRussia: Self = .ce_RU
-    
+
     // Czech
     static let cs: Self = .init(identifier: "cs")
     static let czech: Self = .cs
     static let cs_CZ: Self = .init(identifier: "cs_CZ")
     static let czechCzechia: Self = .cs_CZ
-    
+
     // Chuvash
     static let cv: Self = .init(identifier: "cv")
     static let chuvash: Self = .cv
     static let cv_RU: Self = .init(identifier: "cv_RU")
     static let chuvashRussia: Self = .cv_RU
-    
+
     // Welsh
     static let cy: Self = .init(identifier: "cy")
     static let welsh: Self = .cy
     static let cy_GB: Self = .init(identifier: "cy_GB")
     static let welshUK: Self = .cy_GB
-    
+
     // Danish
     static let da: Self = .init(identifier: "da")
     static let danish: Self = .da
@@ -178,7 +175,7 @@ public extension Locale {
     static let danishDenmark: Self = .da_DK
     static let da_GL: Self = .init(identifier: "da_GL")
     static let danishGreenland: Self = .da_GL
-    
+
     // German
     static let de: Self = .init(identifier: "de")
     static let german: Self = .de
@@ -196,13 +193,13 @@ public extension Locale {
     static let germanLiechtenstein: Self = .de_LI
     static let de_LU: Self = .init(identifier: "de_LU")
     static let germanLuxembourg: Self = .de_LU
-    
+
     // Dzongkha
     static let dz: Self = .init(identifier: "dz")
     static let dzongkha: Self = .dz
     static let dz_BT: Self = .init(identifier: "dz_BT")
     static let dzongkhaBhutan: Self = .dz_BT
-    
+
     // Greek
     static let el: Self = .init(identifier: "el")
     static let greek: Self = .el
@@ -210,7 +207,7 @@ public extension Locale {
     static let greekCyprus: Self = .el_CY
     static let el_GR: Self = .init(identifier: "el_GR")
     static let greekGreece: Self = .el_GR
-    
+
     // English
     static let en: Self = .init(identifier: "en")
     static let english: Self = .en
@@ -486,7 +483,7 @@ public extension Locale {
     static let englishZambia: Self = .en_ZM
     static let en_ZW: Self = .init(identifier: "en_ZW")
     static let englishZimbabwe: Self = .en_ZW
-    
+
     // Spanish
     static let es: Self = .init(identifier: "es")
     static let spanish: Self = .es
@@ -586,19 +583,19 @@ public extension Locale {
     static let spanishBritishVirginIslands: Self = .es_VG
     static let es_VI: Self = .init(identifier: "es_VI")
     static let spanishUSVirginIslands: Self = .es_VI
-    
+
     // Estonian
     static let et: Self = .init(identifier: "et")
     static let estonian: Self = .et
     static let et_EE: Self = .init(identifier: "et_EE")
     static let estonianEstonia: Self = .et_EE
-    
+
     // Basque
     static let eu: Self = .init(identifier: "eu")
     static let basque: Self = .eu
     static let eu_ES: Self = .init(identifier: "eu_ES")
     static let basqueSpain: Self = .eu_ES
-    
+
     // Persian
     static let fa: Self = .init(identifier: "fa")
     static let persian: Self = .fa
@@ -606,13 +603,13 @@ public extension Locale {
     static let persianAfghanistan: Self = .fa_AF
     static let fa_IR: Self = .init(identifier: "fa_IR")
     static let persianIran: Self = .fa_IR
-    
+
     // Finnish
     static let fi: Self = .init(identifier: "fi")
     static let finnish: Self = .fi
     static let fi_FI: Self = .init(identifier: "fi_FI")
     static let finnishFinland: Self = .fi_FI
-    
+
     // French
     static let fr: Self = .init(identifier: "fr")
     static let french: Self = .fr
@@ -708,25 +705,25 @@ public extension Locale {
     static let frenchWallisAndFutuna: Self = .fr_WF
     static let fr_YT: Self = .init(identifier: "fr_YT")
     static let frenchMayotte: Self = .fr_YT
-    
+
     // Irish
     static let ga: Self = .init(identifier: "ga")
     static let irish: Self = .ga
     static let ga_IE: Self = .init(identifier: "ga_IE")
     static let irishIreland: Self = .ga_IE
-    
+
     // Galician
     static let gl: Self = .init(identifier: "gl")
     static let galician: Self = .gl
     static let gl_ES: Self = .init(identifier: "gl_ES")
     static let galicianSpain: Self = .gl_ES
-    
+
     // Gujarati
     static let gu: Self = .init(identifier: "gu")
     static let gujarati: Self = .gu
     static let gu_IN: Self = .init(identifier: "gu_IN")
     static let gujaratiIndia: Self = .gu_IN
-    
+
     // Hausa
     static let ha: Self = .init(identifier: "ha")
     static let hausa: Self = .ha
@@ -736,19 +733,19 @@ public extension Locale {
     static let hausaNiger: Self = .ha_NE
     static let ha_NG: Self = .init(identifier: "ha_NG")
     static let hausaNigeria: Self = .ha_NG
-    
+
     // Hebrew
     static let he: Self = .init(identifier: "he")
     static let hebrew: Self = .he
     static let he_IL: Self = .init(identifier: "he_IL")
     static let hebrewIsrael: Self = .he_IL
-    
+
     // Hindi
     static let hi: Self = .init(identifier: "hi")
     static let hindi: Self = .hi
     static let hi_IN: Self = .init(identifier: "hi_IN")
     static let hindiIndia: Self = .hi_IN
-    
+
     // Croatian
     static let hr: Self = .init(identifier: "hr")
     static let croatian: Self = .hr
@@ -756,31 +753,31 @@ public extension Locale {
     static let croatianBosniaAndHerzegovina: Self = .hr_BA
     static let hr_HR: Self = .init(identifier: "hr_HR")
     static let croatianCroatia: Self = .hr_HR
-    
+
     // Hungarian
     static let hu: Self = .init(identifier: "hu")
     static let hungarian: Self = .hu
     static let hu_HU: Self = .init(identifier: "hu_HU")
     static let hungarianHungary: Self = .hu_HU
-    
+
     // Armenian
     static let hy: Self = .init(identifier: "hy")
     static let armenian: Self = .hy
     static let hy_AM: Self = .init(identifier: "hy_AM")
     static let armenianArmenia: Self = .hy_AM
-    
+
     // Indonesian
     static let id: Self = .init(identifier: "id")
     static let indonesian: Self = .id
     static let id_ID: Self = .init(identifier: "id_ID")
     static let indonesianIndonesia: Self = .id_ID
-    
+
     // Icelandic
     static let `is`: Self = .init(identifier: "is")
     static let icelandic: Self = .`is`
     static let is_IS: Self = .init(identifier: "is_IS")
     static let icelandicIceland: Self = .is_IS
-    
+
     // Italian
     static let it: Self = .init(identifier: "it")
     static let italian: Self = .it
@@ -792,37 +789,37 @@ public extension Locale {
     static let italianSanMarino: Self = .it_SM
     static let it_VA: Self = .init(identifier: "it_VA")
     static let italianVaticanCity: Self = .it_VA
-    
+
     // Japanese
     static let ja: Self = .init(identifier: "ja")
     static let japanese: Self = .ja
     static let ja_JP: Self = .init(identifier: "ja_JP")
     static let japaneseJapan: Self = .ja_JP
-    
+
     // Georgian
     static let ka: Self = .init(identifier: "ka")
     static let georgian: Self = .ka
     static let ka_GE: Self = .init(identifier: "ka_GE")
     static let georgianGeorgia: Self = .ka_GE
-    
+
     // Kazakh
     static let kk: Self = .init(identifier: "kk")
     static let kazakh: Self = .kk
     static let kk_KZ: Self = .init(identifier: "kk_KZ")
     static let kazakhKazakhstan: Self = .kk_KZ
-    
+
     // Khmer
     static let km: Self = .init(identifier: "km")
     static let khmer: Self = .km
     static let km_KH: Self = .init(identifier: "km_KH")
     static let khmerCambodia: Self = .km_KH
-    
+
     // Kannada
     static let kn: Self = .init(identifier: "kn")
     static let kannada: Self = .kn
     static let kn_IN: Self = .init(identifier: "kn_IN")
     static let kannadaIndia: Self = .kn_IN
-    
+
     // Korean
     static let ko: Self = .init(identifier: "ko")
     static let korean: Self = .ko
@@ -830,55 +827,55 @@ public extension Locale {
     static let koreanNorthKorea: Self = .ko_KP
     static let ko_KR: Self = .init(identifier: "ko_KR")
     static let koreanSouthKorea: Self = .ko_KR
-    
+
     // Kyrgyz
     static let ky: Self = .init(identifier: "ky")
     static let kyrgyz: Self = .ky
     static let ky_KG: Self = .init(identifier: "ky_KG")
     static let kyrgyzKyrgyzstan: Self = .ky_KG
-    
+
     // Lao
     static let lo: Self = .init(identifier: "lo")
     static let lao: Self = .lo
     static let lo_LA: Self = .init(identifier: "lo_LA")
     static let laoLaos: Self = .lo_LA
-    
+
     // Lithuanian
     static let lt: Self = .init(identifier: "lt")
     static let lithuanian: Self = .lt
     static let lt_LT: Self = .init(identifier: "lt_LT")
     static let lithuanianLithuania: Self = .lt_LT
-    
+
     // Latvian
     static let lv: Self = .init(identifier: "lv")
     static let latvian: Self = .lv
     static let lv_LV: Self = .init(identifier: "lv_LV")
     static let latvianLatvia: Self = .lv_LV
-    
+
     // Macedonian
     static let mk: Self = .init(identifier: "mk")
     static let macedonian: Self = .mk
     static let mk_MK: Self = .init(identifier: "mk_MK")
     static let macedonianMacedonia: Self = .mk_MK
-    
+
     // Malayalam
     static let ml: Self = .init(identifier: "ml")
     static let malayalam: Self = .ml
     static let ml_IN: Self = .init(identifier: "ml_IN")
     static let malayalamIndia: Self = .ml_IN
-    
+
     // Mongolian
     static let mn: Self = .init(identifier: "mn")
     static let mongolian: Self = .mn
     static let mn_MN: Self = .init(identifier: "mn_MN")
     static let mongolianMongolia: Self = .mn_MN
-    
+
     // Marathi
     static let mr: Self = .init(identifier: "mr")
     static let marathi: Self = .mr
     static let mr_IN: Self = .init(identifier: "mr_IN")
     static let marathiIndia: Self = .mr_IN
-    
+
     // Malay
     static let ms: Self = .init(identifier: "ms")
     static let malay: Self = .ms
@@ -890,19 +887,19 @@ public extension Locale {
     static let malayMalaysia: Self = .ms_MY
     static let ms_SG: Self = .init(identifier: "ms_SG")
     static let malaySingapore: Self = .ms_SG
-    
+
     // Maltese
     static let mt: Self = .init(identifier: "mt")
     static let maltese: Self = .mt
     static let mt_MT: Self = .init(identifier: "mt_MT")
     static let malteseMalta: Self = .mt_MT
-    
+
     // Burmese
     static let my: Self = .init(identifier: "my")
     static let burmese: Self = .my
     static let my_MM: Self = .init(identifier: "my_MM")
     static let burmeseMyanmar: Self = .my_MM
-    
+
     // Norwegian Bokmål
     static let nb: Self = .init(identifier: "nb")
     static let norwegianBokmål: Self = .nb
@@ -910,13 +907,13 @@ public extension Locale {
     static let norwegianBokmålNorway: Self = .nb_NO
     static let nb_SJ: Self = .init(identifier: "nb_SJ")
     static let norwegianBokmålSvalbardAndJanMayen: Self = .nb_SJ
-    
+
     // Northern Ndebele
     static let nd: Self = .init(identifier: "nd")
     static let northernNdebele: Self = .nd
     static let nd_ZW: Self = .init(identifier: "nd_ZW")
     static let northernNdebeleZimbabwe: Self = .nd_ZW
-    
+
     // Nepali
     static let ne: Self = .init(identifier: "ne")
     static let nepali: Self = .ne
@@ -924,7 +921,7 @@ public extension Locale {
     static let nepaliIndia: Self = .ne_IN
     static let ne_NP: Self = .init(identifier: "ne_NP")
     static let nepaliNepal: Self = .ne_NP
-    
+
     // Dutch
     static let nl: Self = .init(identifier: "nl")
     static let dutch: Self = .nl
@@ -942,17 +939,17 @@ public extension Locale {
     static let dutchSuriname: Self = .nl_SR
     static let nl_SX: Self = .init(identifier: "nl_SX")
     static let dutchSintMaarten: Self = .nl_SX
-    
+
     // Norwegian Nynorsk
     static let nn: Self = .init(identifier: "nn")
     static let norwegianNynorsk: Self = .nn
     static let nn_NO: Self = .init(identifier: "nn_NO")
     static let norwegianNynorskNorway: Self = .nn_NO
-    
+
     // Norwegian
     static let no: Self = .init(identifier: "no")
     static let norwegian: Self = .no
-    
+
     // Oromo
     static let om: Self = .init(identifier: "om")
     static let oromo: Self = .om
@@ -960,13 +957,13 @@ public extension Locale {
     static let oromoEthiopia: Self = .om_ET
     static let om_KE: Self = .init(identifier: "om_KE")
     static let oromoKenya: Self = .om_KE
-    
+
     // Oriya
     static let or: Self = .init(identifier: "or")
     static let oriya: Self = .or
     static let or_IN: Self = .init(identifier: "or_IN")
     static let oriyaIndia: Self = .or_IN
-    
+
     // Punjabi
     static let pa: Self = .init(identifier: "pa")
     static let punjabi: Self = .pa
@@ -978,13 +975,13 @@ public extension Locale {
     static let punjabiGurmukhi: Self = .pa_Guru
     static let pa_Guru_IN: Self = .init(identifier: "pa_Guru_IN")
     static let punjabiGurmukhiIndia: Self = .pa_Guru_IN
-    
+
     // Polish
     static let pl: Self = .init(identifier: "pl")
     static let polish: Self = .pl
     static let pl_PL: Self = .init(identifier: "pl_PL")
     static let polishPoland: Self = .pl_PL
-    
+
     // Portuguese
     static let pt: Self = .init(identifier: "pt")
     static let portuguese: Self = .pt
@@ -1014,7 +1011,7 @@ public extension Locale {
     static let portugueseSaoTomeAndPrincipe: Self = .pt_ST
     static let pt_TL: Self = .init(identifier: "pt_TL")
     static let portugueseEastTimor: Self = .pt_TL
-    
+
     // Quechua
     static let qu: Self = .init(identifier: "qu")
     static let quechua: Self = .qu
@@ -1024,7 +1021,7 @@ public extension Locale {
     static let quechuaEcuador: Self = .qu_EC
     static let qu_PE: Self = .init(identifier: "qu_PE")
     static let quechuaPeru: Self = .qu_PE
-    
+
     // Romanian
     static let ro: Self = .init(identifier: "ro")
     static let romanian: Self = .ro
@@ -1032,7 +1029,7 @@ public extension Locale {
     static let romanianMoldova: Self = .ro_MD
     static let ro_RO: Self = .init(identifier: "ro_RO")
     static let romanianRomania: Self = .ro_RO
-    
+
     // Russian
     static let ru: Self = .init(identifier: "ru")
     static let russian: Self = .ru
@@ -1048,25 +1045,25 @@ public extension Locale {
     static let russianRussia: Self = .ru_RU
     static let ru_UA: Self = .init(identifier: "ru_UA")
     static let russianUkraine: Self = .ru_UA
-    
+
     // Kinyarwanda
     static let rw: Self = .init(identifier: "rw")
     static let kinyarwanda: Self = .rw
     static let rw_RW: Self = .init(identifier: "rw_RW")
     static let kinyarwandaRwanda: Self = .rw_RW
-    
+
     // Sanskrit
     static let sa: Self = .init(identifier: "sa")
     static let sanskrit: Self = .sa
     static let sa_IN: Self = .init(identifier: "sa_IN")
     static let sanskritIndia: Self = .sa_IN
-    
+
     // Sindhi
     static let sd: Self = .init(identifier: "sd")
     static let sindhi: Self = .sd
     static let sd_PK: Self = .init(identifier: "sd_PK")
     static let sindhiPakistan: Self = .sd_PK
-    
+
     // Northern Sami
     static let se: Self = .init(identifier: "se")
     static let northernSami: Self = .se
@@ -1076,25 +1073,25 @@ public extension Locale {
     static let northernSamiNorway: Self = .se_NO
     static let se_SE: Self = .init(identifier: "se_SE")
     static let northernSamiSweden: Self = .se_SE
-    
+
     // Sinhala
     static let si: Self = .init(identifier: "si")
     static let sinhala: Self = .si
     static let si_LK: Self = .init(identifier: "si_LK")
     static let sinhalaSriLanka: Self = .si_LK
-    
+
     // Slovak
     static let sk: Self = .init(identifier: "sk")
     static let slovak: Self = .sk
     static let sk_SK: Self = .init(identifier: "sk_SK")
     static let slovakSlovakia: Self = .sk_SK
-    
+
     // Slovenian
     static let sl: Self = .init(identifier: "sl")
     static let slovenian: Self = .sl
     static let sl_SI: Self = .init(identifier: "sl_SI")
     static let slovenianSlovenia: Self = .sl_SI
-    
+
     // Somali
     static let so: Self = .init(identifier: "so")
     static let somali: Self = .so
@@ -1106,7 +1103,7 @@ public extension Locale {
     static let somaliKenya: Self = .so_KE
     static let so_SO: Self = .init(identifier: "so_SO")
     static let somaliSomalia: Self = .so_SO
-    
+
     // Albanian
     static let sq: Self = .init(identifier: "sq")
     static let albanian: Self = .sq
@@ -1116,7 +1113,7 @@ public extension Locale {
     static let albanianNorthMacedonia: Self = .sq_MK
     static let sq_XK: Self = .init(identifier: "sq_XK")
     static let albanianKosovo: Self = .sq_XK
-    
+
     // Serbian
     static let sr: Self = .init(identifier: "sr")
     static let serbian: Self = .sr
@@ -1142,7 +1139,7 @@ public extension Locale {
     static let serbianLatinSerbia: Self = .sr_Latn_RS
     static let sr_Latn_XK: Self = .init(identifier: "sr_Latn_XK")
     static let serbianLatinKosovo: Self = .sr_Latn_XK
-    
+
     // Swati
     static let ss: Self = .init(identifier: "ss")
     static let swati: Self = .ss
@@ -1150,7 +1147,7 @@ public extension Locale {
     static let swatiEswatini: Self = .ss_SZ
     static let ss_ZA: Self = .init(identifier: "ss_ZA")
     static let swatiSouthAfrica: Self = .ss_ZA
-    
+
     // Sotho
     static let st: Self = .init(identifier: "st")
     static let sotho: Self = .st
@@ -1158,7 +1155,7 @@ public extension Locale {
     static let sothoLesotho: Self = .st_LS
     static let st_ZA: Self = .init(identifier: "st_ZA")
     static let sothoSouthAfrica: Self = .st_ZA
-    
+
     // Swedish
     static let sv: Self = .init(identifier: "sv")
     static let swedish: Self = .sv
@@ -1168,7 +1165,7 @@ public extension Locale {
     static let swedishFinland: Self = .sv_FI
     static let sv_SE: Self = .init(identifier: "sv_SE")
     static let swedishSweden: Self = .sv_SE
-    
+
     // Swahili
     static let sw: Self = .init(identifier: "sw")
     static let swahili: Self = .sw
@@ -1180,7 +1177,7 @@ public extension Locale {
     static let swahiliTanzania: Self = .sw_TZ
     static let sw_UG: Self = .init(identifier: "sw_UG")
     static let swahiliUganda: Self = .sw_UG
-    
+
     // Tamil
     static let ta: Self = .init(identifier: "ta")
     static let tamil: Self = .ta
@@ -1192,25 +1189,25 @@ public extension Locale {
     static let tamilMalaysia: Self = .ta_MY
     static let ta_SG: Self = .init(identifier: "ta_SG")
     static let tamilSingapore: Self = .ta_SG
-    
+
     // Telugu
     static let te: Self = .init(identifier: "te")
     static let telugu: Self = .te
     static let te_IN: Self = .init(identifier: "te_IN")
     static let teluguIndia: Self = .te_IN
-    
+
     // Tajik
     static let tg: Self = .init(identifier: "tg")
     static let tajik: Self = .tg
     static let tg_TJ: Self = .init(identifier: "tg_TJ")
     static let tajikTajikistan: Self = .tg_TJ
-    
+
     // Thai
     static let th: Self = .init(identifier: "th")
     static let thai: Self = .th
     static let th_TH: Self = .init(identifier: "th_TH")
     static let thaiThailand: Self = .th_TH
-    
+
     // Tigrinya
     static let ti: Self = .init(identifier: "ti")
     static let tigrinya: Self = .ti
@@ -1218,19 +1215,19 @@ public extension Locale {
     static let tigrinyaEritrea: Self = .ti_ER
     static let ti_ET: Self = .init(identifier: "ti_ET")
     static let tigrinyaEthiopia: Self = .ti_ET
-    
+
     // Turkmen
     static let tk: Self = .init(identifier: "tk")
     static let turkmen: Self = .tk
     static let tk_TM: Self = .init(identifier: "tk_TM")
     static let turkmenTurkmenistan: Self = .tk_TM
-    
+
     // Tongan
     static let to: Self = .init(identifier: "to")
     static let tongan: Self = .to
     static let to_TO: Self = .init(identifier: "to_TO")
     static let tonganTonga: Self = .to_TO
-    
+
     // Turkish
     static let tr: Self = .init(identifier: "tr")
     static let turkish: Self = .tr
@@ -1238,25 +1235,25 @@ public extension Locale {
     static let turkishCyprus: Self = .tr_CY
     static let tr_TR: Self = .init(identifier: "tr_TR")
     static let turkishTurkey: Self = .tr_TR
-    
+
     // Tatar
     static let tt: Self = .init(identifier: "tt")
     static let tatar: Self = .tt
     static let tt_RU: Self = .init(identifier: "tt_RU")
     static let tatarRussia: Self = .tt_RU
-    
+
     // Uyghur
     static let ug: Self = .init(identifier: "ug")
     static let uyghur: Self = .ug
     static let ug_CN: Self = .init(identifier: "ug_CN")
     static let uyghurChina: Self = .ug_CN
-    
+
     // Ukrainian
     static let uk: Self = .init(identifier: "uk")
     static let ukrainian: Self = .uk
     static let uk_UA: Self = .init(identifier: "uk_UA")
     static let ukrainianUkraine: Self = .uk_UA
-    
+
     // Urdu
     static let ur: Self = .init(identifier: "ur")
     static let urdu: Self = .ur
@@ -1264,7 +1261,7 @@ public extension Locale {
     static let urduIndia: Self = .ur_IN
     static let ur_PK: Self = .init(identifier: "ur_PK")
     static let urduPakistan: Self = .ur_PK
-    
+
     // Uzbek
     static let uz: Self = .init(identifier: "uz")
     static let uzbek: Self = .uz
@@ -1280,25 +1277,25 @@ public extension Locale {
     static let uzbekLatin: Self = .uz_Latn
     static let uz_Latn_UZ: Self = .init(identifier: "uz_Latn_UZ")
     static let uzbekLatinUzbekistan: Self = .uz_Latn_UZ
-    
+
     // Vietnamese
     static let vi: Self = .init(identifier: "vi")
     static let vietnamese: Self = .vi
     static let vi_VN: Self = .init(identifier: "vi_VN")
     static let vietnameseVietnam: Self = .vi_VN
-    
+
     // Wolof
     static let wo: Self = .init(identifier: "wo")
     static let wolof: Self = .wo
     static let wo_SN: Self = .init(identifier: "wo_SN")
     static let wolofSenegal: Self = .wo_SN
-    
+
     // Xhosa
     static let xh: Self = .init(identifier: "xh")
     static let xhosa: Self = .xh
     static let xh_ZA: Self = .init(identifier: "xh_ZA")
     static let xhosaSouthAfrica: Self = .xh_ZA
-    
+
     // Yoruba
     static let yo: Self = .init(identifier: "yo")
     static let yoruba: Self = .yo
@@ -1306,7 +1303,7 @@ public extension Locale {
     static let yorubaBenin: Self = .yo_BJ
     static let yo_NG: Self = .init(identifier: "yo_NG")
     static let yorubaNigeria: Self = .yo_NG
-    
+
     // Chinese
     static let zh: Self = .init(identifier: "zh")
     static let chinese: Self = .zh
@@ -1328,7 +1325,7 @@ public extension Locale {
     static let chineseTraditionalMacau: Self = .zh_Hant_MO
     static let zh_Hant_TW: Self = .init(identifier: "zh_Hant_TW")
     static let chineseTraditionalTaiwan: Self = .zh_Hant_TW
-    
+
     // Zulu
     static let zu: Self = .init(identifier: "zu")
     static let zulu: Self = .zu

@@ -8,7 +8,7 @@
 import Foundation
 
 extension TranslatedString {
-    public init<Bound>(_ closedRange: ClosedRange<Bound>) where Bound:CustomStringConvertible {
+    public init<Bound>(_ closedRange: ClosedRange<Bound>) where Bound: CustomStringConvertible {
         self = .init(
             abkhazian: "\(closedRange.lowerBound) начиная с \(closedRange.upperBound)",
             afar: "\(closedRange.lowerBound) kaxxa kee ta \(closedRange.upperBound)",
@@ -193,15 +193,7 @@ extension TranslatedString {
     }
 }
 
-
-
-
-
-
-
-
-
-public extension ClosedRange where Bound:CustomStringConvertible {
+public extension ClosedRange where Bound: CustomStringConvertible {
     func description() -> TranslatedString {
         .init(self)
     }

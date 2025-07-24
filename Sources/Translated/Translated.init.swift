@@ -5,11 +5,9 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
+import Dependencies
 import Foundation
 import Language
-import Dependencies
-
-
 
 extension Translated {
     public init(
@@ -24,7 +22,7 @@ extension Translated {
         _ closure: (Language) -> A
     ) {
         @Dependency(\.languages) var languages
-        
+
         self = .init(
             default: closure(.english),
             dictionary: Dictionary(uniqueKeysWithValues: languages.map { ($0, closure($0)) })
@@ -216,7 +214,7 @@ extension Translated {
         zulu: A? = nil
     ) {
         @Dependency(\.languages) var languages
-        
+
         self = .init(
             default: `default`,
             dictionary: [

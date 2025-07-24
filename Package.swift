@@ -3,125 +3,87 @@
 
 import PackageDescription
 
-extension [Package.Dependency] {
-    static var `default`: Self {
-        [
-            .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5"),
-        ]
-    }
-}
-
 extension String {
-    static let languages: Self = "Languages"
+    static let translating: Self = "Translating"
     static let language: Self = "Language"
-    static let dependency: Self = "Language Dependency"
+    static let languageDependency: Self = "Language Dependency"
     static let locale: Self = "Locale"
     static let singlePlural: Self = "SinglePlural"
     static let string: Self = "String"
     static let translated: Self = "Translated"
     static let translatedString: Self = "TranslatedString"
-    static let date: Self = "Date Formatted Localized"
+    static let dateFormattedLocalized: Self = "Date Formatted Localized"
 }
 
 extension Target.Dependency {
+    static var translating: Self { .target(name: .translating) }
     static var language: Self { .target(name: .language) }
-    static var dependency: Self { .target(name: .dependency) }
+    static var languageDependency: Self { .target(name: .languageDependency) }
     static var locale: Self { .target(name: .locale) }
     static var singlePlural: Self { .target(name: .singlePlural) }
     static var string: Self { .target(name: .string) }
     static var translated: Self { .target(name: .translated) }
     static var translatedString: Self { .target(name: .translatedString) }
-    static var date: Self { .target(name: .date) }
+    static var dateFormattedLocalized: Self { .target(name: .dateFormattedLocalized) }
 }
 
 extension Target.Dependency {
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
 }
 
-extension [Target.Dependency] {
-    static var shared: Self {
-        [
-            
-        ]
-    }
-}
-
-extension Package {
-    static func language(
-        targets: [(
-            name: String,
-            dependencies: [Target.Dependency]
-        )]
-    ) -> Package {
-
-        let names = targets.map(\.name)
-
-        return Package(
-            name: "swift-language",
-            platforms: [
-                .macOS(.v13),
-                .iOS(.v16),
-                .macCatalyst(.v16)
-            ],
-            products: [
-                [
-                    .library(
-                        name: .languages,
-                        targets: [.languages]
-                    )
-                ],
-                names.map { target in
-                    .library(
-                        name: "\(target)",
-                        targets: ["\(target)"]
-                    )
-                }
-            ].flatMap { $0 },
-            dependencies: .default,
-            targets: [
-                [
-                    .target(
-                        name: "Languages",
-                        dependencies: [
-                            .language,
-                            .dependency,
-                            .locale,
-                            .singlePlural,
-                            .string,
-                            .translated,
-                            .translatedString,
-                            .date
-                        ]
-                    )
-                ],
-
-                targets.map { document in
-                    Target.target(
-                        name: "\(document.name)",
-                        dependencies: .shared + [] + document.dependencies
-                    )
-                },
-                targets.map { document in
-                    Target.testTarget(
-                        name: "\(document.name)Tests",
-                        dependencies: [.init(stringLiteral: document.name)]
-                    )
-                }
-            ].flatMap { $0 }
-        )
-    }
-}
-
-let package = Package.language(
+let package = Package(
+    name: "swift-translating",
+    platforms: [
+        .iOS(.v16),
+        .macOS(.v13),
+        .macCatalyst(.v16),
+        .tvOS(.v16),
+        .watchOS(.v9)
+    ],
+    products: [
+        .library(
+            name: .translating,
+            targets: [.translating]
+        ),
+        .library(name: .language, targets: [.language]),
+        .library(name: .languageDependency, targets: [.languageDependency]),
+        .library(name: .locale, targets: [.locale]),
+        .library(name: .singlePlural, targets: [.singlePlural]),
+        .library(name: .string, targets: [.string]),
+        .library(name: .translated, targets: [.translated]),
+        .library(name: .translatedString, targets: [.translatedString]),
+        .library(name: .dateFormattedLocalized, targets: [.dateFormattedLocalized])
+    ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
+    ],
     targets: [
-        (
-            name: .language,
+        .target(
+            name: .translating,
             dependencies: [
-
+                .language,
+                .languageDependency,
+                .locale,
+                .singlePlural,
+                .string,
+                .translated,
+                .translatedString,
+                .dateFormattedLocalized
             ]
         ),
-        (
-            name: .dependency,
+        .testTarget(
+            name: .translating.tests,
+            dependencies: [
+                .translating
+            ]
+        ),
+        .target(name: .language),
+        .testTarget(
+            name: .language.tests,
+            dependencies: [.language]
+        ),
+        .target(
+            name: .languageDependency,
             dependencies: [
                 .language,
                 .string,
@@ -130,13 +92,19 @@ let package = Package.language(
                 .dependencies
             ]
         ),
-        (
-            name: .locale,
-            dependencies: [
-                .language
-            ]
+        .testTarget(
+            name: .languageDependency.tests,
+            dependencies: [.languageDependency]
         ),
-        (
+        .target(
+            name: .locale,
+            dependencies: [.language]
+        ),
+        .testTarget(
+            name: .locale.tests,
+            dependencies: [.locale]
+        ),
+        .target(
             name: .singlePlural,
             dependencies: [
                 .language,
@@ -144,33 +112,55 @@ let package = Package.language(
                 .translatedString
             ]
         ),
-        (
+        .testTarget(
+            name: .singlePlural.tests,
+            dependencies: [.singlePlural]
+        ),
+        .target(
             name: .string,
             dependencies: [
                 .language,
                 .locale
             ]
         ),
-        (
+        .testTarget(
+            name: .string.tests,
+            dependencies: [.string]
+        ),
+        .target(
             name: .translated,
             dependencies: [
                 .language,
                 .dependencies
             ]
         ),
-        (
+        .testTarget(
+            name: .translated.tests,
+            dependencies: [.translated]
+        ),
+        .target(
             name: .translatedString,
             dependencies: [
                 .language,
                 .translated,
-                .string,
+                .string
             ]
         ),
-        (
-            name: .date,
-            dependencies: [
-                .dependencies
-            ]
+        .testTarget(
+            name: .translatedString.tests,
+            dependencies: [.translatedString]
         ),
+        .target(
+            name: .dateFormattedLocalized,
+            dependencies: [.dependencies]
+        ),
+        .testTarget(
+            name: .dateFormattedLocalized.tests,
+            dependencies: [.dateFormattedLocalized]
+        )
     ]
 )
+
+extension String {
+    var tests: Self { "\(self) Tests" }
+}

@@ -10,7 +10,7 @@ import Foundation
 public typealias LanguageTypealias = Language
 
 extension Locale {
-    public init(_ language: LanguageTypealias){
+    public init(_ language: LanguageTypealias) {
         switch language {
         case .english: self = .init(identifier: "US_us")
         case .dutch: self = .init(identifier: "NL_nl")

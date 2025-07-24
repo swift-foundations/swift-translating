@@ -8,12 +8,12 @@
 import Foundation
 import Testing
 
-@Test func localeLanguageIdentifiers()  {
+@Test func localeLanguageIdentifiers() {
 
     Locale.isoLanguageCodes.sorted(by: <).forEach { code in
         print(code)
     }
-    
+
 //    Locale.isoLanguageCodes.sorted().compactMap { Locale.Language(identifier: $0) }.forEach { identifier in
 //        let x = """
 //        \(identifier.languageCode)
@@ -24,9 +24,7 @@ import Testing
 //        
 //        print(x)
 //    }
-    
-    
-    
+
     Locale.availableIdentifiers.sorted().forEach { identifier in
         print(identifier)
     }

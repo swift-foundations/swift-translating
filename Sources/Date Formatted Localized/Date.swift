@@ -17,7 +17,7 @@ extension Date {
 public struct FormattedDate {
     let date: Date
     let formatStyle: Date.FormatStyle
-    
+
     public var localized: String {
         @Dependency(\.locale) var locale
         return date.formatted(formatStyle.locale(locale))

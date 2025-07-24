@@ -16,9 +16,9 @@ extension Language {
 
 public extension Language {
     init(locale: Locale) {
-        
+
         let `default` = Language.english
-           
+
         // Extract the language identifier from the locale.
         let languageCode: String
 #if canImport(Foundation) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS))
@@ -30,7 +30,7 @@ public extension Language {
 #else
         languageCode = locale.identifier
 #endif
-        
+
         switch languageCode {
         case "af": self = .afrikaans
         case "af_NA": self = .afrikaans
@@ -973,7 +973,7 @@ public extension Language {
         case "zu_ZA": self = .zulu
         default:
             self = `default`
-            
+
         }
     }
 }
