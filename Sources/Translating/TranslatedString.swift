@@ -70,11 +70,7 @@ public extension TranslatedString {
 
 extension Translated<String> {
     public func slug(
-        language: Language = {
-            @Dependency(\.language) var language
-            return language
-        }()
-    ) -> String {
-        self(language).slug()
+    ) -> TranslatedString {
+        self.map { $0.slug() }
     }
 }
