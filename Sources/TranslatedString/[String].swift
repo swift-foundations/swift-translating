@@ -21,36 +21,15 @@ public extension [String] {
     }
 }
 
-public extension [String] {
-    func joined(separator: TranslatedString) -> TranslatedString {
-        .init { language in
-            self.joined(separator: separator(language))
-        }
-    }
-
-}
-
 extension TranslatedString {
     public init(_ separator: [String].Separator) {
-        fatalError()
-    }
-}
-
-public extension [String] {
-    func joined(separator: Separator) -> TranslatedString {
-        switch self.count {
-        case 0: return ""
-        case 1: return .init(self[0])
-        case 2:
-            return .init { language in
-                "\(self[0]) \(TranslatedString(separator)(language)) \(self[1])"
-            }
-        default:
-            let rest = self.dropLast().joined(separator: ", ")
-            let last = self.last!
-            return .init { language in
-                "\(rest), \(TranslatedString(separator)(language)) \(last)"
-            }
+        switch separator {
+        case .and:
+            self = [.english: "and"] // TODO: Add proper localized "and" translations
+        case .or:
+            self = [.english: "or"] // TODO: Add proper localized "or" translations  
+        case .andOr:
+            self = [.english: "and/or"] // TODO: Add proper localized "and/or" translations
         }
     }
 }

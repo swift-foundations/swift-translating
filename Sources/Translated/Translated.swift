@@ -1,18 +1,56 @@
-//
-//  File.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 13/12/2020.
-//
-
 import Foundation
 import Language
 
+/// A generic container for storing values that can be translated across multiple languages.
+///
+/// `Translated<A>` provides a type-safe way to store language-specific variants of any value type `A`,
+/// with intelligent fallback mechanisms when specific translations are not available.
+///
+/// ## Usage
+///
+/// ```swift
+/// // Create a translated string
+/// let greeting = Translated<String>(
+///     default: "Hello",
+///     dictionary: [
+///         .english: "Hello",
+///         .spanish: "Hola", 
+///         .french: "Bonjour"
+///     ]
+/// )
+///
+/// // Access translations
+/// let spanishGreeting = greeting[.spanish] // "Hola"
+/// let germanGreeting = greeting[.german]   // "Hello" (falls back to default)
+/// ```
+///
+/// ## Fallback Behavior
+///
+/// Each language has a predefined fallback chain that follows linguistic and geographical relationships.
+/// For example:
+/// - `.dutch` → `.english` → `default`
+/// - `.afrikaans` → `.dutch` → `.english` → `default`
+/// - `.basque` → `.spanish` → `.french` → `.english` → `default`
+///
+/// This ensures users always see meaningful content even when specific translations aren't available.
+///
+/// - Parameters:
+///   - A: The type of value being translated (commonly `String`, but can be any type)
 public struct Translated<A> {
-    public var `default`: A
+    /// The default value used when no translation is available for a requested language
+    package var `default`: A
+
+    /// Internal dictionary storing language-specific translations
     internal var dictionary: [Language: A]
 
-    internal init(
+    /// Cache for memoized fallback results to avoid recomputation
+    private var fallbackCache: [Language: A] = [:]
+
+    /// Creates a new Translated instance with a default value and translation dictionary
+    /// - Parameters:
+    ///   - default: The fallback value to use when no translation exists
+    ///   - dictionary: A dictionary mapping languages to their translated values
+    package init(
         `default`: A,
         dictionary: [Language: A]
     ) {
@@ -22,12 +60,229 @@ public struct Translated<A> {
 }
 
 extension Translated {
+    public init(_ a: A) {
+        self = .init(default: a, dictionary: [:])
+    }
+}
+
+extension Translated {
     public subscript(language: Language) -> A {
         get {
-            dictionary[language] ?? self.default
+            // Fast path: check dictionary first
+            if let value = dictionary[language] {
+                return value
+            }
+
+            // Check cache for already computed fallback
+            if let cachedValue = fallbackCache[language] {
+                return cachedValue
+            }
+
+            // Compute fallback chain and cache result
+            let fallbackValue = computeFallback(for: language)
+            // Note: We can't mutate cache in getter due to value semantics
+            return fallbackValue
         }
         set {
             dictionary[language] = newValue
+            // Clear cache for this language since we have a direct translation now
+            fallbackCache.removeValue(forKey: language)
+        }
+    }
+
+    private func computeFallback(for language: Language) -> A {
+        let fallbackChain = getFallbackChain(for: language)
+
+        for fallbackLanguage in fallbackChain {
+            if let value = dictionary[fallbackLanguage] {
+                return value
+            }
+        }
+
+        return `default`
+    }
+
+    private func getFallbackChain(for language: Language) -> [Language] {
+        switch language {
+        case .abkhazian: return [.russian, .georgian, .english]
+        case .afar: return [.amharic, .oromo, .somali, .tigrinya, .english]
+        case .afrikaans: return [.dutch, .english]
+        case .akan: return [.english]
+        case .albanian: return [.italian, .english]
+        case .amharic: return [.oromo, .somali, .tigrinya, .english]
+        case .arabic: return [.english]
+        case .aragonese: return [.spanish, .english]
+        case .armenian: return [.english]
+        case .assamese: return [.english]
+        case .auEnglish: return [.english]
+        case .avaric: return [.english]
+        case .avestan: return [.english]
+        case .aymara: return [.spanish, .english]
+        case .azerbaijani: return [.english]
+        case .bambara: return [.english]
+        case .bashkir: return [.english]
+        case .basque: return [.spanish, .french, .english]
+        case .belarusian: return [.russian, .english]
+        case .bengali: return [.english]
+        case .bihari: return [.english]
+        case .bislama: return [.english]
+        case .bosnian: return [.english]
+        case .breton: return [.french, .english]
+        case .bulgarian: return [.english]
+        case .burmese: return [.english]
+        case .catalan: return [.spanish, .french, .portuguese, .english]
+        case .caEnglish: return [.english]
+        case .chamorro: return [.english]
+        case .chechen: return [.english]
+        case .chinese: return [.english]
+        case .chuvash: return [.english]
+        case .cornish: return [.english]
+        case .corsican: return [.french, .english]
+        case .cree: return [.english]
+        case .croatian: return [.english]
+        case .czech: return [.english]
+        case .danish: return [.english]
+        case .dutch: return [.english]
+        case .dzongkha: return [.english]
+        case .english: return []
+        case .esperanto: return [.english]
+        case .estonian: return [.russian, .english]
+        case .ewe: return [.english]
+        case .faroese: return [.danish, .english]
+        case .fijian: return [.english]
+        case .finnish: return [.swedish, .english]
+        case .french: return [.english]
+        case .galician: return [.spanish, .english]
+        case .gaelicScottish: return [.english]
+        case .georgian: return [.russian, .english]
+        case .german: return [.english]
+        case .greek: return [.english]
+        case .guarani: return [.spanish, .english]
+        case .gujarati: return [.english]
+        case .haitianCreole: return [.french, .english]
+        case .hausa: return [.french, .english]
+        case .hebrew: return [.english]
+        case .herero: return [.english]
+        case .hindi: return [.english]
+        case .hiriMotu: return [.english]
+        case .hungarian: return [.english]
+        case .icelandic: return [.english]
+        case .ido: return [.english]
+        case .igbo: return [.english]
+        case .indonesian: return [.english]
+        case .interlingua: return [.english]
+        case .interlingue: return [.english]
+        case .inuktitut: return [.english]
+        case .inupiak: return [.english]
+        case .irish: return [.english]
+        case .italian: return [.english]
+        case .japanese: return [.english]
+        case .javanese: return [.indonesian, .english]
+        case .kannada: return [.english]
+        case .kanuri: return [.french, .english]
+        case .kashmiri: return [.english]
+        case .kazakh: return [.russian, .english]
+        case .khmer: return [.english]
+        case .kikuyu: return [.english]
+        case .kinyarwanda: return [.english]
+        case .kirundi: return [.english]
+        case .komi: return [.english]
+        case .kongo: return [.english]
+        case .korean: return [.english]
+        case .kurdish: return [.arabic, .english]
+        case .kwanyama: return [.portuguese, .english]
+        case .kyrgyz: return [.russian, .english]
+        case .lao: return [.english]
+        case .latin: return [.english]
+        case .latvian: return [.russian, .english]
+        case .limburgish: return [.dutch, .english]
+        case .lingala: return [.french, .english]
+        case .lithuanian: return [.russian, .english]
+        case .lugaKatanga: return [.english]
+        case .luxembourgish: return [.french, .german, .english]
+        case .macedonian: return [.english]
+        case .malagasy: return [.french, .english]
+        case .malay: return [.english]
+        case .malayalam: return [.english]
+        case .maltese: return [.english]
+        case .manx: return [.english]
+        case .maori: return [.english]
+        case .marathi: return [.english]
+        case .marshallese: return [.english]
+        case .moldavian: return [.russian, .english]
+        case .mongolian: return [.english]
+        case .nauru: return [.english]
+        case .navajo: return [.english]
+        case .ndonga: return [.english]
+        case .nepali: return [.english]
+        case .northernNdebele: return [.english]
+        case .norwegian: return [.english]
+        case .norwegianBokmål: return [.norwegian, .english]
+        case .norwegianNynorsk: return [.norwegian, .english]
+        case .occitan: return [.spanish, .english]
+        case .ojibwe: return [.english]
+        case .oriya: return [.english]
+        case .oromo: return [.english]
+        case .ossetian: return [.russian, .english]
+        case .pāli: return [.english]
+        case .persian: return [.arabic, .english]
+        case .polish: return [.english]
+        case .portuguese: return [.english]
+        case .punjabi: return [.english]
+        case .quechua: return [.spanish, .english]
+        case .romanian: return [.russian, .english]
+        case .romansh: return [.french, .italian, .german, .english]
+        case .russian: return [.english]
+        case .sami: return [.norwegian, .english]
+        case .samoan: return [.english]
+        case .sango: return [.french, .english]
+        case .sanskrit: return [.english]
+        case .serbian: return [.albanian, .english]
+        case .serboCroatian: return [.english]
+        case .sesotho: return [.english]
+        case .setswana: return [.english]
+        case .shona: return [.english]
+        case .sindhi: return [.urdu, .english]
+        case .sinhalese: return [.english]
+        case .slovak: return [.german, .english]
+        case .slovenian: return [.english]
+        case .somali: return [.english]
+        case .southernNdebele: return [.english]
+        case .spanish: return [.english]
+        case .sundanese: return [.english]
+        case .swahili: return [.english]
+        case .swati: return [.english]
+        case .swedish: return [.english]
+        case .tagalog: return [.english]
+        case .tahitian: return [.english]
+        case .tajik: return [.russian, .english]
+        case .tamil: return [.malay, .english]
+        case .tatar: return [.english]
+        case .telugu: return [.english]
+        case .thai: return [.english]
+        case .tibetan: return [.chinese, .english]
+        case .tigrinya: return [.arabic, .italian, .english]
+        case .tonga: return [.english]
+        case .tsonga: return [.afrikaans, .english]
+        case .turkish: return [.english]
+        case .turkmen: return [.russian, .english]
+        case .twi: return [.english]
+        case .ukEnglish: return [.english]
+        case .ukrainian: return [.english]
+        case .urdu: return [.english]
+        case .usEnglish: return [.english]
+        case .uyghur: return [.chinese, .english]
+        case .uzbek: return [.english]
+        case .venda: return [.english]
+        case .vietnamese: return [.english]
+        case .volapük: return [.english]
+        case .wallon: return [.french, .english]
+        case .welsh: return [.english]
+        case .westernFrisian: return [.dutch, .english]
+        case .wolof: return [.french, .arabic, .english]
+        case .xhosa: return [.english]
+        case .yoruba: return [.english]
+        case .zulu: return [.english]
         }
     }
 }
@@ -41,1607 +296,1607 @@ extension Translated {
 extension Translated {
     public var abkhazian: A {
         get {
-            dictionary[.abkhazian] ?? dictionary[.russian] ?? dictionary[.georgian] ?? dictionary[.english] ?? `default`
+            self[.abkhazian]
         }
         set {
-            dictionary[.abkhazian] = newValue
+            self[.abkhazian] = newValue
         }
     }
     public var afar: A {
         get {
-            dictionary[.afar] ?? dictionary[.amharic] ?? dictionary[.oromo] ?? dictionary[.somali] ?? dictionary[.tigrinya] ?? dictionary[.english] ?? `default`
+            self[.afar]
         }
         set {
-            dictionary[.afar] = newValue
+            self[.afar] = newValue
         }
     }
     public var afrikaans: A {
         get {
-            dictionary[.afrikaans] ?? dictionary[.dutch] ?? dictionary[.english] ?? `default`
+            self[.afrikaans]
         }
         set {
-            dictionary[.afrikaans] = newValue
+            self[.afrikaans] = newValue
         }
     }
 
     public var akan: A {
         get {
-            dictionary[.akan] ?? dictionary[.english] ?? `default`
+            self[.akan]
         }
         set {
-            dictionary[.akan] = newValue
+            self[.akan] = newValue
         }
     }
     public var albanian: A {
         get {
-            dictionary[.albanian] ?? dictionary[.italian] ?? dictionary[.english] ?? `default`
+            self[.albanian]
         }
         set {
-            dictionary[.albanian] = newValue
+            self[.albanian] = newValue
         }
     }
 
     public var amharic: A {
         get {
-            dictionary[.amharic] ?? dictionary[.oromo] ?? dictionary[.somali] ?? dictionary[.tigrinya] ?? dictionary[.english] ?? `default`
+            self[.amharic]
         }
         set {
-            dictionary[.amharic] = newValue
+            self[.amharic] = newValue
         }
     }
 
     public var arabic: A {
         get {
-            dictionary[.arabic] ?? dictionary[.english] ?? `default`
+            self[.arabic]
         }
         set {
-            dictionary[.arabic] = newValue
+            self[.arabic] = newValue
         }
     }
 
     public var aragonese: A {
         get {
-            dictionary[.aragonese] ?? dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.aragonese]
         }
         set {
-            dictionary[.aragonese] = newValue
+            self[.aragonese] = newValue
         }
     }
 
     public var armenian: A {
         get {
-            dictionary[.armenian] ?? dictionary[.english] ?? `default`
+            self[.armenian]
         }
         set {
-            dictionary[.armenian] = newValue
+            self[.armenian] = newValue
         }
     }
 
     public var assamese: A {
         get {
-            dictionary[.assamese] ?? dictionary[.english] ?? `default`
+            self[.assamese]
         }
         set {
-            dictionary[.assamese] = newValue
+            self[.assamese] = newValue
         }
     }
 
     public var auEnglish: A {
         get {
-            dictionary[.auEnglish] ?? dictionary[.english] ?? `default`
+            self[.auEnglish]
         }
         set {
-            dictionary[.auEnglish] = newValue
+            self[.auEnglish] = newValue
         }
     }
 
     public var avaric: A {
         get {
-            dictionary[.avaric] ?? dictionary[.english] ?? `default`
+            self[.avaric]
         }
         set {
-            dictionary[.avaric] = newValue
+            self[.avaric] = newValue
         }
     }
 
     public var avestan: A {
         get {
-            dictionary[.avestan] ?? dictionary[.english] ?? `default`
+            self[.avestan]
         }
         set {
-            dictionary[.avestan] = newValue
+            self[.avestan] = newValue
         }
     }
 
     public var aymara: A {
         get {
-            dictionary[.aymara] ?? dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.aymara]
         }
         set {
-            dictionary[.aymara] = newValue
+            self[.aymara] = newValue
         }
     }
 
     public var azerbaijani: A {
         get {
-            dictionary[.azerbaijani] ?? dictionary[.english] ?? `default`
+            self[.azerbaijani]
         }
         set {
-            dictionary[.azerbaijani] = newValue
+            self[.azerbaijani] = newValue
         }
     }
 
     public var bambara: A {
         get {
-            dictionary[.bambara] ?? dictionary[.english] ?? `default`
+            self[.bambara]
         }
         set {
-            dictionary[.bambara] = newValue
+            self[.bambara] = newValue
         }
     }
 
     public var bashkir: A {
         get {
-            dictionary[.bashkir] ?? dictionary[.english] ?? `default`
+            self[.bashkir]
         }
         set {
-            dictionary[.bashkir] = newValue
+            self[.bashkir] = newValue
         }
     }
 
     public var basque: A {
         get {
-            dictionary[.basque] ?? dictionary[.spanish] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.basque]
         }
         set {
-            dictionary[.basque] = newValue
+            self[.basque] = newValue
         }
     }
 
     public var belarusian: A {
         get {
-            dictionary[.belarusian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.belarusian]
         }
         set {
-            dictionary[.belarusian] = newValue
+            self[.belarusian] = newValue
         }
     }
 
     public var bengali: A {
         get {
-            dictionary[.bengali] ?? dictionary[.english] ?? `default`
+            self[.bengali]
         }
         set {
-            dictionary[.bengali] = newValue
+            self[.bengali] = newValue
         }
     }
 
     public var bihari: A {
         get {
-            dictionary[.bihari] ?? dictionary[.english] ?? `default`
+            self[.bihari]
         }
         set {
-            dictionary[.bihari] = newValue
+            self[.bihari] = newValue
         }
     }
 
     public var bislama: A {
         get {
-            dictionary[.bislama] ?? dictionary[.english] ?? `default`
+            self[.bislama]
         }
         set {
-            dictionary[.bislama] = newValue
+            self[.bislama] = newValue
         }
     }
 
     public var bosnian: A {
         get {
-            dictionary[.bosnian] ?? dictionary[.english] ?? `default`
+            self[.bosnian]
         }
         set {
-            dictionary[.bosnian] = newValue
+            self[.bosnian] = newValue
         }
     }
 
     public var breton: A {
         get {
-            dictionary[.breton] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.breton]
         }
         set {
-            dictionary[.breton] = newValue
+            self[.breton] = newValue
         }
     }
 
     public var bulgarian: A {
         get {
-            dictionary[.bulgarian] ?? dictionary[.english] ?? `default`
+            self[.bulgarian]
         }
         set {
-            dictionary[.bulgarian] = newValue
+            self[.bulgarian] = newValue
         }
     }
 
     public var burmese: A {
         get {
-            dictionary[.burmese] ?? dictionary[.english] ?? `default`
+            self[.burmese]
         }
         set {
-            dictionary[.burmese] = newValue
+            self[.burmese] = newValue
         }
     }
 
     public var catalan: A {
         get {
-            dictionary[.catalan] ?? dictionary[.spanish] ?? dictionary[.french] ?? dictionary[.portuguese] ?? dictionary[.english] ?? `default`
+            self[.catalan]
         }
         set {
-            dictionary[.catalan] = newValue
+            self[.catalan] = newValue
         }
     }
 
     public var caEnglish: A {
         get {
-            dictionary[.caEnglish] ?? dictionary[.english] ?? `default`
+            self[.caEnglish]
         }
         set {
-            dictionary[.caEnglish] = newValue
+            self[.caEnglish] = newValue
         }
     }
 
     public var chamorro: A {
         get {
-            dictionary[.chamorro] ?? dictionary[.english] ?? `default`
+            self[.chamorro]
         }
         set {
-            dictionary[.chamorro] = newValue
+            self[.chamorro] = newValue
         }
     }
 
     public var chechen: A {
         get {
-            dictionary[.chechen] ?? dictionary[.english] ?? `default`
+            self[.chechen]
         }
         set {
-            dictionary[.chechen] = newValue
+            self[.chechen] = newValue
         }
     }
 
     public var chinese: A {
         get {
-            dictionary[.chinese] ?? dictionary[.english] ?? `default`
+            self[.chinese]
         }
         set {
-            dictionary[.chinese] = newValue
+            self[.chinese] = newValue
         }
     }
 
     public var chuvash: A {
         get {
-            dictionary[.chuvash] ?? dictionary[.english] ?? `default`
+            self[.chuvash]
         }
         set {
-            dictionary[.chuvash] = newValue
+            self[.chuvash] = newValue
         }
     }
 
     public var cornish: A {
         get {
-            dictionary[.cornish] ?? dictionary[.english] ?? `default`
+            self[.cornish]
         }
         set {
-            dictionary[.cornish] = newValue
+            self[.cornish] = newValue
         }
     }
 
     public var corsican: A {
         get {
-            dictionary[.corsican] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.corsican]
         }
         set {
-            dictionary[.corsican] = newValue
+            self[.corsican] = newValue
         }
     }
 
     public var cree: A {
         get {
-            dictionary[.cree] ?? dictionary[.english] ?? `default`
+            self[.cree]
         }
         set {
-            dictionary[.cree] = newValue
+            self[.cree] = newValue
         }
     }
 
     public var croatian: A {
         get {
-            dictionary[.croatian] ?? dictionary[.english] ?? `default`
+            self[.croatian]
         }
         set {
-            dictionary[.croatian] = newValue
+            self[.croatian] = newValue
         }
     }
 
     public var czech: A {
         get {
-            dictionary[.czech] ?? dictionary[.english] ?? `default`
+            self[.czech]
         }
         set {
-            dictionary[.czech] = newValue
+            self[.czech] = newValue
         }
     }
 
     public var danish: A {
         get {
-            dictionary[.danish] ?? dictionary[.english] ?? `default`
+            self[.danish]
         }
         set {
-            dictionary[.danish] = newValue
+            self[.danish] = newValue
         }
     }
 
     public var dutch: A {
         get {
-            dictionary[.dutch] ?? dictionary[.english] ?? `default`
+            self[.dutch]
         }
         set {
-            dictionary[.dutch] = newValue
+            self[.dutch] = newValue
         }
     }
 
     public var dzongkha: A {
         get {
-            dictionary[.dzongkha] ?? dictionary[.english] ?? `default`
+            self[.dzongkha]
         }
         set {
-            dictionary[.dzongkha] = newValue
+            self[.dzongkha] = newValue
         }
     }
 
     public var english: A {
         get {
-            dictionary[.english] ?? `default`
+            self[.english]
         }
         set {
-            dictionary[.english] = newValue
+            self[.english] = newValue
         }
     }
 
     public var esperanto: A {
         get {
-            dictionary[.esperanto] ?? dictionary[.english] ?? `default`
+            self[.esperanto]
         }
         set {
-            dictionary[.esperanto] = newValue
+            self[.esperanto] = newValue
         }
     }
 
     public var estonian: A {
         get {
-            dictionary[.estonian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.estonian]
         }
         set {
-            dictionary[.estonian] = newValue
+            self[.estonian] = newValue
         }
     }
 
     public var ewe: A {
         get {
-            dictionary[.ewe] ?? dictionary[.english] ?? `default`
+            self[.ewe]
         }
         set {
-            dictionary[.ewe] = newValue
+            self[.ewe] = newValue
         }
     }
     public var faroese: A {
         get {
-            dictionary[.faroese] ?? dictionary[.danish] ?? dictionary[.english] ?? `default`
+            self[.faroese]
         }
         set {
-            dictionary[.faroese] = newValue
+            self[.faroese] = newValue
         }
     }
 
     public var fijian: A {
         get {
-            dictionary[.fijian] ?? dictionary[.english] ?? `default`
+            self[.fijian]
         }
         set {
-            dictionary[.fijian] = newValue
+            self[.fijian] = newValue
         }
     }
 
     public var finnish: A {
         get {
-            dictionary[.finnish] ?? dictionary[.swedish] ?? dictionary[.english] ?? `default`
+            self[.finnish]
         }
         set {
-            dictionary[.finnish] = newValue
+            self[.finnish] = newValue
         }
     }
 
     public var french: A {
         get {
-            dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.french]
         }
         set {
-            dictionary[.french] = newValue
+            self[.french] = newValue
         }
     }
 
     public var galician: A {
         get {
-            dictionary[.galician] ?? dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.galician]
         }
         set {
-            dictionary[.galician] = newValue
+            self[.galician] = newValue
         }
     }
 
     public var gaelicScottish: A {
         get {
-            dictionary[.gaelicScottish] ?? dictionary[.english] ?? `default`
+            self[.gaelicScottish]
         }
         set {
-            dictionary[.gaelicScottish] = newValue
+            self[.gaelicScottish] = newValue
         }
     }
 
     public var georgian: A {
         get {
-            dictionary[.georgian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.georgian]
         }
         set {
-            dictionary[.georgian] = newValue
+            self[.georgian] = newValue
         }
     }
 
     public var german: A {
         get {
-            dictionary[.german] ?? dictionary[.english] ?? `default`
+            self[.german]
         }
         set {
-            dictionary[.german] = newValue
+            self[.german] = newValue
         }
     }
 
     public var greek: A {
         get {
-            dictionary[.greek] ?? dictionary[.english] ?? `default`
+            self[.greek]
         }
         set {
-            dictionary[.greek] = newValue
+            self[.greek] = newValue
         }
     }
 
     public var guarani: A {
         get {
-            dictionary[.guarani] ?? dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.guarani]
         }
         set {
-            dictionary[.guarani] = newValue
+            self[.guarani] = newValue
         }
     }
 
     public var gujarati: A {
         get {
-            dictionary[.gujarati] ?? dictionary[.english] ?? `default`
+            self[.gujarati]
         }
         set {
-            dictionary[.gujarati] = newValue
+            self[.gujarati] = newValue
         }
     }
 
     public var haitianCreole: A {
         get {
-            dictionary[.haitianCreole] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.haitianCreole]
         }
         set {
-            dictionary[.haitianCreole] = newValue
+            self[.haitianCreole] = newValue
         }
     }
 
     public var hausa: A {
         get {
-            dictionary[.hausa] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.hausa]
         }
         set {
-            dictionary[.hausa] = newValue
+            self[.hausa] = newValue
         }
     }
 
     public var hebrew: A {
         get {
-            dictionary[.hebrew] ?? dictionary[.english] ?? `default`
+            self[.hebrew]
         }
         set {
-            dictionary[.hebrew] = newValue
+            self[.hebrew] = newValue
         }
     }
 
     public var herero: A {
         get {
-            dictionary[.herero] ?? dictionary[.english] ?? `default`
+            self[.herero]
         }
         set {
-            dictionary[.herero] = newValue
+            self[.herero] = newValue
         }
     }
 
     public var hindi: A {
         get {
-            dictionary[.hindi] ?? dictionary[.english] ?? `default`
+            self[.hindi]
         }
         set {
-            dictionary[.hindi] = newValue
+            self[.hindi] = newValue
         }
     }
 
     public var hiriMotu: A {
         get {
-            dictionary[.hiriMotu] ?? dictionary[.english] ?? `default`
+            self[.hiriMotu]
         }
         set {
-            dictionary[.hiriMotu] = newValue
+            self[.hiriMotu] = newValue
         }
     }
 
     public var hungarian: A {
         get {
-            dictionary[.hungarian] ?? dictionary[.english] ?? `default`
+            self[.hungarian]
         }
         set {
-            dictionary[.hungarian] = newValue
+            self[.hungarian] = newValue
         }
     }
 
     public var icelandic: A {
         get {
-            dictionary[.icelandic] ?? dictionary[.english] ?? `default`
+            self[.icelandic]
         }
         set {
-            dictionary[.icelandic] = newValue
+            self[.icelandic] = newValue
         }
     }
 
     public var ido: A {
         get {
-            dictionary[.ido] ?? dictionary[.english] ?? `default`
+            self[.ido]
         }
         set {
-            dictionary[.ido] = newValue
+            self[.ido] = newValue
         }
     }
 
     public var igbo: A {
         get {
-            dictionary[.igbo] ?? dictionary[.english] ?? `default`
+            self[.igbo]
         }
         set {
-            dictionary[.igbo] = newValue
+            self[.igbo] = newValue
         }
     }
 
     public var indonesian: A {
         get {
-            dictionary[.indonesian] ?? dictionary[.english] ?? `default`
+            self[.indonesian]
         }
         set {
-            dictionary[.indonesian] = newValue
+            self[.indonesian] = newValue
         }
     }
 
     public var interlingua: A {
         get {
-            dictionary[.interlingua] ?? dictionary[.english] ?? `default`
+            self[.interlingua]
         }
         set {
-            dictionary[.interlingua] = newValue
+            self[.interlingua] = newValue
         }
     }
 
     public var interlingue: A {
         get {
-            dictionary[.interlingue] ?? dictionary[.english] ?? `default`
+            self[.interlingue]
         }
         set {
-            dictionary[.interlingue] = newValue
+            self[.interlingue] = newValue
         }
     }
 
     public var inuktitut: A {
         get {
-            dictionary[.inuktitut] ?? dictionary[.english] ?? `default`
+            self[.inuktitut]
         }
         set {
-            dictionary[.inuktitut] = newValue
+            self[.inuktitut] = newValue
         }
     }
 
     public var inupiak: A {
         get {
-            dictionary[.inupiak] ?? dictionary[.english] ?? `default`
+            self[.inupiak]
         }
         set {
-            dictionary[.inupiak] = newValue
+            self[.inupiak] = newValue
         }
     }
 
     public var irish: A {
         get {
-            dictionary[.irish] ?? dictionary[.english] ?? `default`
+            self[.irish]
         }
         set {
-            dictionary[.irish] = newValue
+            self[.irish] = newValue
         }
     }
 
     public var italian: A {
         get {
-            dictionary[.italian] ?? dictionary[.english] ?? `default`
+            self[.italian]
         }
         set {
-            dictionary[.italian] = newValue
+            self[.italian] = newValue
         }
     }
 
     public var japanese: A {
         get {
-            dictionary[.japanese] ?? dictionary[.english] ?? `default`
+            self[.japanese]
         }
         set {
-            dictionary[.japanese] = newValue
+            self[.japanese] = newValue
         }
     }
 
     public var javanese: A {
         get {
-            dictionary[.javanese] ?? dictionary[.indonesian] ?? dictionary[.english] ?? `default`
+            self[.javanese]
         }
         set {
-            dictionary[.javanese] = newValue
+            self[.javanese] = newValue
         }
     }
 
     public var kannada: A {
         get {
-            dictionary[.kannada] ?? dictionary[.english] ?? `default`
+            self[.kannada]
         }
         set {
-            dictionary[.kannada] = newValue
+            self[.kannada] = newValue
         }
     }
 
     public var kanuri: A {
         get {
-            dictionary[.kanuri] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.kanuri]
         }
         set {
-            dictionary[.kanuri] = newValue
+            self[.kanuri] = newValue
         }
     }
 
     public var kashmiri: A {
         get {
-            dictionary[.kashmiri] ?? dictionary[.english] ?? `default`
+            self[.kashmiri]
         }
         set {
-            dictionary[.kashmiri] = newValue
+            self[.kashmiri] = newValue
         }
     }
 
     public var kazakh: A {
         get {
-            dictionary[.kazakh] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.kazakh]
         }
         set {
-            dictionary[.kazakh] = newValue
+            self[.kazakh] = newValue
         }
     }
 
     public var khmer: A {
         get {
-            dictionary[.khmer] ?? dictionary[.english] ?? `default`
+            self[.khmer]
         }
         set {
-            dictionary[.khmer] = newValue
+            self[.khmer] = newValue
         }
     }
 
     public var kikuyu: A {
         get {
-            dictionary[.kikuyu] ?? dictionary[.english] ?? `default`
+            self[.kikuyu]
         }
         set {
-            dictionary[.kikuyu] = newValue
+            self[.kikuyu] = newValue
         }
     }
 
     public var kinyarwanda: A {
         get {
-            dictionary[.kinyarwanda] ?? dictionary[.english] ?? `default`
+            self[.kinyarwanda]
         }
         set {
-            dictionary[.kinyarwanda] = newValue
+            self[.kinyarwanda] = newValue
         }
     }
 
     public var kirundi: A {
         get {
-            dictionary[.kirundi] ?? dictionary[.english] ?? `default`
+            self[.kirundi]
         }
         set {
-            dictionary[.kirundi] = newValue
+            self[.kirundi] = newValue
         }
     }
 
     public var korean: A {
         get {
-            dictionary[.korean] ?? dictionary[.english] ?? `default`
+            self[.korean]
         }
         set {
-            dictionary[.korean] = newValue
+            self[.korean] = newValue
         }
     }
 
     public var komi: A {
         get {
-            dictionary[.komi] ?? dictionary[.english] ?? `default`
+            self[.komi]
         }
         set {
-            dictionary[.komi] = newValue
+            self[.komi] = newValue
         }
     }
 
     public var kongo: A {
         get {
-            dictionary[.kongo] ?? dictionary[.english] ?? `default`
+            self[.kongo]
         }
         set {
-            dictionary[.kongo] = newValue
+            self[.kongo] = newValue
         }
     }
     public var kurdish: A {
         get {
-            dictionary[.kurdish] ?? dictionary[.arabic] ?? dictionary[.english] ?? `default`
+            self[.kurdish]
         }
         set {
-            dictionary[.kurdish] = newValue
+            self[.kurdish] = newValue
         }
     }
 
     public var kwanyama: A {
         get {
-            dictionary[.kwanyama] ?? dictionary[.portuguese] ?? dictionary[.english] ?? `default`
+            self[.kwanyama]
         }
         set {
-            dictionary[.kwanyama] = newValue
+            self[.kwanyama] = newValue
         }
     }
 
     public var kyrgyz: A {
         get {
-            dictionary[.kyrgyz] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.kyrgyz]
         }
         set {
-            dictionary[.kyrgyz] = newValue
+            self[.kyrgyz] = newValue
         }
     }
 
     public var lao: A {
         get {
-            dictionary[.lao] ?? dictionary[.english] ?? `default`
+            self[.lao]
         }
         set {
-            dictionary[.lao] = newValue
+            self[.lao] = newValue
         }
     }
 
     public var latin: A {
         get {
-            dictionary[.latin] ?? dictionary[.english] ?? `default`
+            self[.latin]
         }
         set {
-            dictionary[.latin] = newValue
+            self[.latin] = newValue
         }
     }
 
     public var latvian: A {
         get {
-            dictionary[.latvian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.latvian]
         }
         set {
-            dictionary[.latvian] = newValue
+            self[.latvian] = newValue
         }
     }
 
     public var limburgish: A {
         get {
-            dictionary[.limburgish] ?? dictionary[.dutch] ?? dictionary[.english] ?? `default`
+            self[.limburgish]
         }
         set {
-            dictionary[.limburgish] = newValue
+            self[.limburgish] = newValue
         }
     }
 
     public var lingala: A {
         get {
-            dictionary[.lingala] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.lingala]
         }
         set {
-            dictionary[.lingala] = newValue
+            self[.lingala] = newValue
         }
     }
 
     public var lithuanian: A {
         get {
-            dictionary[.lithuanian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.lithuanian]
         }
         set {
-            dictionary[.lithuanian] = newValue
+            self[.lithuanian] = newValue
         }
     }
 
     public var lugaKatanga: A {
         get {
-            dictionary[.lugaKatanga] ?? dictionary[.english] ?? `default`
+            self[.lugaKatanga]
         }
         set {
-            dictionary[.lugaKatanga] = newValue
+            self[.lugaKatanga] = newValue
         }
     }
 
     public var luxembourgish: A {
         get {
-            dictionary[.luxembourgish] ?? dictionary[.french] ?? dictionary[.german] ?? dictionary[.english] ?? `default`
+            self[.luxembourgish]
         }
         set {
-            dictionary[.luxembourgish] = newValue
+            self[.luxembourgish] = newValue
         }
     }
 
     public var macedonian: A {
         get {
-            dictionary[.macedonian] ?? dictionary[.english] ?? `default`
+            self[.macedonian]
         }
         set {
-            dictionary[.macedonian] = newValue
+            self[.macedonian] = newValue
         }
     }
 
     public var malagasy: A {
         get {
-            dictionary[.malagasy] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.malagasy]
         }
         set {
-            dictionary[.malagasy] = newValue
+            self[.malagasy] = newValue
         }
     }
 
     public var malay: A {
         get {
-            dictionary[.malay] ?? dictionary[.english] ?? `default`
+            self[.malay]
         }
         set {
-            dictionary[.malay] = newValue
+            self[.malay] = newValue
         }
     }
 
     public var malayalam: A {
         get {
-            dictionary[.malayalam] ?? dictionary[.english] ?? `default`
+            self[.malayalam]
         }
         set {
-            dictionary[.malayalam] = newValue
+            self[.malayalam] = newValue
         }
     }
 
     public var maltese: A {
         get {
-            dictionary[.maltese] ?? dictionary[.english] ?? `default`
+            self[.maltese]
         }
         set {
-            dictionary[.maltese] = newValue
+            self[.maltese] = newValue
         }
     }
 
     public var manx: A {
         get {
-            dictionary[.manx] ?? dictionary[.english] ?? `default`
+            self[.manx]
         }
         set {
-            dictionary[.manx] = newValue
+            self[.manx] = newValue
         }
     }
 
     public var maori: A {
         get {
-            dictionary[.maori] ?? dictionary[.english] ?? `default`
+            self[.maori]
         }
         set {
-            dictionary[.maori] = newValue
+            self[.maori] = newValue
         }
     }
 
     public var marathi: A {
         get {
-            dictionary[.marathi] ?? dictionary[.english] ?? `default`
+            self[.marathi]
         }
         set {
-            dictionary[.marathi] = newValue
+            self[.marathi] = newValue
         }
     }
 
     public var marshallese: A {
         get {
-            dictionary[.marshallese] ?? dictionary[.english] ?? `default`
+            self[.marshallese]
         }
         set {
-            dictionary[.marshallese] = newValue
+            self[.marshallese] = newValue
         }
     }
 
     public var moldavian: A {
         get {
-            dictionary[.moldavian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.moldavian]
         }
         set {
-            dictionary[.moldavian] = newValue
+            self[.moldavian] = newValue
         }
     }
 
     public var mongolian: A {
         get {
-            dictionary[.mongolian] ?? dictionary[.english] ?? `default`
+            self[.mongolian]
         }
         set {
-            dictionary[.mongolian] = newValue
+            self[.mongolian] = newValue
         }
     }
 
     public var nauru: A {
         get {
-            dictionary[.nauru] ?? dictionary[.english] ?? `default`
+            self[.nauru]
         }
         set {
-            dictionary[.nauru] = newValue
+            self[.nauru] = newValue
         }
     }
 
     public var navajo: A {
         get {
-            dictionary[.navajo] ?? dictionary[.english] ?? `default`
+            self[.navajo]
         }
         set {
-            dictionary[.navajo] = newValue
+            self[.navajo] = newValue
         }
     }
 
     public var ndonga: A {
         get {
-            dictionary[.ndonga] ?? dictionary[.english] ?? `default`
+            self[.ndonga]
         }
         set {
-            dictionary[.ndonga] = newValue
+            self[.ndonga] = newValue
         }
     }
 
     public var nepali: A {
         get {
-            dictionary[.nepali] ?? dictionary[.english] ?? `default`
+            self[.nepali]
         }
         set {
-            dictionary[.nepali] = newValue
+            self[.nepali] = newValue
         }
     }
 
     public var northernNdebele: A {
         get {
-            dictionary[.northernNdebele] ?? dictionary[.english] ?? `default`
+            self[.northernNdebele]
         }
         set {
-            dictionary[.northernNdebele] = newValue
+            self[.northernNdebele] = newValue
         }
     }
 
     public var norwegian: A {
         get {
-            dictionary[.norwegian] ?? dictionary[.english] ?? `default`
+            self[.norwegian]
         }
         set {
-            dictionary[.norwegian] = newValue
+            self[.norwegian] = newValue
         }
     }
 
     public var norwegianBokmål: A {
         get {
-            dictionary[.norwegianBokmål] ?? dictionary[.norwegian] ?? dictionary[.english] ?? `default`
+            self[.norwegianBokmål]
         }
         set {
-            dictionary[.norwegianBokmål] = newValue
+            self[.norwegianBokmål] = newValue
         }
     }
 
     public var norwegianNynorsk: A {
         get {
-            dictionary[.norwegianNynorsk] ?? dictionary[.norwegian] ?? dictionary[.english] ?? `default`
+            self[.norwegianNynorsk]
         }
         set {
-            dictionary[.norwegianNynorsk] = newValue
+            self[.norwegianNynorsk] = newValue
         }
     }
 
     public var occitan: A {
         get {
-            dictionary[.occitan] ?? dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.occitan]
         }
         set {
-            dictionary[.occitan] = newValue
+            self[.occitan] = newValue
         }
     }
 
     public var ojibwe: A {
         get {
-            dictionary[.ojibwe] ?? dictionary[.english] ?? `default`
+            self[.ojibwe]
         }
         set {
-            dictionary[.ojibwe] = newValue
+            self[.ojibwe] = newValue
         }
     }
 
     public var oriya: A {
         get {
-            dictionary[.oriya] ?? dictionary[.english] ?? `default`
+            self[.oriya]
         }
         set {
-            dictionary[.oriya] = newValue
+            self[.oriya] = newValue
         }
     }
 
     public var oromo: A {
         get {
-            dictionary[.oromo] ?? dictionary[.english] ?? `default`
+            self[.oromo]
         }
         set {
-            dictionary[.oromo] = newValue
+            self[.oromo] = newValue
         }
     }
 
     public var ossetian: A {
         get {
-            dictionary[.ossetian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.ossetian]
         }
         set {
-            dictionary[.ossetian] = newValue
+            self[.ossetian] = newValue
         }
     }
 
     public var pāli: A {
         get {
-            dictionary[.pāli] ?? dictionary[.english] ?? `default`
+            self[.pāli]
         }
         set {
-            dictionary[.pāli] = newValue
+            self[.pāli] = newValue
         }
     }
 
     public var persian: A {
         get {
-            dictionary[.persian] ?? dictionary[.arabic] ?? dictionary[.english] ?? `default`
+            self[.persian]
         }
         set {
-            dictionary[.persian] = newValue
+            self[.persian] = newValue
         }
     }
 
     public var polish: A {
         get {
-            dictionary[.polish] ?? dictionary[.english] ?? `default`
+            self[.polish]
         }
         set {
-            dictionary[.polish] = newValue
+            self[.polish] = newValue
         }
     }
 
     public var portuguese: A {
         get {
-            dictionary[.portuguese] ?? dictionary[.english] ?? `default`
+            self[.portuguese]
         }
         set {
-            dictionary[.portuguese] = newValue
+            self[.portuguese] = newValue
         }
     }
 
     public var punjabi: A {
         get {
-            dictionary[.punjabi] ?? dictionary[.english] ?? `default`
+            self[.punjabi]
         }
         set {
-            dictionary[.punjabi] = newValue
+            self[.punjabi] = newValue
         }
     }
 
     public var quechua: A {
         get {
-            dictionary[.quechua] ?? dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.quechua]
         }
         set {
-            dictionary[.quechua] = newValue
+            self[.quechua] = newValue
         }
     }
 
     public var romanian: A {
         get {
-            dictionary[.romanian] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.romanian]
         }
         set {
-            dictionary[.romanian] = newValue
+            self[.romanian] = newValue
         }
     }
 
     public var romansh: A {
         get {
-            dictionary[.romansh] ?? dictionary[.french] ?? dictionary[.italian] ?? dictionary[.german] ?? dictionary[.english] ?? `default`
+            self[.romansh]
         }
         set {
-            dictionary[.romansh] = newValue
+            self[.romansh] = newValue
         }
     }
 
     public var russian: A {
         get {
-            dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.russian]
         }
         set {
-            dictionary[.russian] = newValue
+            self[.russian] = newValue
         }
     }
 
     public var sami: A {
         get {
-            dictionary[.sami] ?? dictionary[.norwegian] ?? dictionary[.english] ?? `default`
+            self[.sami]
         }
         set {
-            dictionary[.sami] = newValue
+            self[.sami] = newValue
         }
     }
 
     public var samoan: A {
         get {
-            dictionary[.samoan] ?? dictionary[.english] ?? `default`
+            self[.samoan]
         }
         set {
-            dictionary[.samoan] = newValue
+            self[.samoan] = newValue
         }
     }
 
     public var sango: A {
         get {
-            dictionary[.sango] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.sango]
         }
         set {
-            dictionary[.sango] = newValue
+            self[.sango] = newValue
         }
     }
 
     public var sanskrit: A {
         get {
-            dictionary[.sanskrit] ?? dictionary[.english] ?? `default`
+            self[.sanskrit]
         }
         set {
-            dictionary[.sanskrit] = newValue
+            self[.sanskrit] = newValue
         }
     }
 
     public var serbian: A {
         get {
-            dictionary[.serbian] ?? dictionary[.albanian] ?? dictionary[.english] ?? `default`
+            self[.serbian]
         }
         set {
-            dictionary[.serbian] = newValue
+            self[.serbian] = newValue
         }
     }
 
     public var serboCroatian: A {
         get {
-            dictionary[.serboCroatian] ?? dictionary[.english] ?? `default`
+            self[.serboCroatian]
         }
         set {
-            dictionary[.serboCroatian] = newValue
+            self[.serboCroatian] = newValue
         }
     }
 
     public var sesotho: A {
         get {
-            dictionary[.sesotho] ?? dictionary[.english] ?? `default`
+            self[.sesotho]
         }
         set {
-            dictionary[.sesotho] = newValue
+            self[.sesotho] = newValue
         }
     }
 
     public var setswana: A {
         get {
-            dictionary[.setswana] ?? dictionary[.english] ?? `default`
+            self[.setswana]
         }
         set {
-            dictionary[.setswana] = newValue
+            self[.setswana] = newValue
         }
     }
 
     public var shona: A {
         get {
-            dictionary[.shona] ?? dictionary[.english] ?? `default`
+            self[.shona]
         }
         set {
-            dictionary[.shona] = newValue
+            self[.shona] = newValue
         }
     }
 
     public var sindhi: A {
         get {
-            dictionary[.sindhi] ?? dictionary[.urdu] ?? dictionary[.english] ?? `default`
+            self[.sindhi]
         }
         set {
-            dictionary[.sindhi] = newValue
+            self[.sindhi] = newValue
         }
     }
 
     public var sinhalese: A {
         get {
-            dictionary[.sinhalese] ?? dictionary[.english] ?? `default`
+            self[.sinhalese]
         }
         set {
-            dictionary[.sinhalese] = newValue
+            self[.sinhalese] = newValue
         }
     }
 
     public var slovak: A {
         get {
-            dictionary[.slovak] ?? dictionary[.german] ?? dictionary[.english] ?? `default`
+            self[.slovak]
         }
         set {
-            dictionary[.slovak] = newValue
+            self[.slovak] = newValue
         }
     }
 
     public var slovenian: A {
         get {
-            dictionary[.slovenian] ?? dictionary[.english] ?? `default`
+            self[.slovenian]
         }
         set {
-            dictionary[.slovenian] = newValue
+            self[.slovenian] = newValue
         }
     }
 
     public var somali: A {
         get {
-            dictionary[.somali] ?? dictionary[.english] ?? `default`
+            self[.somali]
         }
         set {
-            dictionary[.somali] = newValue
+            self[.somali] = newValue
         }
     }
 
     public var southernNdebele: A {
         get {
-            dictionary[.southernNdebele] ?? dictionary[.english] ?? `default`
+            self[.southernNdebele]
         }
         set {
-            dictionary[.southernNdebele] = newValue
+            self[.southernNdebele] = newValue
         }
     }
 
     public var spanish: A {
         get {
-            dictionary[.spanish] ?? dictionary[.english] ?? `default`
+            self[.spanish]
         }
         set {
-            dictionary[.spanish] = newValue
+            self[.spanish] = newValue
         }
     }
 
     public var sundanese: A {
         get {
-            dictionary[.sundanese] ?? dictionary[.english] ?? `default`
+            self[.sundanese]
         }
         set {
-            dictionary[.sundanese] = newValue
+            self[.sundanese] = newValue
         }
     }
 
     public var swahili: A {
         get {
-            dictionary[.swahili] ?? dictionary[.english] ?? `default`
+            self[.swahili]
         }
         set {
-            dictionary[.swahili] = newValue
+            self[.swahili] = newValue
         }
     }
 
     public var swati: A {
         get {
-            dictionary[.swati] ?? dictionary[.english] ?? `default`
+            self[.swati]
         }
         set {
-            dictionary[.swati] = newValue
+            self[.swati] = newValue
         }
     }
 
     public var swedish: A {
         get {
-            dictionary[.swedish] ?? dictionary[.english] ?? `default`
+            self[.swedish]
         }
         set {
-            dictionary[.swedish] = newValue
+            self[.swedish] = newValue
         }
     }
 
     public var tagalog: A {
         get {
-            dictionary[.tagalog] ?? dictionary[.english] ?? `default`
+            self[.tagalog]
         }
         set {
-            dictionary[.tagalog] = newValue
+            self[.tagalog] = newValue
         }
     }
 
     public var tahitian: A {
         get {
-            dictionary[.tahitian] ?? dictionary[.english] ?? `default`
+            self[.tahitian]
         }
         set {
-            dictionary[.tahitian] = newValue
+            self[.tahitian] = newValue
         }
     }
 
     public var tajik: A {
         get {
-            dictionary[.tajik] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.tajik]
         }
         set {
-            dictionary[.tajik] = newValue
+            self[.tajik] = newValue
         }
     }
 
     public var tamil: A {
         get {
-            dictionary[.tamil] ?? dictionary[.malay] ?? dictionary[.english] ?? `default`
+            self[.tamil]
         }
         set {
-            dictionary[.tamil] = newValue
+            self[.tamil] = newValue
         }
     }
 
     public var tatar: A {
         get {
-            dictionary[.tatar] ?? dictionary[.english] ?? `default`
+            self[.tatar]
         }
         set {
-            dictionary[.tatar] = newValue
+            self[.tatar] = newValue
         }
     }
 
     public var telugu: A {
         get {
-            dictionary[.telugu] ?? dictionary[.english] ?? `default`
+            self[.telugu]
         }
         set {
-            dictionary[.telugu] = newValue
+            self[.telugu] = newValue
         }
     }
 
     public var thai: A {
         get {
-            dictionary[.thai] ?? dictionary[.english] ?? `default`
+            self[.thai]
         }
         set {
-            dictionary[.thai] = newValue
+            self[.thai] = newValue
         }
     }
 
     public var tibetan: A {
         get {
-            dictionary[.tibetan] ?? dictionary[.chinese] ?? dictionary[.english] ?? `default`
+            self[.tibetan]
         }
         set {
-            dictionary[.tibetan] = newValue
+            self[.tibetan] = newValue
         }
     }
 
     public var tigrinya: A {
         get {
-            dictionary[.tigrinya] ?? dictionary[.arabic] ?? dictionary[.italian] ?? dictionary[.english] ?? `default`
+            self[.tigrinya]
         }
         set {
-            dictionary[.tigrinya] = newValue
+            self[.tigrinya] = newValue
         }
     }
 
     public var tonga: A {
         get {
-            dictionary[.tonga] ?? dictionary[.english] ?? `default`
+            self[.tonga]
         }
         set {
-            dictionary[.tonga] = newValue
+            self[.tonga] = newValue
         }
     }
 
     public var tsonga: A {
         get {
-            dictionary[.tsonga] ?? dictionary[.afrikaans] ?? dictionary[.english] ?? `default`
+            self[.tsonga]
         }
         set {
-            dictionary[.tsonga] = newValue
+            self[.tsonga] = newValue
         }
     }
 
     public var turkish: A {
         get {
-            dictionary[.turkish] ?? dictionary[.english] ?? `default`
+            self[.turkish]
         }
         set {
-            dictionary[.turkish] = newValue
+            self[.turkish] = newValue
         }
     }
 
     public var turkmen: A {
         get {
-            dictionary[.turkmen] ?? dictionary[.russian] ?? dictionary[.english] ?? `default`
+            self[.turkmen]
         }
         set {
-            dictionary[.turkmen] = newValue
+            self[.turkmen] = newValue
         }
     }
 
     public var twi: A {
         get {
-            dictionary[.twi] ?? dictionary[.english] ?? `default`
+            self[.twi]
         }
         set {
-            dictionary[.twi] = newValue
+            self[.twi] = newValue
         }
     }
 
     public var ukEnglish: A {
         get {
-            dictionary[.ukEnglish] ?? dictionary[.english] ?? `default`
+            self[.ukEnglish]
         }
         set {
-            dictionary[.ukEnglish] = newValue
+            self[.ukEnglish] = newValue
         }
     }
 
     public var ukrainian: A {
         get {
-            dictionary[.ukrainian] ?? dictionary[.english] ?? `default`
+            self[.ukrainian]
         }
         set {
-            dictionary[.ukrainian] = newValue
+            self[.ukrainian] = newValue
         }
     }
 
     public var urdu: A {
         get {
-            dictionary[.urdu] ?? dictionary[.english] ?? `default`
+            self[.urdu]
         }
         set {
-            dictionary[.urdu] = newValue
+            self[.urdu] = newValue
         }
     }
 
     public var usEnglish: A {
         get {
-            dictionary[.usEnglish] ?? dictionary[.english] ?? `default`
+            self[.usEnglish]
         }
         set {
-            dictionary[.usEnglish] = newValue
+            self[.usEnglish] = newValue
         }
     }
 
     public var uyghur: A {
         get {
-            dictionary[.uyghur] ?? dictionary[.chinese] ?? dictionary[.english] ?? `default`
+            self[.uyghur]
         }
         set {
-            dictionary[.uyghur] = newValue
+            self[.uyghur] = newValue
         }
     }
 
     public var uzbek: A {
         get {
-            dictionary[.uzbek] ?? dictionary[.english] ?? `default`
+            self[.uzbek]
         }
         set {
-            dictionary[.uzbek] = newValue
+            self[.uzbek] = newValue
         }
     }
 
     public var venda: A {
         get {
-            dictionary[.venda] ?? dictionary[.english] ?? `default`
+            self[.venda]
         }
         set {
-            dictionary[.venda] = newValue
+            self[.venda] = newValue
         }
     }
 
     public var vietnamese: A {
         get {
-            dictionary[.vietnamese] ?? dictionary[.english] ?? `default`
+            self[.vietnamese]
         }
         set {
-            dictionary[.vietnamese] = newValue
+            self[.vietnamese] = newValue
         }
     }
 
     public var volapük: A {
         get {
-            dictionary[.volapük] ?? dictionary[.english] ?? `default`
+            self[.volapük]
         }
         set {
-            dictionary[.volapük] = newValue
+            self[.volapük] = newValue
         }
     }
 
     public var wallon: A {
         get {
-            dictionary[.wallon] ?? dictionary[.french] ?? dictionary[.english] ?? `default`
+            self[.wallon]
         }
         set {
-            dictionary[.wallon] = newValue
+            self[.wallon] = newValue
         }
     }
 
     public var welsh: A {
         get {
-            dictionary[.welsh] ?? dictionary[.english] ?? `default`
+            self[.welsh]
         }
         set {
-            dictionary[.welsh] = newValue
+            self[.welsh] = newValue
         }
     }
 
     public var westernFrisian: A {
         get {
-            dictionary[.westernFrisian] ?? dictionary[.dutch] ?? dictionary[.english] ?? `default`
+            self[.westernFrisian]
         }
         set {
-            dictionary[.westernFrisian] = newValue
+            self[.westernFrisian] = newValue
         }
     }
 
     public var wolof: A {
         get {
-            dictionary[.wolof] ?? dictionary[.french] ?? dictionary[.arabic] ?? dictionary[.english] ?? `default`
+            self[.wolof]
         }
         set {
-            dictionary[.wolof] = newValue
+            self[.wolof] = newValue
         }
     }
 
     public var xhosa: A {
         get {
-            dictionary[.xhosa] ?? dictionary[.english] ?? `default`
+            self[.xhosa]
         }
         set {
-            dictionary[.xhosa] = newValue
+            self[.xhosa] = newValue
         }
     }
 
     public var yoruba: A {
         get {
-            dictionary[.yoruba] ?? dictionary[.english] ?? `default`
+            self[.yoruba]
         }
         set {
-            dictionary[.yoruba] = newValue
+            self[.yoruba] = newValue
         }
     }
 
     public var zulu: A {
         get {
-            dictionary[.zulu] ?? dictionary[.english] ?? `default`
+            self[.zulu]
         }
         set {
-            dictionary[.zulu] = newValue
+            self[.zulu] = newValue
         }
     }
 }
@@ -1651,27 +1906,101 @@ extension Translated: Sendable where A: Sendable {}
 extension Translated: Equatable where A: Equatable {}
 extension Translated: Hashable where A: Hashable {}
 
+/// ExpressibleByDictionaryLiteral conformance allows creating Translated instances with dictionary literal syntax
+///
+/// This enables elegant initialization syntax such as:
+/// ```swift
+/// let greeting: Translated<String> = [
+///     .english: "Hello",
+///     .dutch: "Hallo", 
+///     .french: "Bonjour"
+/// ]
+/// ```
+///
+/// For non-String types, the dictionary must contain at least one translation.
+/// The default value is selected in this priority order:
+/// 1. English (if present)
+/// 2. The first language in the dictionary literal order
+extension Translated: ExpressibleByDictionaryLiteral {
+    public typealias Key = Language
+    public typealias Value = A
+
+    /// Creates a Translated instance from a dictionary literal.
+    ///
+    /// The default value is selected in this priority order:
+    /// 1. English (if present)
+    /// 2. The first language in the dictionary literal order
+    /// If the dictionary is empty, this initializer will cause a runtime error.
+    ///
+    /// - Parameter elements: Key-value pairs representing language-translation mappings
+    public init(dictionaryLiteral elements: (Language, A)...) {
+        let dictionary = Dictionary(uniqueKeysWithValues: elements)
+
+        guard !dictionary.isEmpty else {
+            fatalError("Dictionary literal must contain at least one translation")
+        }
+
+        // Prefer English as default if available, otherwise use the first provided value
+        let defaultValue = dictionary[.english] ?? elements.first!.1
+
+        self.init(default: defaultValue, dictionary: dictionary)
+    }
+}
+
+/// String concatenation operators for Translated<String> (including TranslatedString)
+///
+/// These operators enable concatenating translated strings while preserving all language
+/// translations. The concatenation works across ALL supported languages, not just a subset.
 extension Translated<String> {
-    public static func +(lhs: Translated<String>, rhs: Translated<String>) -> Translated<String> {
+    /// Concatenates two Translated<String> instances, preserving all language translations.
+    ///
+    /// This operator combines translations from both operands for every language present in either.
+    /// If a language exists in only one operand, an empty string is used as the fallback for the missing translation.
+    ///
+    /// - Parameters:
+    ///   - lhs: The left-hand translated string
+    ///   - rhs: The right-hand translated string
+    /// - Returns: A new Translated<String> with concatenated translations for all languages
+    ///
+    /// ## Example
+    /// ```swift
+    /// let greeting = TranslatedString(english: "Hello", french: "Bonjour")
+    /// let name = TranslatedString(english: " World", spanish: " Mundo")
+    /// let result = greeting + name
+    /// // Result contains: english: "Hello World", french: "Bonjour", spanish: " Mundo"
+    /// ```
+    public static func +(lhs: Self, rhs: Self) -> Self {
         let allKeys = Set(lhs.dictionary.keys).union(rhs.dictionary.keys)
 
-        let newTranslations = Dictionary(uniqueKeysWithValues: allKeys.map { key in
-            (key, (lhs.dictionary[key] ?? "") + (rhs.dictionary[key] ?? ""))
-        })
+        let newTranslations = Dictionary(
+            uniqueKeysWithValues: allKeys.map { ($0, (lhs.dictionary[$0] ?? lhs.default) + (rhs.dictionary[$0] ?? rhs.default)) }
+        )
 
-        return Translated<String>(
+        return Self(
             default: lhs.default + rhs.default,
             dictionary: newTranslations
         )
     }
 
-    public static func +(lhs: Translated<String>, rhs: String) -> Translated<String> {
+    /// Concatenates a regular string to all translations in a Translated<String>.
+    ///
+    /// - Parameters:
+    ///   - lhs: The translated string
+    ///   - rhs: The string to append to all translations
+    /// - Returns: A new Translated<String> with the string appended to all translations
+    public static func +(lhs: Self, rhs: String) -> Self {
         let newTranslations = lhs.dictionary.mapValues { $0 + rhs }
-        return Translated<String>(default: lhs.default, dictionary: newTranslations)
+        return Self(default: lhs.default + rhs, dictionary: newTranslations)
     }
 
-    public static func +(lhs: String, rhs: Translated<String>) -> Translated<String> {
+    /// Concatenates a regular string to the beginning of all translations in a Translated<String>.
+    ///
+    /// - Parameters:
+    ///   - lhs: The string to prepend to all translations
+    ///   - rhs: The translated string
+    /// - Returns: A new Translated<String> with the string prepended to all translations
+    public static func +(lhs: String, rhs: Self) -> Self {
         let newTranslations = rhs.dictionary.mapValues { lhs + $0 }
-        return Translated<String>(default: rhs.default, dictionary: newTranslations)
+        return Self(default: lhs + rhs.default, dictionary: newTranslations)
     }
 }

@@ -1,47 +1,54 @@
-//
-//  File.swift
-//  
-//
-//  Created by Coen ten Thije Boonkkamp on 03/05/2023.
-//
-
 import Foundation
 import Language
-import String
 import Translated
 
+/// A specialized version of `Translated<String>` optimized for internationalized string handling.
+///
+/// `TranslatedString` is the most commonly used type in the Swift Translating package, providing
+/// a convenient way to store and access strings in multiple languages with intelligent fallbacks.
+///
+/// ## Basic Usage
+///
+/// ```swift
+/// let welcome = TranslatedString(
+///     dutch: "Welkom",
+///     english: "Welcome", 
+///     french: "Bienvenue",
+///     german: "Willkommen",
+///     spanish: "Bienvenido"
+/// )
+/// ```
+///
+/// ## String Literal Support
+///
+/// TranslatedString supports Swift string literals for quick creation:
+///
+/// ```swift
+/// let message: TranslatedString = "Hello World" // Creates with English as default
+/// ```
+///
+/// ## String Operations
+///
+/// TranslatedString supports common string operations that work across all languages:
+///
+/// ```swift
+/// let greeting = TranslatedString(english: "hello", spanish: "hola")
+/// let capitalizedGreeting = greeting.capitalized // "Hello" / "Hola"
+/// let withPunctuation = greeting.period // "hello." / "hola."
+/// ```
+///
+/// ## Usage with Dependencies
+///
+/// Use with Swift Dependencies for automatic language resolution:
+///
+/// ```swift
+/// @Dependency(\.language) var language
+/// let localizedText = welcome.description // Uses current language dependency
+/// ```
+///
+/// - SeeAlso: ``Translated`` for the underlying generic implementation
+/// - SeeAlso: ``Language`` for supported language codes
 public typealias TranslatedString = Translated<String>
-
-public extension [Language] {
-    func sort() -> Self {
-        self.sorted { language1, langauge2 in
-            "\(language1)" < "\(langauge2)"
-        }
-    }
-}
-
-//
-// extension TranslatedString {
-//    public static func +(lhs: TranslatedString, rhs: String) -> TranslatedString {
-//        var newTranslations = lhs.translations
-//        for (key, value) in newTranslations {
-//            newTranslations[key] = value + rhs
-//        }
-//        return TranslatedString(translations: newTranslations)
-//    }
-//
-//    public static func +(lhs: String, rhs: TranslatedString) -> TranslatedString {
-//        var newTranslations = rhs.translations
-//        for (key, value) in newTranslations {
-//            newTranslations[key] = lhs + value
-//        }
-//        return TranslatedString(translations: newTranslations)
-//    }
-// }
-
-public func +(_ lhs: TranslatedString, _ rhs: TranslatedString) -> TranslatedString {
-    return TranslatedString(dutch: lhs(in: .dutch) + rhs(in: .dutch), english: lhs(in: .english) + rhs(in: .english))
-}
 
 extension TranslatedString: ExpressibleByUnicodeScalarLiteral {
     public init(unicodeScalarLiteral value: String) {
@@ -58,364 +65,38 @@ extension TranslatedString: ExpressibleByExtendedGraphemeClusterLiteral {
 }
 
 extension TranslatedString: ExpressibleByStringLiteral & ExpressibleByStringInterpolation {
-    public init(stringLiteral: String) {
-        self.init(stringLiteral)
+    public init(stringLiteral value: String) {
+        self.init(value)
     }
 }
 
 public extension TranslatedString {
-    static let space: Self = .init(String.space)
-    static let period: Self = .init(String.period)
-    static let comma: Self = .init(String.comma)
-    static let semicolon: Self = .init(String.semicolon)
-    static let questionmark: Self = .init(String.questionmark)
+    static let empty: Self = TranslatedString(stringLiteral: "")
 }
 
-public extension TranslatedString {
+/// Specialized ExpressibleByDictionaryLiteral conformance for TranslatedString
+///
+/// This specialization allows empty dictionary literals for TranslatedString,
+/// using an empty string as the sensible default value.
+extension TranslatedString {
+    /// Creates a TranslatedString instance from a dictionary literal.
+    ///
+    /// Empty dictionaries are allowed and will use an empty string as the default.
+    /// For non-empty dictionaries, the default value is selected in this priority order:
+    /// 1. English (if present)
+    /// 2. The first language in the dictionary literal order
+    ///
+    /// - Parameter elements: Key-value pairs representing language-translation mappings  
+    public init(dictionaryLiteral elements: (Language, String)...) {
+        if elements.isEmpty {
+            self = TranslatedString.empty
+        } else {
+            let dictionary = Dictionary(uniqueKeysWithValues: elements)
+            // Prefer English as default if available, otherwise use the first provided value
+            let defaultValue = dictionary[.english] ?? elements.first!.1
 
-    var period: Self {
-        self.map(\.period)
+            // Use the basic dictionary initializer instead of closure-based
+            self.init(default: defaultValue, dictionary: dictionary)
+        }
     }
-
-    var comma: Self {
-        self.map(\.comma)
-    }
-
-    var semicolon: Self {
-        self.map(\.semicolon)
-    }
-
-    var colon: Self {
-        self.map(\.colon)
-    }
-
-    var questionmark: Self {
-        self.map(\.questionmark)
-    }
-
-    var isEmpty: Bool {
-        self.english.isEmpty && self.dutch.isEmpty
-    }
-
-    var capitalized: Self {
-        self.map(\.capitalized)
-    }
-
-    func capitalized(with locale: Locale? = nil) -> Self {
-        self.map { $0.capitalized(with: locale) }
-    }
-
-    func uppercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.uppercased(with: locale) }
-    }
-
-    @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
-    func capitalizedFirstLetter() -> Self {
-        self.capitalizingFirstLetter()
-    }
-
-    func capitalizingFirstLetter() -> Self {
-
-        self.map { $0.prefix(1).capitalized + $0.dropFirst() }
-    }
-
-    func firstLetter(_ closure: (String) -> String) -> Self {
-
-        self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
-
-    }
-
-    func lowercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.lowercased(with: locale) }
-    }
-}
-
-public extension TranslatedString {
-
-    static let male: Self = .init(
-        dutch: "man",
-        english: "male",
-        french: "mâle",
-        german: "Mann",
-        spanish: "masculino"
-    )
-
-    static let female: Self = .init(
-        dutch: "vrouw",
-        english: "female",
-        french: "femme",
-        german: "Frau",
-        spanish: "femenina"
-    )
-
-    static let nonBinaire: Self = .init(
-        dutch: "non-binair",
-        english: "non binary",
-        french: "non binaire",
-        german: "nicht binär",
-        spanish: "No binario"
-    )
-
-    static let answer: Self = .init(
-        dutch: "antwoord",
-        english: "answer",
-        french: "répondre",
-        german: "antwort",
-        spanish: "respuesta"
-    )
-
-    static let agree: Self = .init(
-        dutch: "eens",
-        english: "agree",
-        french: "convenu",
-        german: "stimmt",
-        spanish: "acordado"
-    )
-
-    static let disagree: Self = .init(
-        dutch: "oneens",
-        english: "disagree",
-        french: "désaccord",
-        german: "nein",
-        spanish: "discrepar"
-    )
-
-    static let compact: Self = .init(
-        dutch: "compact",
-        english: "compact",
-        french: "compact",
-        german: "kompakt",
-        spanish: "compacto"
-    )
-
-    static let complete: Self = .init(
-        dutch: "compleet",
-        english: "complete",
-        french: "complet",
-        german: "vollständig",
-        spanish: "completo"
-    )
-
-    static let your_name: Self = .init(
-        dutch: "je naam",
-        english: "your name",
-        french: "votre nom",
-        german: "Ihren Namen",
-        spanish: "Su nombre"
-    )
-
-    static let your_gender: Self = .init(
-        dutch: "je geslacht",
-        english: "your gender",
-        french: "votre sexe",
-        german: "dein Geschlecht",
-        spanish: "tu género"
-    )
-
-    static let select_an_option: Self = .init(
-        dutch: "selecteer een keuze",
-        english: "select an option",
-        french: "choisir une option",
-        german: "Wähle eine Option",
-        spanish: "Seleccione una opción"
-    )
-
-    static let gender: Self = .init(
-        dutch: "gender",
-        english: "gender",
-        french: "genre",
-        german: "Geschlecht",
-        spanish: "género"
-    )
-
-    static let new: Self = .init(
-        dutch: "Nieuw",
-        english: "New",
-        french: "Nouveau",
-        german: "Neue",
-        spanish: "Nuevo"
-    )
-
-    static let language: Self = .init(
-        dutch: "Taal",
-        english: "Language",
-        french: "Langue",
-        german: "Sprache",
-        spanish: "Idioma"
-    )
-
-    static let next: Self = .init(
-        dutch: "volgende",
-        english: "next"
-    )
-
-    static let subject: Self = .init(
-        dutch: "onderwerp",
-        english: "subject"
-    )
-
-    static let date: Self = .init(
-        dutch: "datum",
-        english: "date"
-    )
-
-    static let name: Self = .init(
-        dutch: "naam",
-        english: "name"
-    )
-
-    static let `continue`: Self = .init(
-        dutch: "doorgaan",
-        english: "continue"
-    )
-
-    static let `true`: Self = .init(
-        dutch: "waar",
-        english: "true"
-    )
-
-    static let `false`: Self = .init(
-        dutch: "onwaar",
-        english: "false"
-    )
-
-    static let and: Self = .init(
-        dutch: "en",
-        english: "and",
-        french: "et",
-        german: "und",
-        italian: "e",
-        spanish: "y"
-    )
-
-    static let or: Self = .init(
-        dutch: "of",
-        english: "or",
-        french: "ou",
-        german: "oder",
-        italian: "o",
-        spanish: "o"
-    )
-
-    static let title: Self = .init(
-        dutch: "Titel",
-        english: "Title",
-        french: "Titre",
-        german: "Titel",
-        spanish: "Título"
-    )
-
-    static let delete: Self = .init(
-        dutch: "Verwijder",
-        english: "Delete",
-        french: "Supprimer",
-        german: "Löschen",
-        spanish: "Borrar"
-    )
-
-    static let done: Self = .init(
-        dutch: "klaar",
-        english: "done",
-        french: "fini",
-        german: "fertig",
-        spanish: "finalizado"
-    )
-
-    static let edit: Self = .init(
-        dutch: "wijzig",
-        english: "edit"
-    )
-
-    static let in_progress: Self = .init(
-        dutch: "bezig",
-        english: "in progress",
-        french: "fini",
-        german: "im Gange",
-        spanish: "en curso"
-    )
-
-    static let reset: Self = .init(
-        dutch: "Reset",
-        english: "Reset",
-        french: "Reset",
-        german: "Reset",
-        spanish: "Reset"
-    )
-
-    static let random: Self = .init(
-        dutch: "Random",
-        english: "Random",
-        french: "Random",
-        german: "Random",
-        spanish: "Random"
-    )
-
-    static let cancel: Self = .init(
-        dutch: "Annuleer",
-        english: "Cancel",
-        french: "Annuler",
-        german: "Stornieren",
-        spanish: "Cancelar"
-    )
-
-    static let allow_changes: Self = .init(
-        dutch: "sta wijzigingen toe",
-        english: "allow changes",
-        french: "autoriser les modifications",
-        german: "Änderungen zulassen",
-        spanish: "permitir cambios"
-    )
-
-    static let choose_true_or_false: Self = .init(
-        dutch: "Kies waar of onwaar",
-        english: "Choose true or false"
-    )
-
-    static let cannotUndo: Self = .init(
-        dutch: "Je kunt dit niet ongedaan maken",
-        english: "You cannot undo this action",
-        french: "Vous ne pouvez pas annuler cette action",
-        german: "Sie können diese Aktion nicht rückgängig machen",
-        spanish: "No puedes deshacer esta acción"
-    )
-
-    static let textColor: Self = .init(
-        dutch: "Tekstkleur",
-        english: "Text color",
-        french: "Couleur du texte",
-        german: "Textfarbe",
-        spanish: "Color de texto"
-    )
-
-    static let backgroundColor: Self = .init(
-        dutch: "Achtergrondkleur",
-        english: "Background color",
-        french: "La couleur d'arrière-plan",
-        german: "Hintergrundfarbe",
-        spanish: "Color de fondo"
-    )
-
-    var any: Self {
-        .init(
-
-            dutch: "een \(dutch)",
-            english: {
-                if let first = english.first {
-                    if Set<String>.consonents.contains(String(first)) {return "an \(english)"} else { return "a \(english)" }
-                }
-                return english
-            }()
-        )
-    }
-
-    var the: Self {
-        .init(
-            dutch: "de \(dutch)",
-            english: "the \(english)"
-        )
-    }
-}
-
-public extension TranslatedString {
-    static let empty: Self = .init("")
 }

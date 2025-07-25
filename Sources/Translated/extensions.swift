@@ -77,9 +77,3 @@ extension Sequence {
         callAsFunction(language: language)
     }
 }
-
-extension Translated {
-    public var engels: A { english }
-    public var nederlands: A { dutch }
-    public var nl: A { dutch }
-}

@@ -4,31 +4,30 @@
 import PackageDescription
 
 extension String {
-    static let translating: Self = "Translating"
+    static let dateFormattedLocalized: Self = "DateFormattedLocalized"
     static let language: Self = "Language"
-    static let languageDependency: Self = "Language Dependency"
-    static let locale: Self = "Locale"
+    static let translatingDependencies: Self = "Translating+Dependencies"
     static let singlePlural: Self = "SinglePlural"
-    static let string: Self = "String"
     static let translated: Self = "Translated"
     static let translatedString: Self = "TranslatedString"
-    static let dateFormattedLocalized: Self = "Date Formatted Localized"
+    static let translating: Self = "Translating"
+    static let translatingTestSupport: Self = "TranslatingTestSupport"
 }
 
 extension Target.Dependency {
-    static var translating: Self { .target(name: .translating) }
+    static var dateFormattedLocalized: Self { .target(name: .dateFormattedLocalized) }
     static var language: Self { .target(name: .language) }
-    static var languageDependency: Self { .target(name: .languageDependency) }
-    static var locale: Self { .target(name: .locale) }
+    static var translatingDependencies: Self { .target(name: .translatingDependencies) }
     static var singlePlural: Self { .target(name: .singlePlural) }
-    static var string: Self { .target(name: .string) }
     static var translated: Self { .target(name: .translated) }
     static var translatedString: Self { .target(name: .translatedString) }
-    static var dateFormattedLocalized: Self { .target(name: .dateFormattedLocalized) }
+    static var translating: Self { .target(name: .translating) }
+    static var translatingTestSupport: Self { .target(name: .translatingTestSupport) }
 }
 
 extension Target.Dependency {
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
+    static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
 }
 
 let package = Package(
@@ -46,26 +45,23 @@ let package = Package(
             targets: [.translating]
         ),
         .library(name: .language, targets: [.language]),
-        .library(name: .languageDependency, targets: [.languageDependency]),
-        .library(name: .locale, targets: [.locale]),
+        .library(name: .translatingDependencies, targets: [.translatingDependencies]),
         .library(name: .singlePlural, targets: [.singlePlural]),
-        .library(name: .string, targets: [.string]),
         .library(name: .translated, targets: [.translated]),
         .library(name: .translatedString, targets: [.translatedString]),
-        .library(name: .dateFormattedLocalized, targets: [.dateFormattedLocalized])
+        .library(name: .dateFormattedLocalized, targets: [.dateFormattedLocalized]),
+        .library(name: .translatingTestSupport, targets: [.translatingTestSupport])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.5")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2")
     ],
     targets: [
         .target(
             name: .translating,
             dependencies: [
                 .language,
-                .languageDependency,
-                .locale,
+                .translatingDependencies,
                 .singlePlural,
-                .string,
                 .translated,
                 .translatedString,
                 .dateFormattedLocalized
@@ -74,35 +70,33 @@ let package = Package(
         .testTarget(
             name: .translating.tests,
             dependencies: [
-                .translating
+                .translating,
+                .dependenciesTestSupport
             ]
         ),
         .target(name: .language),
         .testTarget(
             name: .language.tests,
-            dependencies: [.language]
-        ),
-        .target(
-            name: .languageDependency,
             dependencies: [
                 .language,
-                .string,
+                .dependenciesTestSupport
+            ]
+        ),
+        .target(
+            name: .translatingDependencies,
+            dependencies: [
+                .language,
                 .translated,
                 .translatedString,
                 .dependencies
             ]
         ),
         .testTarget(
-            name: .languageDependency.tests,
-            dependencies: [.languageDependency]
-        ),
-        .target(
-            name: .locale,
-            dependencies: [.language]
-        ),
-        .testTarget(
-            name: .locale.tests,
-            dependencies: [.locale]
+            name: .translatingDependencies.tests,
+            dependencies: [
+                .translatingDependencies,
+                .dependenciesTestSupport
+            ]
         ),
         .target(
             name: .singlePlural,
@@ -114,50 +108,54 @@ let package = Package(
         ),
         .testTarget(
             name: .singlePlural.tests,
-            dependencies: [.singlePlural]
-        ),
-        .target(
-            name: .string,
             dependencies: [
-                .language,
-                .locale
+                .singlePlural,
+                .dependenciesTestSupport
             ]
-        ),
-        .testTarget(
-            name: .string.tests,
-            dependencies: [.string]
         ),
         .target(
             name: .translated,
             dependencies: [
                 .language,
-                .dependencies
             ]
         ),
         .testTarget(
             name: .translated.tests,
-            dependencies: [.translated]
+            dependencies: [
+                .translated,
+                .dependenciesTestSupport
+            ]
         ),
         .target(
             name: .translatedString,
             dependencies: [
-                .language,
-                .translated,
-                .string
+                .translated
             ]
         ),
         .testTarget(
             name: .translatedString.tests,
-            dependencies: [.translatedString]
+            dependencies: [
+                .translatedString,
+                .dependenciesTestSupport
+            ]
         ),
         .target(
             name: .dateFormattedLocalized,
-            dependencies: [.dependencies]
+            dependencies: [
+                .dependencies,
+                .language,
+                .translatingDependencies
+            ]
         ),
         .testTarget(
             name: .dateFormattedLocalized.tests,
-            dependencies: [.dateFormattedLocalized]
-        )
+            dependencies: [
+                .dateFormattedLocalized,
+                .dependenciesTestSupport,
+                .language
+            ]
+        ),
+        .target(name: .translatingTestSupport)
     ]
 )
 

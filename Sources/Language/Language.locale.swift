@@ -196,26 +196,5 @@ extension Locale {
 }
 
 extension LanguageTypealias {
-    public var locale: Locale {
-        .init(self)
-    }
-}
-
-public extension Language {
-    static func preferredLanguageForUser() -> Self {
-
-        if let language = Locale.preferredLanguages.first {
-            switch language {
-            case "en", "en-US", "en-UK": return .english
-            case "fr", "fr-FR": return .french
-            case "de", "de-DE": return .german
-            case "es", "es-ES": return .spanish
-            case "nl-NL", "nl": return .dutch
-            default: return .english
-            }
-
-        } else {
-            return .english
-        }
-    }
+    public var locale: Locale { .init(self) }
 }

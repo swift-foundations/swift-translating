@@ -1,7 +1,30 @@
 import Foundation
 
-public typealias _Language = Language
-
+/// A comprehensive enumeration representing 180+ languages with their ISO 639-1/639-2 codes.
+///
+/// `Language` provides type-safe language identification for internationalization and localization.
+/// Each case corresponds to a specific language with its standard ISO language code as the raw value.
+///
+/// ## Usage
+///
+/// ```swift
+/// let userLanguage: Language = .english
+/// let languageCode = userLanguage.rawValue // "en"
+/// 
+/// // Create from string
+/// let spanish = Language(rawValue: "es") // .spanish
+/// ```
+///
+/// ## Supported Languages
+///
+/// The enum includes support for major world languages including:
+/// - European languages (English, French, German, Spanish, Italian, etc.)
+/// - Asian languages (Chinese, Japanese, Korean, Hindi, Arabic, etc.)  
+/// - Regional variants (US English, UK English, Canadian English, etc.)
+/// - Less common but standardized languages
+///
+/// - Note: All language codes follow ISO 639-1 (two-letter) or ISO 639-2 (three-letter) standards
+/// - SeeAlso: ``Locale`` for locale-specific functionality
 public indirect enum Language: String, CaseIterable, Hashable, Equatable, Codable, Sendable {
     case abkhazian = "ab"
     case afar = "aa"

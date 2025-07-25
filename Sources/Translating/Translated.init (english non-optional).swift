@@ -5,7 +5,10 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
+import Dependencies
 import Foundation
+import Language
+import Translated
 
 extension Translated {
     public init(

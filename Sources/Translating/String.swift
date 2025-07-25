@@ -7,29 +7,29 @@
 
 import Foundation
 import Language
-import Locale
 
 extension String {
-    public static let period: Self = "."
-    public static let comma: Self = ","
-    public static let semicolon: Self = ";"
-    public static let questionmark: Self = "?"
-    public static let space: Self = "\u{00a0}"
-    public static let tab: Self = "\u{0009}"
-}
-
-extension String {
+    /// Returns the string with the appropriate indefinite article ("a" or "an") prepended.
+    /// Uses English grammar rules: "an" before vowel sounds, "a" before consonant sounds.
     public var any: Self {
         if let first = self.first {
-            if Set<String>.consonents.contains(String(first)) {return "an \(self)"} else { return "a \(self)" }
+            if Set<String>.vowels.contains(String(first).lowercased()) {
+                return "an \(self)"
+            } else {
+                return "a \(self)"
+            }
         }
         return self
     }
 }
 
 extension Set where Element == String {
-    public static let consonents: Self = [
-        "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"
+    /// English vowels (including 'y' when it sounds like a vowel)
+    public static let vowels: Self = ["a", "e", "i", "o", "u"]
+
+    /// English consonants
+    public static let consonants: Self = [
+        "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"
     ]
 }
 
@@ -197,7 +197,7 @@ extension String {
         return String(repeating: string, count: characters)
     }
 
-    public static func placeholder(_ size: Placeholder.Size, _ string: String = .space) -> String {
+    public static func placeholder(_ size: String.Placeholder.Size, _ string: String = .space) -> String {
         switch size {
         case .large: return String(repeating: string, count: 40)
         case .medium: return String(repeating: string, count: 22)
