@@ -8,8 +8,7 @@
 import Foundation
 
 public extension TranslatedString {
-
-    @inlinable static var male: Self {
+    static let male: Self =
         .init(
             dutch: "man",
             english: "male",
@@ -17,9 +16,8 @@ public extension TranslatedString {
             german: "Mann",
             spanish: "masculino"
         )
-    }
-
-    @inlinable static var female: Self {
+    
+    static let female: Self =
         .init(
             dutch: "vrouw",
             english: "female",
@@ -27,9 +25,8 @@ public extension TranslatedString {
             german: "Frau",
             spanish: "femenina"
         )
-    }
-
-    @inlinable static var non_binary: Self {
+    
+    static let non_binary: Self =
         .init(
             dutch: "non-binair",
             english: "non binary",
@@ -37,9 +34,8 @@ public extension TranslatedString {
             german: "nicht binär",
             spanish: "no binario"
         )
-    }
-
-    @inlinable static var answer: Self {
+    
+    static let answer: Self =
         .init(
             dutch: "antwoord",
             english: "answer",
@@ -47,9 +43,8 @@ public extension TranslatedString {
             german: "antwort",
             spanish: "respuesta"
         )
-    }
-
-    @inlinable static var agree: Self {
+    
+    static let agree: Self =
         .init(
             dutch: "eens",
             english: "agree",
@@ -57,9 +52,8 @@ public extension TranslatedString {
             german: "stimmt",
             spanish: "acordado"
         )
-    }
-
-    @inlinable static var disagree: Self {
+    
+    static let disagree: Self =
         .init(
             dutch: "oneens",
             english: "disagree",
@@ -67,9 +61,8 @@ public extension TranslatedString {
             german: "nein",
             spanish: "discrepar"
         )
-    }
-
-    @inlinable static var compact: Self {
+    
+    static let compact: Self =
         .init(
             dutch: "compact",
             english: "compact",
@@ -77,9 +70,8 @@ public extension TranslatedString {
             german: "kompakt",
             spanish: "compacto"
         )
-    }
-
-    @inlinable static var complete: Self {
+    
+    static let complete: Self =
         .init(
             dutch: "compleet",
             english: "complete",
@@ -87,9 +79,8 @@ public extension TranslatedString {
             german: "vollständig",
             spanish: "completo"
         )
-    }
-
-    @inlinable static var your_name: Self {
+    
+    static let your_name: Self =
         .init(
             dutch: "je naam",
             english: "your name",
@@ -97,9 +88,8 @@ public extension TranslatedString {
             german: "Ihren Namen",
             spanish: "Su nombre"
         )
-    }
-
-    @inlinable static var your_gender: Self {
+    
+    static let your_gender: Self =
         .init(
             dutch: "je geslacht",
             english: "your gender",
@@ -107,9 +97,8 @@ public extension TranslatedString {
             german: "dein Geschlecht",
             spanish: "tu género"
         )
-    }
-
-    @inlinable static var select_an_option: Self {
+    
+    static let select_an_option: Self =
         .init(
             dutch: "selecteer een keuze",
             english: "select an option",
@@ -117,9 +106,8 @@ public extension TranslatedString {
             german: "Wähle eine Option",
             spanish: "Seleccione una opción"
         )
-    }
-
-    @inlinable static var gender: Self {
+    
+    static let gender: Self =
         .init(
             dutch: "gender",
             english: "gender",
@@ -127,9 +115,8 @@ public extension TranslatedString {
             german: "Geschlecht",
             spanish: "género"
         )
-    }
-
-    @inlinable static var new: Self {
+    
+    static let new: Self =
         .init(
             dutch: "Nieuw",
             english: "New",
@@ -137,9 +124,8 @@ public extension TranslatedString {
             german: "Neue",
             spanish: "Nuevo"
         )
-    }
-
-    @inlinable static var language: Self {
+    
+    static let language: Self =
         .init(
             dutch: "taal",
             english: "language",
@@ -147,58 +133,50 @@ public extension TranslatedString {
             german: "sprache",
             spanish: "idioma"
         )
-    }
-
-    @inlinable static var next: Self {
+    
+    static let next: Self =
         .init(
             dutch: "volgende",
             english: "next"
         )
-    }
-
-    @inlinable static var subject: Self {
+    
+    static let subject: Self =
         .init(
             dutch: "onderwerp",
             english: "subject"
         )
-    }
-
-    @inlinable static var date: Self {
+    
+    static let date: Self =
         .init(
             dutch: "datum",
             english: "date"
         )
-    }
-
-    @inlinable static var name: Self {
+    
+    static let name: Self =
         .init(
             dutch: "naam",
             english: "name"
         )
-    }
-
-    @inlinable static var `continue`: Self {
+    
+    static let `continue`: Self =
         .init(
             dutch: "doorgaan",
             english: "continue"
         )
-    }
-
-    @inlinable static var `true`: Self {
+    
+    static let `true`: Self =
         .init(
             dutch: "waar",
             english: "true"
         )
-    }
-
-    @inlinable static var `false`: Self {
+    
+    static let `false`: Self =
         .init(
             dutch: "onwaar",
             english: "false"
         )
-    }
-
-    @inlinable static var and: Self {
+    
+    static let and: Self =
         .init(
             dutch: "en",
             english: "and",
@@ -207,9 +185,8 @@ public extension TranslatedString {
             italian: "e",
             spanish: "y"
         )
-    }
-
-    @inlinable static var or: Self {
+    
+    static let or: Self =
         .init(
             dutch: "of",
             english: "or",
@@ -218,9 +195,8 @@ public extension TranslatedString {
             italian: "o",
             spanish: "o"
         )
-    }
-
-    @inlinable static var title: Self {
+    
+    static let title: Self =
         .init(
             dutch: "Titel",
             english: "Title",
@@ -228,9 +204,8 @@ public extension TranslatedString {
             german: "Titel",
             spanish: "Título"
         )
-    }
-
-    @inlinable static var delete: Self {
+    
+    static let delete: Self =
         .init(
             dutch: "verwijder",
             english: "delete",
@@ -238,9 +213,8 @@ public extension TranslatedString {
             german: "löschen",
             spanish: "borrar"
         )
-    }
-
-    @inlinable static var done: Self {
+    
+    static let done: Self =
         .init(
             dutch: "klaar",
             english: "done",
@@ -248,16 +222,14 @@ public extension TranslatedString {
             german: "fertig",
             spanish: "finalizado"
         )
-    }
-
-    @inlinable static var edit: Self {
+    
+    static let edit: Self =
         .init(
             dutch: "wijzig",
             english: "edit"
         )
-    }
-
-    @inlinable static var in_progress: Self {
+    
+    static let in_progress: Self =
         .init(
             dutch: "bezig",
             english: "in progress",
@@ -265,9 +237,8 @@ public extension TranslatedString {
             german: "im Gange",
             spanish: "en curso"
         )
-    }
-
-    @inlinable static var reset: Self {
+    
+    static let reset: Self =
         .init(
             dutch: "Reset",
             english: "Reset",
@@ -275,9 +246,8 @@ public extension TranslatedString {
             german: "Reset",
             spanish: "Reset"
         )
-    }
-
-    @inlinable static var random: Self {
+    
+    static let random: Self =
         .init(
             dutch: "andom",
             english: "random",
@@ -285,9 +255,8 @@ public extension TranslatedString {
             german: "random",
             spanish: "random"
         )
-    }
-
-    @inlinable static var cancel: Self {
+    
+    static let cancel: Self =
         .init(
             dutch: "annuleer",
             english: "cancel",
@@ -295,9 +264,8 @@ public extension TranslatedString {
             german: "stornieren",
             spanish: "cancelar"
         )
-    }
-
-    @inlinable static var allow_changes: Self {
+    
+    static let allow_changes: Self =
         .init(
             dutch: "sta wijzigingen toe",
             english: "allow changes",
@@ -305,16 +273,14 @@ public extension TranslatedString {
             german: "Änderungen zulassen",
             spanish: "permitir cambios"
         )
-    }
-
-    @inlinable static var choose_true_or_false: Self {
+    
+    static let choose_true_or_false: Self =
         .init(
             dutch: "Kies waar of onwaar",
             english: "Choose true or false"
         )
-    }
-
-    @inlinable static var cannot_undo: Self {
+    
+    static let cannot_undo: Self =
         .init(
             dutch: "je kunt dit niet ongedaan maken",
             english: "you cannot undo this action",
@@ -322,9 +288,8 @@ public extension TranslatedString {
             german: "Sie können diese Aktion nicht rückgängig machen",
             spanish: "no puedes deshacer esta acción"
         )
-    }
-
-    @inlinable static var text_color: Self {
+    
+    static let text_color: Self =
         .init(
             dutch: "tekstkleur",
             english: "text color",
@@ -332,9 +297,8 @@ public extension TranslatedString {
             german: "textfarbe",
             spanish: "color de texto"
         )
-    }
-
-    @inlinable static var background_color: Self {
+    
+    static let background_color: Self =
         .init(
             dutch: "achtergrondkleur",
             english: "background color",
@@ -342,8 +306,7 @@ public extension TranslatedString {
             german: "hintergrundfarbe",
             spanish: "color de fondo"
         )
-    }
-
+    
     var any: Self {
         .init(
             dutch: "een \(dutch)",

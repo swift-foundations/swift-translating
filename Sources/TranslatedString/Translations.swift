@@ -17,23 +17,9 @@ extension String {
 }
 
 public extension TranslatedString {
-    @inlinable static var space: Self {
-        .init(String.space)
-    }
-
-    @inlinable static var period: Self {
-        .init(String.period)
-    }
-
-    @inlinable static var comma: Self {
-        .init(String.comma)
-    }
-
-    @inlinable static var semicolon: Self {
-        .init(String.semicolon)
-    }
-
-    @inlinable static var questionmark: Self {
-        .init(String.questionmark)
-    }
+    static let space: Self = .init(String.space)
+    static let period: Self = .init(String.period)
+    static let comma: Self = .init(String.comma)
+    static let semicolon: Self = .init(String.semicolon)
+    static let questionmark: Self = .init(String.questionmark)
 }
