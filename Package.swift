@@ -11,6 +11,7 @@ extension String {
     static let translated: Self = "Translated"
     static let translatedString: Self = "TranslatedString"
     static let translating: Self = "Translating"
+    static let translations: Self = "Translations"
     static let translatingTestSupport: Self = "TranslatingTestSupport"
 }
 
@@ -22,6 +23,7 @@ extension Target.Dependency {
     static var translated: Self { .target(name: .translated) }
     static var translatedString: Self { .target(name: .translatedString) }
     static var translating: Self { .target(name: .translating) }
+    static var translations: Self { .target(name: .translations) }
     static var translatingTestSupport: Self { .target(name: .translatingTestSupport) }
 }
 
@@ -50,7 +52,8 @@ let package = Package(
         .library(name: .translated, targets: [.translated]),
         .library(name: .translatedString, targets: [.translatedString]),
         .library(name: .dateFormattedLocalized, targets: [.dateFormattedLocalized]),
-        .library(name: .translatingTestSupport, targets: [.translatingTestSupport])
+        .library(name: .translatingTestSupport, targets: [.translatingTestSupport]),
+        .library(name: .translations, targets: [.translations])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2")
@@ -155,7 +158,13 @@ let package = Package(
                 .language
             ]
         ),
-        .target(name: .translatingTestSupport)
+        .target(name: .translatingTestSupport),
+        .target(
+            name: .translations,
+            dependencies: [
+                .translating
+            ]
+        )
     ]
 )
 

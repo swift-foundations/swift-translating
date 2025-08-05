@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Language
+import Translating
 
 extension TranslatedString {
     public init(_ language: Language) {

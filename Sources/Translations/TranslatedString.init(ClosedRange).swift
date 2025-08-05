@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Language
+import Translating
 
 extension TranslatedString {
     public init<Bound>(_ closedRange: ClosedRange<Bound>) where Bound: CustomStringConvertible {

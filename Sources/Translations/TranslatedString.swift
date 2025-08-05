@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Translating
 
 public extension TranslatedString {
     static let male: Self =
