@@ -196,23 +196,23 @@ struct TranslatingTests {
                 default: return "Hello World"
                 }
             }
-            
+
             withDependencies {
                 $0.language = .english
             } operation: {
-                #expect(translated.slug() == "hello-world")
+                #expect(translated.slug().description == "hello-world")
             }
-            
+
             withDependencies {
                 $0.language = .dutch
             } operation: {
-                #expect(translated.slug() == "hallo-wereld")
+                #expect(translated.slug().description == "hallo-wereld")
             }
-            
+
             withDependencies {
                 $0.language = .french
             } operation: {
-                #expect(translated.slug() == "bonjour-monde")
+                #expect(translated.slug().description == "bonjour-monde")
             }
         }
         
@@ -225,12 +225,17 @@ struct TranslatingTests {
                 default: return "Test String"
                 }
             }
-            
+
+            withDependencies {
+                $0.language = .spanish
+            } operation: {
+                #expect(translated.slug().description == "cadena-de-prueba")
+            }
+
             withDependencies {
                 $0.language = .english
             } operation: {
-                #expect(translated.slug(language: .spanish) == "cadena-de-prueba")
-                #expect(translated.slug(language: .english) == "test-string")
+                #expect(translated.slug().description == "test-string")
             }
         }
         

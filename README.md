@@ -1,28 +1,31 @@
 # swift-translating
 
-A comprehensive Swift package providing cross-platform internationalization and localization support with type-safe language handling, intelligent fallbacks, and seamless dependency injection.
-
+[![CI](https://github.com/coenttb/swift-translating/workflows/CI/badge.svg)](https://github.com/coenttb/swift-translating/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
-This package is currently in active development and is subject to frequent changes. Features and APIs may change without prior notice until a stable release is available.
+A cross-platform Swift package for internationalization and localization with type-safe language handling, intelligent fallback chains, and dependency injection integration.
+
+## Overview
+
+swift-translating provides a comprehensive internationalization system for Swift applications with support for 180+ languages, automatic linguistic fallbacks, and seamless integration with Swift Dependencies. The package includes specialized components for translated strings, date formatting, singular/plural forms, and generic translated value containers.
 
 ## Features
 
-- **Comprehensive Language Support**: 180+ languages with ISO 639-1/639-2 codes
-- **Intelligent Fallback Chains**: Automatic fallbacks based on linguistic relationships
-- **Type-Safe API**: Compile-time safety for language handling and translations
-- **Performance Optimized**: Lazy evaluation and caching for efficient translations
-- **Dependency Injection**: Seamless integration with Swift Dependencies
-- **Flexible Translation System**: Dictionary literals, parameter-based, and closure-based initialization
-- **Localized Date Formatting**: Automatic date formatting per language/locale
-- **Plural Forms Support**: Handle singular/plural variations intelligently  
-- **String Operations**: Concatenation, manipulation with translation preservation
-- **Modular Architecture**: Use only the components you need
-- **Swift Testing Integration**: Built-in testing support with proper dependency isolation
+- 180+ language support with ISO 639-1/639-2 codes and locale mapping
+- Intelligent fallback chains based on linguistic and geographical relationships
+- Type-safe translation API with compile-time guarantees
+- Dictionary literal, parameter-based, and closure-based initialization patterns
+- Integration with Swift Dependencies for automatic language resolution
+- Localized date and time formatting across all languages
+- Singular/plural form handling for grammatical number variations
+- String concatenation and manipulation with translation preservation
+- Generic `Translated<A>` container supporting any type
+- Modular architecture allowing selective component import
+- Performance optimizations including lazy evaluation and caching
 
 ## Installation
 
-Add this package to your project using Swift Package Manager:
+Add to your `Package.swift`:
 
 ```swift
 dependencies: [
@@ -30,65 +33,66 @@ dependencies: [
 ]
 ```
 
-## Usage
-
-### Basic Translation
+## Quick Start
 
 ```swift
 import Translating
 import Dependencies
 
-let greeting = TranslatedString(
-    dutch: "Hallo",
-    english: "Hello",
-    french: "Bonjour",
-    german: "Hallo",
-    spanish: "Hola"
-)
+// Create translated content
+let greeting: TranslatedString = [
+    .english: "Hello",
+    .dutch: "Hallo",
+    .french: "Bonjour"
+]
 
-// Using dependency injection
+// Use with dependency injection
 withDependencies {
-    $0.language = .english
-} operation: {
-    print(greeting.description) // "Hello"
-}
-
-withDependencies {
-    $0.language = .dutch  
+    $0.language = .dutch
 } operation: {
     print(greeting.description) // "Hallo"
 }
 
 // Direct language access
-let dutchGreeting = greeting[.dutch]     // "Hallo"
-let germanGreeting = greeting[.german]   // "Hallo"
-let koreanGreeting = greeting[.korean]   // "Hello" (fallback to English)
+let englishGreeting = greeting[.english] // "Hello"
+let koreanGreeting = greeting[.korean]   // "Hello" (fallback)
 ```
 
-### Dictionary Literal Syntax
+## Usage Examples
 
-The most efficient way to create translations:
+### Translation Creation
+
+**Dictionary literal syntax (recommended for performance):**
 
 ```swift
 let welcome: TranslatedString = [
     .english: "Welcome",
-    .dutch: "Welkom", 
+    .dutch: "Welkom",
     .french: "Bienvenue",
     .spanish: "Bienvenido"
 ]
 ```
 
-### String Literal Support
-
-For simple cases:
+**Parameter-based initialization:**
 
 ```swift
-let message: TranslatedString = "Hello World" // Uses English as default
+let notification = TranslatedString(
+    "New message",              // Default value
+    dutch: "Nieuw bericht",
+    french: "Nouveau message",
+    german: "Neue Nachricht"
+)
 ```
 
-### Intelligent Fallbacks
+**String literal for simple cases:**
 
-Languages automatically fall back based on linguistic relationships:
+```swift
+let message: TranslatedString = "Hello World"
+```
+
+### Language Fallback System
+
+Automatic fallbacks follow linguistic relationships:
 
 ```swift
 let text: TranslatedString = [
@@ -96,23 +100,31 @@ let text: TranslatedString = [
     .dutch: "Hallo"
 ]
 
-// These languages fallback to Dutch, then English
-print(text[.afrikaans])     // "Hallo" (afrikaans → dutch → english)
-print(text[.limburgish])    // "Hallo" (limburgish → dutch → english)
-print(text[.chinese])       // "Hello" (chinese → english)
+print(text[.afrikaans])    // "Hallo" (afrikaans → dutch → english)
+print(text[.limburgish])   // "Hallo" (limburgish → dutch → english)
+print(text[.chinese])      // "Hello" (chinese → english)
 ```
 
-### Parameter-Based Initialization
+Each language has a predefined fallback chain. For example:
+- Afrikaans → Dutch → English → default
+- Basque → Spanish → French → English → default
+- Finnish → Swedish → English → default
 
-Clean syntax for specific languages:
+### Dependency Injection
+
+Integration with Swift Dependencies for automatic language resolution:
 
 ```swift
-let notification = TranslatedString(
-    "New message",          // Default
-    dutch: "Nieuw bericht",
-    french: "Nouveau message",
-    german: "Neue Nachricht"
-)
+import Dependencies
+
+@Dependency(\.language) var currentLanguage
+
+withDependencies {
+    $0.language = .french
+} operation: {
+    // All TranslatedString.description calls use French
+    print(greeting.description) // Uses French translation
+}
 ```
 
 ### Singular/Plural Forms
@@ -122,34 +134,34 @@ Handle grammatical number variations:
 ```swift
 import SinglePlural
 
-let itemCount = SinglePlural(
-    single: TranslatedString(english: "1 item", dutch: "1 item"),
-    plural: TranslatedString(english: "items", dutch: "items")
+let itemLabel = SinglePlural(
+    single: TranslatedString([.english: "item", .dutch: "item"]),
+    plural: TranslatedString([.english: "items", .dutch: "items"])
 )
 
-let message = itemCount(.single)  // Uses singular form
-let message = itemCount(.plural)  // Uses plural form
+let singleMessage = itemLabel(.single)  // Returns TranslatedString for "item"
+let pluralMessage = itemLabel(.plural)  // Returns TranslatedString for "items"
 ```
 
-### Date Formatting
+### Localized Date Formatting
 
-Automatic localization for dates:
+Automatic date formatting for all languages:
 
 ```swift
 import DateFormattedLocalized
 
 let date = Date()
-let formattedDate = date.formatted(
-    date: .full, 
-    time: .short, 
+let formatted = date.formatted(
+    date: .complete,
+    time: .shortened,
     translated: true
 )
-// Creates TranslatedString with localized date formats for all languages
+// Creates TranslatedString with localized formats for all languages
 ```
 
-### Type-Safe Generic Translation
+### Generic Translation Container
 
-Works with any type, not just strings:
+`Translated<A>` works with any type:
 
 ```swift
 let prices: Translated<Double> = [
@@ -158,74 +170,97 @@ let prices: Translated<Double> = [
     .french: 10.99
 ]
 
-let currentPrice = prices[.dutch] // 8.99
+let dutchPrice = prices[.dutch]  // 8.99
+
+let settings: Translated<Bool> = [
+    .english: true,
+    .dutch: false
+]
 ```
 
-## Architecture
+### String Operations
 
-Swift Translating is built with a modular architecture. You can import only the components you need:
+Translation-preserving string operations:
+
+```swift
+let greeting: TranslatedString = [.english: "hello", .dutch: "hallo"]
+let capitalized = greeting.capitalized
+// capitalized.english == "Hello"
+// capitalized.dutch == "Hallo"
+
+let withPunctuation = greeting.period
+// withPunctuation.english == "hello."
+// withPunctuation.dutch == "hallo."
+
+// Concatenation
+let prefix: TranslatedString = [.english: "Good ", .dutch: "Goeie "]
+let time: TranslatedString = [.english: "morning", .dutch: "morgen"]
+let combined = prefix + time
+// combined.english == "Good morning"
+// combined.dutch == "Goeie morgen"
+```
+
+## Module Architecture
+
+The package is modular - import only what you need:
 
 ```swift
 // Core language support
-import Language
+import Language                 // Language enum with 180+ codes
 
 // Translation system
-import Translated
-import TranslatedString  
+import Translated              // Generic Translated<A> container
+import TranslatedString        // Specialized string translations
 
-// Dependency injection support
-import Translating_Dependencies
+// Dependency injection
+import Translating_Dependencies // Swift Dependencies integration
 
-// Singular/plural handling
-import SinglePlural
+// Additional features
+import SinglePlural            // Singular/plural form handling
+import DateFormattedLocalized  // Localized date formatting
 
-// Localized date formatting
-import DateFormattedLocalized
-
-// Everything together
+// All components
 import Translating
 ```
 
 ### Core Components
 
-- **`Language`**: Enum with 180+ language codes and locale mapping
-- **`Translated<A>`**: Generic container for translated values with intelligent fallbacks
-- **`TranslatedString`**: Specialized `Translated<String>` with additional string operations
-- **`SinglePlural<A>`**: Container for singular/plural form handling
-- **`DateFormattedLocalized`**: Date formatting with translation support
+- **`Language`**: Enum with 180+ ISO 639-1/639-2 language codes and locale conversion
+- **`Translated<A>`**: Generic container for translated values with intelligent fallback system
+- **`TranslatedString`**: Type alias for `Translated<String>` with additional string operations
+- **`SinglePlural<A>`**: Container for managing singular and plural forms
+- **`DateFormattedLocalized`**: Extension for creating localized date/time formatted strings
 
-## Performance
+## Performance Characteristics
 
-The package is optimized for performance:
-
+- **Dictionary lookups**: O(1) direct translation access
 - **Lazy evaluation**: Fallback chains computed only when needed
-- **Caching**: Memoization of computed fallback results  
-- **Dictionary-first lookup**: O(1) direct translations
-- **Avoiding closure overhead**: Dictionary literals preferred over closure-based initialization
+- **Memoization**: Computed fallback results cached
+- **Dictionary vs closure initialization**: Dictionary literals are 4.5x faster
 
-⚠️ **Performance Tip**: Use dictionary literal syntax instead of closure-based initialization for optimal performance.
+**Performance recommendation:**
 
 ```swift
-// ✅ PREFERRED - Fast
-let text: TranslatedString = [.english: "Hello", .dutch: "Hallo"]
+// ✅ Preferred - Fast dictionary literal
+let text: TranslatedString = [
+    .english: "Hello",
+    .dutch: "Hallo"
+]
 
-// ❌ AVOID - 4.5x slower
-let text = TranslatedString { language in lookupTranslation(for: language) }
+// ❌ Avoid - Closure called for every language in dependency
+let text = TranslatedString { language in
+    expensiveTranslationLookup(for: language)  // Called 180+ times
+}
 ```
 
-## Feedback is Much Appreciated!
-  
-If you’re working on your own Swift web project, feel free to learn, fork, and contribute.
+## Related Packages
 
-Got thoughts? Found something you love? Something you hate? Let me know! Your feedback helps make this project better for everyone. Open an issue or start a discussion—I’m all ears.
-
-> [Subscribe to my newsletter](http://coenttb.com/en/newsletter/subscribe)
->
-> [Follow me on X](http://x.com/coenttb)
-> 
-> [Link on Linkedin](https://www.linkedin.com/in/tenthijeboonkkamp)
+- **[swift-dependencies](https://github.com/pointfreeco/swift-dependencies)**: Dependency management system used for language injection
 
 ## License
 
-This project is licensed by coenttb under the **Apache 2.0 License**.  
-See [LICENSE](LICENSE.md) for details.
+This package is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+## Contributing
+
+Contributions are welcome. Please open an issue to discuss proposed changes before submitting a pull request.
