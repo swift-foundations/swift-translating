@@ -47,3 +47,5 @@ jobs:
         with:
           commit_message: Run swift-format
           branch: 'main'
+          file_pattern: '*.swift'
+          skip_dirty_check: false
