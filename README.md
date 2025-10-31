@@ -7,7 +7,7 @@ A cross-platform Swift package for internationalization and localization with ty
 
 ## Overview
 
-swift-translating provides a comprehensive internationalization system for Swift applications with support for 180+ languages, automatic linguistic fallbacks, and seamless integration with Swift Dependencies. The package includes specialized components for translated strings, date formatting, singular/plural forms, and generic translated value containers.
+swift-translating provides internationalization and localization for Swift applications with support for 180+ languages, automatic linguistic fallbacks, and integration with Swift Dependencies. The package includes components for translated strings, date formatting, singular/plural forms, and generic translated value containers.
 
 ## Features
 
@@ -255,7 +255,7 @@ let text = TranslatedString { language in
 
 ## Related Packages
 
-- **[swift-dependencies](https://github.com/pointfreeco/swift-dependencies)**: Dependency management system used for language injection
+- **[swift-dependencies](https://github.com/pointfreeco/swift-dependencies)**: A dependency management library inspired by SwiftUI's "environment."
 
 ## License
 
