@@ -264,9 +264,8 @@ This package is used by many packages across the ecosystem, including:
 - [coenttb-server](https://github.com/coenttb/coenttb-server): A Swift package for building fast, modern, and safe servers.
 - [coenttb-ui](https://github.com/coenttb/coenttb-ui): A Swift package with UI components for coenttb applications.
 - [coenttb-web](https://github.com/coenttb/coenttb-web): A Swift package with tools for web development building on swift-web.
-- [pointfree-html-translating](https://github.com/coenttb/pointfree-html-translating): A Swift package integrating pointfree-html with swift-translating.
 - [swift-document-templates](https://github.com/coenttb/swift-document-templates): A Swift package for data-driven business document creation.
-- [swift-html](https://github.com/coenttb/swift-html): The Swift library for domain-accurate and type-safe HTML & CSS.
+- [swift-html](https://github.com/coenttb/swift-html): The Swift library for domain-accurate and type-safe HTML & CSS (includes HTML translating functionality).
 - [swift-money](https://github.com/coenttb/swift-money): A Swift package with foundational types for currency and monetary calculations.
 - [swift-password-validation](https://github.com/coenttb/swift-password-validation): A Swift package for type-safe password validation.
 
