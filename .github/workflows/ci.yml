@@ -70,18 +70,23 @@ jobs:
       - name: Run tests
         run: swift test
 
-  windows:
-    name: Windows (Swift 6.2)
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: SwiftyLab/setup-swift@latest
-        with:
-          swift-version: "6.2"
-      - name: Build
-        run: swift build
-      - name: Run tests
-        run: swift test
+  # Windows support disabled due to UUID type ambiguity in swift-dependencies
+  # (Foundation.UUID vs Windows SDK's UUID defined in rpcdce.h)
+  # Point-Free's swift-dependencies doesn't test on Windows, so we disable it here too.
+  # See: https://github.com/pointfreeco/swift-dependencies/blob/main/.github/workflows/ci.yml
+  #
+  # windows:
+  #   name: Windows (Swift 6.2)
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v5
+  #     - uses: SwiftyLab/setup-swift@latest
+  #       with:
+  #         swift-version: "6.2"
+  #     - name: Build
+  #       run: swift build
+  #     - name: Run tests
+  #       run: swift test
 
   readme-validation:
     name: README Code Examples
