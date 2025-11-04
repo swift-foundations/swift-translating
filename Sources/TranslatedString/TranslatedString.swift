@@ -12,7 +12,7 @@ import Translated
 /// ```swift
 /// let welcome = TranslatedString(
 ///     dutch: "Welkom",
-///     english: "Welcome", 
+///     english: "Welcome",
 ///     french: "Bienvenue",
 ///     german: "Willkommen",
 ///     spanish: "Bienvenido"
@@ -51,27 +51,27 @@ import Translated
 public typealias TranslatedString = Translated<String>
 
 extension TranslatedString: ExpressibleByUnicodeScalarLiteral {
-    public init(unicodeScalarLiteral value: String) {
-        self.init(value)
-    }
+  public init(unicodeScalarLiteral value: String) {
+    self.init(value)
+  }
 
-    public typealias UnicodeScalarLiteralType = String
+  public typealias UnicodeScalarLiteralType = String
 
 }
 
 extension TranslatedString: ExpressibleByExtendedGraphemeClusterLiteral {
-    public typealias ExtendedGraphemeClusterLiteralType = String
+  public typealias ExtendedGraphemeClusterLiteralType = String
 
 }
 
 extension TranslatedString: ExpressibleByStringLiteral & ExpressibleByStringInterpolation {
-    public init(stringLiteral value: String) {
-        self.init(value)
-    }
+  public init(stringLiteral value: String) {
+    self.init(value)
+  }
 }
 
-public extension TranslatedString {
-    static let empty: Self = TranslatedString(stringLiteral: "")
+extension TranslatedString {
+  public static let empty: Self = TranslatedString(stringLiteral: "")
 }
 
 /// Specialized ExpressibleByDictionaryLiteral conformance for TranslatedString
@@ -79,24 +79,24 @@ public extension TranslatedString {
 /// This specialization allows empty dictionary literals for TranslatedString,
 /// using an empty string as the sensible default value.
 extension TranslatedString {
-    /// Creates a TranslatedString instance from a dictionary literal.
-    ///
-    /// Empty dictionaries are allowed and will use an empty string as the default.
-    /// For non-empty dictionaries, the default value is selected in this priority order:
-    /// 1. English (if present)
-    /// 2. The first language in the dictionary literal order
-    ///
-    /// - Parameter elements: Key-value pairs representing language-translation mappings  
-    public init(dictionaryLiteral elements: (Language, String)...) {
-        if elements.isEmpty {
-            self = TranslatedString.empty
-        } else {
-            let dictionary = Dictionary(uniqueKeysWithValues: elements)
-            // Prefer English as default if available, otherwise use the first provided value
-            let defaultValue = dictionary[.english] ?? elements.first!.1
+  /// Creates a TranslatedString instance from a dictionary literal.
+  ///
+  /// Empty dictionaries are allowed and will use an empty string as the default.
+  /// For non-empty dictionaries, the default value is selected in this priority order:
+  /// 1. English (if present)
+  /// 2. The first language in the dictionary literal order
+  ///
+  /// - Parameter elements: Key-value pairs representing language-translation mappings
+  public init(dictionaryLiteral elements: (Language, String)...) {
+    if elements.isEmpty {
+      self = TranslatedString.empty
+    } else {
+      let dictionary = Dictionary(uniqueKeysWithValues: elements)
+      // Prefer English as default if available, otherwise use the first provided value
+      let defaultValue = dictionary[.english] ?? elements.first!.1
 
-            // Use the basic dictionary initializer instead of closure-based
-            self.init(default: defaultValue, dictionary: dictionary)
-        }
+      // Use the basic dictionary initializer instead of closure-based
+      self.init(default: defaultValue, dictionary: dictionary)
     }
+  }
 }

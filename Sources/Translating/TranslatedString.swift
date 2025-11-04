@@ -9,68 +9,67 @@ import Foundation
 import Language
 import Translated
 
-public extension TranslatedString {
+extension TranslatedString {
 
-    var period: Self {
-        self.map(\.period)
-    }
+  public var period: Self {
+    self.map(\.period)
+  }
 
-    var comma: Self {
-        self.map(\.comma)
-    }
+  public var comma: Self {
+    self.map(\.comma)
+  }
 
-    var semicolon: Self {
-        self.map(\.semicolon)
-    }
+  public var semicolon: Self {
+    self.map(\.semicolon)
+  }
 
-    var colon: Self {
-        self.map(\.colon)
-    }
+  public var colon: Self {
+    self.map(\.colon)
+  }
 
-    var questionmark: Self {
-        self.map(\.questionmark)
-    }
+  public var questionmark: Self {
+    self.map(\.questionmark)
+  }
 
-    var isEmpty: Bool {
-        self.english.isEmpty && self.dutch.isEmpty
-    }
+  public var isEmpty: Bool {
+    self.english.isEmpty && self.dutch.isEmpty
+  }
 
-    var capitalized: Self {
-        self.map(\.capitalized)
-    }
+  public var capitalized: Self {
+    self.map(\.capitalized)
+  }
 
-    func capitalized(with locale: Locale? = nil) -> Self {
-        self.map { $0.capitalized(with: locale) }
-    }
+  public func capitalized(with locale: Locale? = nil) -> Self {
+    self.map { $0.capitalized(with: locale) }
+  }
 
-    func uppercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.uppercased(with: locale) }
-    }
+  public func uppercased(with locale: Locale? = nil) -> Self {
+    self.map { $0.uppercased(with: locale) }
+  }
 
-    @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
-    func capitalizedFirstLetter() -> Self {
-        self.capitalizingFirstLetter()
-    }
+  @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
+  public func capitalizedFirstLetter() -> Self {
+    self.capitalizingFirstLetter()
+  }
 
-    func capitalizingFirstLetter() -> Self {
+  public func capitalizingFirstLetter() -> Self {
 
-        self.map { $0.prefix(1).capitalized + $0.dropFirst() }
-    }
+    self.map { $0.prefix(1).capitalized + $0.dropFirst() }
+  }
 
-    func firstLetter(_ closure: (String) -> String) -> Self {
+  public func firstLetter(_ closure: (String) -> String) -> Self {
 
-        self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
+    self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
 
-    }
+  }
 
-    func lowercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.lowercased(with: locale) }
-    }
+  public func lowercased(with locale: Locale? = nil) -> Self {
+    self.map { $0.lowercased(with: locale) }
+  }
 }
 
 extension Translated<String> {
-    public func slug(
-    ) -> TranslatedString {
-        self.map { $0.slug() }
-    }
+  public func slug() -> TranslatedString {
+    self.map { $0.slug() }
+  }
 }

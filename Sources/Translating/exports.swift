@@ -1,5 +1,5 @@
 /// Swift Translating - Main module exports
-/// 
+///
 /// This file re-exports all public APIs from the Swift Translating package modules,
 /// allowing users to import just `Translating` to access all functionality.
 
