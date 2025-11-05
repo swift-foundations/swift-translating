@@ -9,10 +9,10 @@ import Foundation
 import Language
 
 extension Date {
-  public static func placeholder() -> TranslatedString {
-    [
-      .dutch: "__ ________________ 2021",
-      .english: "________________ __, 2021",
-    ]
-  }
+    public static func placeholder() -> TranslatedString {
+        [
+            .dutch: "__ ________________ 2021",
+            .english: "________________ __, 2021",
+        ]
+    }
 }
