@@ -6,7 +6,7 @@
 //
 
 import Dependencies
-import DependenciesTestSupport
+import Dependencies_Test_Support
 import Foundation
 import Testing
 
@@ -29,12 +29,12 @@ struct PerformanceTests {
     )
     struct ClosureBasedInitializationTests {
 
-        @Test("All languages dependency - Current Implementation")
-        func closureInitializerAllLanguagesPerformance() throws {
+        @Test
+        func `All languages dependency - Current Implementation`() throws {
             let clock = ContinuousClock()
             var callCount = 0
 
-            let languages = Language.allCases
+            let languages = Array(Set<Language>.supported)
 
             let result = clock.measure {
                 withDependencies {
@@ -42,7 +42,7 @@ struct PerformanceTests {
                 } operation: {
                     let translated = Translated<String> { language in
                         callCount += 1
-                        return "Translation for \(language.rawValue)"
+                        return "Translation for \(language)"
                     }
                     _ = translated[.english]  // Access one value to ensure initialization
                 }
@@ -54,7 +54,7 @@ struct PerformanceTests {
             print("   Time: \(result)")
             print("   Time (seconds): \(timeInSeconds)")
             print("   Closure calls: \(callCount)")
-            print("   Languages in dependency: \(Language.allCases.count)")
+            print("   Languages in dependency: \(Set<Language>.supported.count)")
             print("   Calls per second: \(Double(callCount) / timeInSeconds)")
             print("   Average time per closure call: \(timeInSeconds / Double(callCount) * 1000)ms")
             print("   ⚠️  Performance issue: Closure called \(callCount) times for ALL languages!")
@@ -70,8 +70,8 @@ struct PerformanceTests {
             )
         }
 
-        @Test("Limited languages dependency")
-        func closureInitializerLimitedLanguagesPerformance() throws {
+        @Test
+        func `Limited languages dependency`() throws {
             let limitedLanguages: Set<Language> = [.english, .dutch, .french, .german, .spanish]
             let clock = ContinuousClock()
             var callCount = 0
@@ -82,7 +82,7 @@ struct PerformanceTests {
                 } operation: {
                     let translated = Translated<String> { language in
                         callCount += 1
-                        return "Translation for \(language.rawValue)"
+                        return "Translation for \(language)"
                     }
                     _ = translated[.english]
                 }
@@ -106,11 +106,11 @@ struct PerformanceTests {
             #expect(result < .milliseconds(50), "Should be very fast with limited languages")
         }
 
-        @Test("Expensive closure operations - Real-world impact simulation")
-        func expensiveClosureOperationsPerformance() throws {
+        @Test
+        func `Expensive closure operations - Real-world impact simulation`() throws {
             let clock = ContinuousClock()
             var callCount = 0
-            let languages = Language.allCases.prefix(50)
+            let languages = Array(Set<Language>.supported).prefix(50)
 
             let result = clock.measure {
                 withDependencies {
@@ -120,7 +120,7 @@ struct PerformanceTests {
                         callCount += 1
                         // Simulate expensive operation (database lookup, API call, complex formatting)
                         Thread.sleep(forTimeInterval: 0.001)  // 1ms delay per call
-                        return "Expensive translation for \(language.rawValue)"
+                        return "Expensive translation for \(language)"
                     }
                     _ = translated[.english]
                 }
@@ -147,21 +147,21 @@ struct PerformanceTests {
             )
         }
 
-        @Test("Real-world scenario - Creating many TranslatedStrings")
-        func realWorldScenarioManyTranslatedStrings() throws {
+        @Test
+        func `Real-world scenario - Creating many TranslatedStrings`() throws {
             let stringCount = 1000
             let clock = ContinuousClock()
 
             let result = clock.measure {
                 withDependencies {
-                    $0.languages = Set(Language.allCases.prefix(20))  // Realistic subset
+                    $0.languages = Set(Array(Set<Language>.supported).prefix(20))  // Realistic subset
                 } operation: {
                     var translatedStrings: [Translated<String>] = []
                     translatedStrings.reserveCapacity(stringCount)
 
                     for i in 1...stringCount {
                         let translated = Translated<String> { language in
-                            "String \(i) in \(language.rawValue)"
+                            "String \(i) in \(language)"
                         }
                         translatedStrings.append(translated)
                     }
@@ -195,8 +195,8 @@ struct PerformanceTests {
     )
     struct DictionaryVsClosureTests {
 
-        @Test("Dictionary literal initialization performance")
-        func dictionaryLiteralPerformance() throws {
+        @Test
+        func `Dictionary literal initialization performance`() throws {
             let clock = ContinuousClock()
 
             let result = clock.measure {
@@ -223,8 +223,8 @@ struct PerformanceTests {
             #expect(result < .milliseconds(10), "Dictionary literal should be extremely fast")
         }
 
-        @Test("Direct comparison - Closure vs Dictionary literal")
-        func performanceComparisonClosureVsDictionary() throws {
+        @Test
+        func `Direct comparison - Closure vs Dictionary literal`() throws {
             let testLanguages: Set<Language> = [.english, .dutch, .french, .german, .spanish]
 
             // Test closure-based approach
@@ -235,7 +235,7 @@ struct PerformanceTests {
                 } operation: {
                     let translated = Translated<String> { language in
                         closureCallCount += 1
-                        return "Translation for \(language.rawValue)"
+                        return "Translation for \(language)"
                     }
                     _ = translated[.english]
                 }
@@ -290,18 +290,18 @@ struct PerformanceTests {
     )
     struct MemoryUsageTests {
 
-        @Test("Memory comparison - All languages vs Limited languages")
-        func memoryUsageComparison() throws {
+        @Test
+        func `Memory comparison - All languages vs Limited languages`() throws {
             let initialMemory = Self.getMemoryUsage()
 
             // Test with all languages
             var allLanguagesTranslated: Translated<String>?
             let allLanguagesMemoryResult = ContinuousClock().measure {
                 withDependencies {
-                    $0.languages = Set(Language.allCases)
+                    $0.languages = Set(Array(Set<Language>.supported))
                 } operation: {
                     allLanguagesTranslated = Translated<String> { language in
-                        "Translation for \(language.rawValue)"
+                        "Translation for \(language)"
                     }
                 }
             }
@@ -317,7 +317,7 @@ struct PerformanceTests {
                     $0.languages = [.english, .dutch, .french, .german, .spanish]
                 } operation: {
                     limitedLanguagesTranslated = Translated<String> { language in
-                        "Translation for \(language.rawValue)"
+                        "Translation for \(language)"
                     }
                 }
             }
@@ -335,7 +335,7 @@ struct PerformanceTests {
             print("   All languages time: \(allLanguagesMemoryResult)")
             print("   Limited languages time: \(limitedLanguagesMemoryResult)")
             print(
-                "   Memory per language (all): \(allLanguagesMemoryIncrease / Int64(Language.allCases.count)) bytes"
+                "   Memory per language (all): \(allLanguagesMemoryIncrease / Int64(Set<Language>.supported.count)) bytes"
             )
             print("   Memory per language (limited): \(limitedLanguagesMemoryIncrease / 5) bytes")
 

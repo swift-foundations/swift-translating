@@ -1,20 +1,20 @@
-import DateFormattedLocalized
 import Dependencies
 import Foundation
 import Language
-import SinglePlural
+import Single_Plural
 import Testing
 import Translated
-import TranslatedString
+import Translated_String
 import Translating
+import Translating_Platform
 
 @Suite("README Verification")
 struct ReadmeVerificationTests {
 
     // MARK: - Quick Start Example
 
-    @Test("Quick Start example from README lines 38-59")
-    func quickStartExample() throws {
+    @Test
+    func `Quick Start example from README lines 38-59`() throws {
         // Create translated content
         let greeting: TranslatedString = [
             .english: "Hello",
@@ -39,8 +39,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Translation Creation Examples
 
-    @Test("Dictionary literal syntax from README lines 67-74")
-    func dictionaryLiteralSyntax() {
+    @Test
+    func `Dictionary literal syntax from README lines 67-74`() {
         let welcome: TranslatedString = [
             .english: "Welcome",
             .dutch: "Welkom",
@@ -54,8 +54,8 @@ struct ReadmeVerificationTests {
         #expect(welcome[.spanish] == "Bienvenido")
     }
 
-    @Test("Parameter-based initialization from README lines 78-85")
-    func parameterBasedInitialization() {
+    @Test
+    func `Parameter-based initialization from README lines 78-85`() {
         let notification = TranslatedString(
             "New message",
             dutch: "Nieuw bericht",
@@ -69,8 +69,8 @@ struct ReadmeVerificationTests {
         #expect(notification[.german] == "Neue Nachricht")
     }
 
-    @Test("String literal initialization from README lines 89-91")
-    func stringLiteralInitialization() {
+    @Test
+    func `String literal initialization from README lines 89-91`() {
         let message: TranslatedString = "Hello World"
 
         #expect(message[.english] == "Hello World")
@@ -79,8 +79,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Language Fallback Examples
 
-    @Test("Language fallback system from README lines 97-106")
-    func languageFallbackSystem() {
+    @Test
+    func `Language fallback system from README lines 97-106`() {
         let text: TranslatedString = [
             .english: "Hello",
             .dutch: "Hallo",
@@ -93,8 +93,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Dependency Injection Examples
 
-    @Test("Dependency injection from README lines 117-128")
-    func dependencyInjection() {
+    @Test
+    func `Dependency injection from README lines 117-128`() {
         let greeting: TranslatedString = [
             .english: "Hello",
             .french: "Bonjour",
@@ -109,8 +109,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Singular/Plural Forms Examples
 
-    @Test("Singular/plural forms from README lines 135-144")
-    func singularPluralForms() {
+    @Test
+    func `Singular/plural forms from README lines 135-144`() {
         let single: TranslatedString = [.english: "item", .dutch: "item"]
         let plural: TranslatedString = [.english: "items", .dutch: "items"]
 
@@ -132,42 +132,33 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Formatting Examples
 
-    @Test("Localized date formatting from README lines 150-160")
-    func localizedDateFormatting() {
+    @Test
+    func `Localized date formatting from README lines 150-160`() {
+        let date = Date()
+        let formatted = date.formatted(
+            date: .complete,
+            time: .shortened,
+            translated: true
+        )
+
+        // Verify it has content for different languages
         withDependencies {
-            $0.locale = Locale(identifier: "en_US")
+            $0.language = .english
         } operation: {
-            let date = Date()
-            let formatted = date.formatted(
-                date: .complete,
-                time: .shortened,
-                translated: true
-            )
+            #expect(!formatted.description.isEmpty)
+        }
 
-            // Verify it creates a TranslatedString
-            #expect(formatted is TranslatedString)
-
-            // Verify it has content for different languages
-            withDependencies {
-                $0.language = .english
-                $0.locale = Locale(identifier: "en_US")
-            } operation: {
-                #expect(!formatted.description.isEmpty)
-            }
-
-            withDependencies {
-                $0.language = .dutch
-                $0.locale = Locale(identifier: "nl_NL")
-            } operation: {
-                #expect(!formatted.description.isEmpty)
-            }
+        withDependencies {
+            $0.language = .dutch
+        } operation: {
+            #expect(!formatted.description.isEmpty)
         }
     }
 
     // MARK: - Generic Translation Container Examples
 
-    @Test("Generic translation container from README lines 166-179")
-    func genericTranslationContainer() {
+    @Test
+    func `Generic translation container from README lines 166-179`() {
         let prices: Translated<Double> = [
             .english: 9.99,
             .dutch: 8.99,
@@ -188,8 +179,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - String Operations Examples
 
-    @Test("String operations from README lines 185-195")
-    func stringOperations() {
+    @Test
+    func `String operations from README lines 185-195`() {
         let greeting: TranslatedString = [.english: "hello", .dutch: "hallo"]
 
         let capitalized = greeting.capitalized
@@ -211,8 +202,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Performance Examples
 
-    @Test("Dictionary literal performance recommendation from README lines 238-243")
-    func dictionaryLiteralPerformance() {
+    @Test
+    func `Dictionary literal performance recommendation from README lines 238-243`() {
         // ✅ Preferred - Fast dictionary literal
         let text: TranslatedString = [
             .english: "Hello",

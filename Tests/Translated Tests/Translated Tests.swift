@@ -16,8 +16,8 @@ struct TranslatedTests {
     @Suite("Basic Functionality")
     struct BasicFunctionalityTests {
 
-        @Test("Creates translated value with default")
-        func createsTranslatedValueWithDefault() {
+        @Test
+        func `Creates translated value with default`() {
             let translated = Translated<String>(
                 default: "Hello",
                 dictionary: [
@@ -31,8 +31,8 @@ struct TranslatedTests {
             #expect(translated[.french] == "Bonjour")
         }
 
-        @Test("Returns default when language not found")
-        func returnsDefaultWhenLanguageNotFound() {
+        @Test
+        func `Returns default when language not found`() {
             let translated = Translated<String>(
                 default: "Hello",
                 dictionary: [.dutch: "Hallo"]
@@ -42,8 +42,8 @@ struct TranslatedTests {
             #expect(translated[.spanish] == "Hello")
         }
 
-        @Test("Updates translation via subscript")
-        func updatesTranslationViaSubscript() {
+        @Test
+        func `Updates translation via subscript`() {
             var translated = Translated<String>(
                 default: "Hello",
                 dictionary: [:]
@@ -60,8 +60,8 @@ struct TranslatedTests {
     @Suite("Initializer Tests")
     struct InitializerTests {
 
-        @Test("Simple dictionary literal initializer")
-        func simpleDictionaryLiteralInitializer() {
+        @Test
+        func `Simple dictionary literal initializer`() {
             let translated: Translated<String> = [.english: "Default Value"]
 
             #expect(translated.default == "Default Value")
@@ -73,8 +73,8 @@ struct TranslatedTests {
     @Suite("Language Fallback System")
     struct LanguageFallbackTests {
 
-        @Test("Dutch falls back to English")
-        func dutchFallsBackToEnglish() {
+        @Test
+        func `Dutch falls back to English`() {
             let translated = Translated(
                 default: "Default",
                 dictionary: [.english: "Hello"]
@@ -84,8 +84,8 @@ struct TranslatedTests {
             #expect(translated.dutch == "Hello")
         }
 
-        @Test("Afrikaans falls back through chain")
-        func afrikaansFallsBackThroughChain() {
+        @Test
+        func `Afrikaans falls back through chain`() {
             let translated = Translated(
                 default: "Default",
                 dictionary: [
@@ -98,8 +98,8 @@ struct TranslatedTests {
             #expect(translated.afrikaans == "Hallo")
         }
 
-        @Test("Complex fallback chain")
-        func complexFallbackChain() {
+        @Test
+        func `Complex fallback chain`() {
             let translated = Translated(
                 default: "Default",
                 dictionary: [
@@ -115,8 +115,8 @@ struct TranslatedTests {
             #expect(translated.catalan == "Hola")
         }
 
-        @Test("Subscript accessor uses same fallback chains as properties")
-        func subscriptAccessorUsesSameFallbackChainsAsProperties() {
+        @Test
+        func `Subscript accessor uses same fallback chains as properties`() {
             let translated = Translated(
                 default: "Default",
                 dictionary: [
@@ -142,8 +142,8 @@ struct TranslatedTests {
     @Suite("String Concatenation")
     struct StringConcatenationTests {
 
-        @Test("Concatenates two translated strings preserving all languages")
-        func concatenatesTwoTranslatedStrings() {
+        @Test
+        func `Concatenates two translated strings preserving all languages`() {
             let greeting = Translated<String>(
                 default: "Hello",
                 dictionary: [
@@ -168,8 +168,8 @@ struct TranslatedTests {
             #expect(result[.spanish] == "Hello Mundo")  // Empty + Spanish = " Mundo"
         }
 
-        @Test("Concatenates translated string with regular string")
-        func concatenatesTranslatedStringWithRegularString() {
+        @Test
+        func `Concatenates translated string with regular string`() {
             let greeting = Translated<String>(
                 default: "Hello",
                 dictionary: [
@@ -185,8 +185,8 @@ struct TranslatedTests {
             #expect(result[.french] == "Bonjour!")
         }
 
-        @Test("Prepends regular string to translated string")
-        func prependsRegularStringToTranslatedString() {
+        @Test
+        func `Prepends regular string to translated string`() {
             let greeting = Translated<String>(
                 default: "World",
                 dictionary: [
@@ -206,8 +206,8 @@ struct TranslatedTests {
     @Suite("Protocol Conformances")
     struct ProtocolConformanceTests {
 
-        @Test("Equatable conformance works correctly")
-        func equatableConformanceWorks() {
+        @Test
+        func `Equatable conformance works correctly`() {
             let translated1: Translated<String> = [.english: "Hello", .dutch: "Hallo"]
             let translated2: Translated<String> = [.english: "Hello", .dutch: "Hallo"]
             let translated3: Translated<String> = [.english: "Hi", .dutch: "Hallo"]
@@ -216,8 +216,8 @@ struct TranslatedTests {
             #expect(translated1 != translated3)
         }
 
-        @Test("Hashable conformance works correctly")
-        func hashableConformanceWorks() {
+        @Test
+        func `Hashable conformance works correctly`() {
             let translated1: Translated<String> = [.english: "Hello", .dutch: "Hallo"]
             let translated2: Translated<String> = [.english: "Hello", .dutch: "Hallo"]
 
@@ -229,8 +229,8 @@ struct TranslatedTests {
     @Suite("ExpressibleByDictionaryLiteral")
     struct ExpressibleByDictionaryLiteralTests {
 
-        @Test("Creates translated value from dictionary literal with English priority")
-        func createsTranslatedValueFromDictionaryLiteralWithEnglishPriority() {
+        @Test
+        func `Creates translated value from dictionary literal with English priority`() {
             let translated: Translated<String> = [
                 .french: "Bonjour",
                 .dutch: "Hallo",
@@ -245,8 +245,8 @@ struct TranslatedTests {
             #expect(translated[.german] == "Hello")  // Falls back to default
         }
 
-        @Test("Uses first provided value when no English")
-        func usesFirstProvidedValueWhenNoEnglish() {
+        @Test
+        func `Uses first provided value when no English`() {
             let translated: Translated<String> = [
                 .spanish: "Hola",
                 .dutch: "Hallo",
@@ -260,8 +260,8 @@ struct TranslatedTests {
             #expect(translated[.spanish] == "Hola")
         }
 
-        @Test("Works with non-String types")
-        func worksWithNonStringTypes() {
+        @Test
+        func `Works with non-String types`() {
             let translated: Translated<Int> = [
                 .dutch: 2,
                 .english: 1,
@@ -276,8 +276,8 @@ struct TranslatedTests {
             #expect(translated[.german] == 1)  // Falls back to default
         }
 
-        @Test("Single item dictionary literal")
-        func singleItemDictionaryLiteral() {
+        @Test
+        func `Single item dictionary literal`() {
             let translated: Translated<String> = [.german: "Hallo"]
 
             #expect(translated.default == "Hallo")
@@ -290,8 +290,8 @@ struct TranslatedTests {
     @Suite("Edge Cases")
     struct EdgeCaseTests {
 
-        @Test("Empty translation dictionary")
-        func emptyTranslationDictionary() {
+        @Test
+        func `Empty translation dictionary`() {
             let translated = Translated<String>(
                 default: "Default",
                 dictionary: [:]
@@ -302,8 +302,8 @@ struct TranslatedTests {
             #expect(translated[.french] == "Default")
         }
 
-        @Test("Generic type other than String")
-        func genericTypeOtherThanString() {
+        @Test
+        func `Generic type other than String`() {
             let translated = Translated<Int>(
                 default: 0,
                 dictionary: [
@@ -319,8 +319,8 @@ struct TranslatedTests {
             #expect(translated[.german] == 0)  // Falls back to default
         }
 
-        @Test("Very long language names")
-        func veryLongLanguageNames() {
+        @Test
+        func `Very long language names`() {
             let longString = String(repeating: "A", count: 1000)
             let translated = Translated(
                 default: "Short",
@@ -331,8 +331,8 @@ struct TranslatedTests {
             #expect(translated[.dutch] == "Short")
         }
 
-        @Test("Call as function syntax")
-        func callAsFunctionSyntax() {
+        @Test
+        func `Call as function syntax`() {
             let translated = Translated(
                 default: "Default",
                 dictionary: [
@@ -346,8 +346,8 @@ struct TranslatedTests {
             #expect(translated(.german) == "Default")
         }
 
-        @Test("AllCases property returns all translations")
-        func allCasesPropertyReturnsAllTranslations() {
+        @Test
+        func `AllCases property returns all translations`() {
             let translated = Translated(
                 default: "Default",
                 dictionary: [

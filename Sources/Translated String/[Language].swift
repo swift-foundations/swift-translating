@@ -1,0 +1,19 @@
+//
+//  File.swift
+//  swift-translating
+//
+//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
+//
+
+public import Language
+public import Translated
+
+extension [Language] {
+    /// Sorts the array of languages alphabetically by their string representation
+    /// - Returns: A new sorted array of languages
+    public func sort() -> Self {
+        self.sorted { language1, language2 in
+            "\(language1)" < "\(language2)"
+        }
+    }
+}

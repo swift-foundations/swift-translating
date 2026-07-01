@@ -5,213 +5,209 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import Foundation
-import Translating
+public import Translating
+
+private let languageNames: [Language: TranslatedString] = [
+    .abkhazian: [.english: "abkhazian"],
+    .afar: [.english: "afar"],
+    .afrikaans: [.english: "afrikaans"],
+    .akan: [.english: "akan"],
+    .albanian: [.english: "albanian"],
+    .amharic: [.english: "amharic"],
+    .arabic: [.arabic: "عربي", .english: "Arabic"],
+    .aragonese: [.english: "aragonese"],
+    .armenian: [.english: "armenian"],
+    .assamese: [.english: "assamese"],
+    .auEnglish: [.english: "Australian English"],
+    .avaric: [.english: "avaric"],
+    .avestan: [.english: "avestan"],
+    .aymara: [.english: "aymara"],
+    .azerbaijani: [.english: "azerbaijani"],
+    .bambara: [.english: "bambara"],
+    .bashkir: [.english: "bashkir"],
+    .basque: [.english: "basque"],
+    .belarusian: [.english: "belarusian"],
+    .bengali: [.bengali: "বাংলা", .english: "Bengali"],
+    .bihari: [.english: "bihari"],
+    .bislama: [.english: "bislama"],
+    .bosnian: [.english: "bosnian"],
+    .breton: [.english: "breton"],
+    .bulgarian: [.english: "bulgarian"],
+    .burmese: [.english: "burmese"],
+    .catalan: [.english: "catalan"],
+    .caEnglish: [.english: "caEnglish"],
+    .chamorro: [.english: "chamorro"],
+    .chechen: [.english: "chechen"],
+    .chinese: [.chinese: "中国人", .english: "Chinese"],
+    .chuvash: [.english: "chuvash"],
+    .cornish: [.english: "cornish"],
+    .corsican: [.english: "corsican"],
+    .cree: [.english: "cree"],
+    .croatian: [.english: "croatian"],
+    .czech: [.english: "czech"],
+    .danish: [.danish: "dansk", .english: "Danish"],
+    .dutch: [
+        .dutch: "Nederlands", .english: "Dutch", .french: "Néerlandais",
+        .german: "Niederländisch",
+        .spanish: "Holandés",
+    ],
+    .dzongkha: [.english: "dzongkha"],
+    .english: [
+        .dutch: "Engels", .english: "English", .french: "Anglais", .german: "Englisch",
+        .spanish: "Inglés",
+    ],
+    .esperanto: [.english: "esperanto"],
+    .estonian: [.english: "estonian"],
+    .ewe: [.english: "ewe"],
+    .faroese: [.english: "faroese"],
+    .fijian: [.english: "fijian"],
+    .finnish: [.english: "finnish"],
+    .french: [
+        .dutch: "Frans", .english: "French", .french: "Français", .german: "Französisch",
+        .spanish: "Francés",
+    ],
+    .galician: [.english: "galician"],
+    .gaelicScottish: [.english: "gaelicScottish"],
+    .georgian: [.english: "georgian"],
+    .german: [
+        .dutch: "Duits", .english: "German", .french: "Allemand", .german: "Deutsch",
+        .spanish: "Alemán",
+    ],
+    .greek: [.english: "greek"],
+    .guarani: [.english: "guarani"],
+    .gujarati: [.english: "gujarati"],
+    .haitianCreole: [.english: "haitianCreole"],
+    .hausa: [.english: "hausa"],
+    .hebrew: [.english: "hebrew"],
+    .herero: [.english: "herero"],
+    .hindi: [.english: "Hindi", .hindi: "हिंदी"],
+    .hiriMotu: [.english: "hiriMotu"],
+    .hungarian: [.english: "hungarian"],
+    .icelandic: [.english: "icelandic"],
+    .ido: [.english: "ido"],
+    .igbo: [.english: "igbo"],
+    .indonesian: [.english: "Indonesian", .indonesian: "Bahasa Indonesia"],
+    .interlingua: [.english: "interlingua"],
+    .interlingue: [.english: "interlingue"],
+    .inuktitut: [.english: "inuktitut"],
+    .inupiak: [.english: "inupiak"],
+    .irish: [.english: "irish"],
+    .italian: [.english: "Italian", .italian: "Italiano"],
+    .japanese: [.english: "Japanese", .japanese: "日本語"],
+    .javanese: [.english: "Javanese", .javanese: "Basa Jawa"],
+    .kannada: [.english: "kannada"],
+    .kanuri: [.english: "kanuri"],
+    .kashmiri: [.english: "kashmiri"],
+    .kazakh: [.english: "kazakh"],
+    .khmer: [.english: "khmer"],
+    .kikuyu: [.english: "kikuyu"],
+    .kinyarwanda: [.english: "kinyarwanda"],
+    .kirundi: [.english: "kirundi"],
+    .komi: [.english: "komi"],
+    .kongo: [.english: "kongo"],
+    .korean: [.english: "Korean", .korean: "한국인"],
+    .kurdish: [.english: "kurdish"],
+    .kwanyama: [.english: "kwanyama"],
+    .kyrgyz: [.english: "kyrgyz"],
+    .lao: [.english: "lao"],
+    .latin: [.english: "latin"],
+    .latvian: [.english: "latvian"],
+    .limburgish: [.english: "limburgish"],
+    .lingala: [.english: "lingala"],
+    .lithuanian: [.english: "lithuanian"],
+    .lugaKatanga: [.english: "lugaKatanga"],
+    .luxembourgish: [.english: "luxembourgish"],
+    .macedonian: [.english: "macedonian"],
+    .malagasy: [.english: "malagasy"],
+    .malay: [.english: "malay"],
+    .malayalam: [.english: "malayalam"],
+    .maltese: [.english: "maltese"],
+    .manx: [.english: "manx"],
+    .maori: [.english: "maori"],
+    .marathi: [.english: "marathi"],
+    .marshallese: [.english: "marshallese"],
+    .moldavian: [.english: "moldavian"],
+    .mongolian: [.english: "mongolian"],
+    .nauru: [.english: "nauru"],
+    .navajo: [.english: "navajo"],
+    .ndonga: [.english: "ndonga"],
+    .nepali: [.english: "nepali"],
+    .northernNdebele: [.english: "northernNdebele"],
+    .norwegian: [.english: "norwegian"],
+    .norwegianBokmål: [.english: "norwegianBokmål"],
+    .norwegianNynorsk: [.english: "norwegianNynorsk"],
+    .occitan: [.english: "occitan"],
+    .ojibwe: [.english: "ojibwe"],
+    .oriya: [.english: "oriya"],
+    .oromo: [.english: "oromo"],
+    .ossetian: [.english: "ossetian"],
+    .pāli: [.english: "pāli"],
+    .persian: [.english: "persian"],
+    .polish: [.english: "Polish", .polish: "Polski"],
+    .portuguese: [.english: "Portuguese", .portuguese: "Português"],
+    .punjabi: [.english: "punjabi"],
+    .quechua: [.english: "quechua"],
+    .romanian: [.english: "Romanian", .romanian: "Română"],
+    .romansh: [.english: "romansh"],
+    .russian: [.english: "Russian", .russian: "Pусский"],
+    .sami: [.english: "sami"],
+    .samoan: [.english: "samoan"],
+    .sango: [.english: "sango"],
+    .sanskrit: [.english: "sanskrit"],
+    .serbian: [.english: "serbian"],
+    .serboCroatian: [.english: "serboCroatian"],
+    .sesotho: [.english: "sesotho"],
+    .setswana: [.english: "setswana"],
+    .shona: [.english: "shona"],
+    .sindhi: [.english: "sindhi"],
+    .sinhalese: [.english: "sinhalese"],
+    .slovak: [.english: "Slovak", .slovak: "slovenský"],
+    .slovenian: [.english: "Slovenian", .slovenian: "Slovenščina"],
+    .somali: [.english: "somali"],
+    .southernNdebele: [.english: "southernNdebele"],
+    .spanish: [
+        .dutch: "Spaans", .english: "Spanish", .french: "Espagnol", .german: "Spanisch",
+        .spanish: "Español",
+    ],
+    .sundanese: [.english: "sundanese"],
+    .swahili: [.english: "swahili"],
+    .swati: [.english: "swati"],
+    .swedish: [.english: "Swedish", .swedish: "Tvåds"],
+    .tagalog: [.english: "tagalog"],
+    .tahitian: [.english: "tahitian"],
+    .tajik: [.english: "tajik"],
+    .tamil: [.english: "tamil"],
+    .tatar: [.english: "tatar"],
+    .telugu: [.english: "telugu"],
+    .thai: [.english: "thai"],
+    .tibetan: [.english: "tibetan"],
+    .tigrinya: [.english: "tigrinya"],
+    .tonga: [.english: "tonga"],
+    .tsonga: [.english: "tsonga"],
+    .turkish: [.english: "Turkish", .turkish: "Türkçe"],
+    .turkmen: [.english: "turkmen"],
+    .twi: [.english: "twi"],
+    .ukEnglish: [.english: "ukEnglish"],
+    .ukrainian: [.english: "ukrainian"],
+    .urdu: [.english: "urdu"],
+    .usEnglish: [.english: "usEnglish"],
+    .uyghur: [.english: "uyghur"],
+    .uzbek: [.english: "uzbek"],
+    .venda: [.english: "venda"],
+    .vietnamese: [.english: "vietnamese"],
+    .volapük: [.english: "volapük"],
+    .wallon: [.english: "wallon"],
+    .welsh: [.english: "welsh"],
+    .westernFrisian: [.english: "westernFrisian"],
+    .wolof: [.english: "wolof"],
+    .xhosa: [.english: "xhosa"],
+    .yoruba: [.english: "yoruba"],
+    .zulu: [.english: "zulu"],
+]
 
 extension TranslatedString {
     public init(_ language: Language) {
-        switch language {
-        case .abkhazian: self = [.english: "abkhazian"]
-        case .afar: self = [.english: "afar"]
-        case .afrikaans: self = [.english: "afrikaans"]
-        case .akan: self = [.english: "akan"]
-        case .albanian: self = [.english: "albanian"]
-        case .amharic: self = [.english: "amharic"]
-        case .arabic: self = [.arabic: "عربي", .english: "Arabic"]
-        case .aragonese: self = [.english: "aragonese"]
-        case .armenian: self = [.english: "armenian"]
-        case .assamese: self = [.english: "assamese"]
-        case .auEnglish: self = [.english: "Australian English"]
-        case .avaric: self = [.english: "avaric"]
-        case .avestan: self = [.english: "avestan"]
-        case .aymara: self = [.english: "aymara"]
-        case .azerbaijani: self = [.english: "azerbaijani"]
-        case .bambara: self = [.english: "bambara"]
-        case .bashkir: self = [.english: "bashkir"]
-        case .basque: self = [.english: "basque"]
-        case .belarusian: self = [.english: "belarusian"]
-        case .bengali: self = [.bengali: "বাংলা", .english: "Bengali"]
-        case .bihari: self = [.english: "bihari"]
-        case .bislama: self = [.english: "bislama"]
-        case .bosnian: self = [.english: "bosnian"]
-        case .breton: self = [.english: "breton"]
-        case .bulgarian: self = [.english: "bulgarian"]
-        case .burmese: self = [.english: "burmese"]
-        case .catalan: self = [.english: "catalan"]
-        case .caEnglish: self = [.english: "caEnglish"]
-        case .chamorro: self = [.english: "chamorro"]
-        case .chechen: self = [.english: "chechen"]
-        case .chinese: self = [.chinese: "中国人", .english: "Chinese"]
-        case .chuvash: self = [.english: "chuvash"]
-        case .cornish: self = [.english: "cornish"]
-        case .corsican: self = [.english: "corsican"]
-        case .cree: self = [.english: "cree"]
-        case .croatian: self = [.english: "croatian"]
-        case .czech: self = [.english: "czech"]
-        case .danish: self = [.danish: "dansk", .english: "Danish"]
-        case .dutch:
-            self = [
-                .dutch: "Nederlands", .english: "Dutch", .french: "Néerlandais",
-                .german: "Niederländisch",
-                .spanish: "Holandés",
-            ]
-        case .dzongkha: self = [.english: "dzongkha"]
-        case .english:
-            self = [
-                .dutch: "Engels", .english: "English", .french: "Anglais", .german: "Englisch",
-                .spanish: "Inglés",
-            ]
-        case .esperanto: self = [.english: "esperanto"]
-        case .estonian: self = [.english: "estonian"]
-        case .ewe: self = [.english: "ewe"]
-        case .faroese: self = [.english: "faroese"]
-        case .fijian: self = [.english: "fijian"]
-        case .finnish: self = [.english: "finnish"]
-        case .french:
-            self = [
-                .dutch: "Frans", .english: "French", .french: "Français", .german: "Französisch",
-                .spanish: "Francés",
-            ]
-        case .galician: self = [.english: "galician"]
-        case .gaelicScottish: self = [.english: "gaelicScottish"]
-        case .georgian: self = [.english: "georgian"]
-        case .german:
-            self = [
-                .dutch: "Duits", .english: "German", .french: "Allemand", .german: "Deutsch",
-                .spanish: "Alemán",
-            ]
-        case .greek: self = [.english: "greek"]
-        case .guarani: self = [.english: "guarani"]
-        case .gujarati: self = [.english: "gujarati"]
-        case .haitianCreole: self = [.english: "haitianCreole"]
-        case .hausa: self = [.english: "hausa"]
-        case .hebrew: self = [.english: "hebrew"]
-        case .herero: self = [.english: "herero"]
-        case .hindi: self = [.english: "Hindi", .hindi: "हिंदी"]
-        case .hiriMotu: self = [.english: "hiriMotu"]
-        case .hungarian: self = [.english: "hungarian"]
-        case .icelandic: self = [.english: "icelandic"]
-        case .ido: self = [.english: "ido"]
-        case .igbo: self = [.english: "igbo"]
-        case .indonesian: self = [.english: "Indonesian", .indonesian: "Bahasa Indonesia"]
-        case .interlingua: self = [.english: "interlingua"]
-        case .interlingue: self = [.english: "interlingue"]
-        case .inuktitut: self = [.english: "inuktitut"]
-        case .inupiak: self = [.english: "inupiak"]
-        case .irish: self = [.english: "irish"]
-        case .italian: self = [.english: "Italian", .italian: "Italiano"]
-        case .japanese: self = [.english: "Japanese", .japanese: "日本語"]
-        case .javanese: self = [.english: "Javanese", .javanese: "Basa Jawa"]
-        case .kannada: self = [.english: "kannada"]
-        case .kanuri: self = [.english: "kanuri"]
-        case .kashmiri: self = [.english: "kashmiri"]
-        case .kazakh: self = [.english: "kazakh"]
-        case .khmer: self = [.english: "khmer"]
-        case .kikuyu: self = [.english: "kikuyu"]
-        case .kinyarwanda: self = [.english: "kinyarwanda"]
-        case .kirundi: self = [.english: "kirundi"]
-        case .komi: self = [.english: "komi"]
-        case .kongo: self = [.english: "kongo"]
-        case .korean: self = [.english: "Korean", .korean: "한국인"]
-        case .kurdish: self = [.english: "kurdish"]
-        case .kwanyama: self = [.english: "kwanyama"]
-        case .kyrgyz: self = [.english: "kyrgyz"]
-        case .lao: self = [.english: "lao"]
-        case .latin: self = [.english: "latin"]
-        case .latvian: self = [.english: "latvian"]
-        case .limburgish: self = [.english: "limburgish"]
-        case .lingala: self = [.english: "lingala"]
-        case .lithuanian: self = [.english: "lithuanian"]
-        case .lugaKatanga: self = [.english: "lugaKatanga"]
-        case .luxembourgish: self = [.english: "luxembourgish"]
-        case .macedonian: self = [.english: "macedonian"]
-        case .malagasy: self = [.english: "malagasy"]
-        case .malay: self = [.english: "malay"]
-        case .malayalam: self = [.english: "malayalam"]
-        case .maltese: self = [.english: "maltese"]
-        case .manx: self = [.english: "manx"]
-        case .maori: self = [.english: "maori"]
-        case .marathi: self = [.english: "marathi"]
-        case .marshallese: self = [.english: "marshallese"]
-        case .moldavian: self = [.english: "moldavian"]
-        case .mongolian: self = [.english: "mongolian"]
-        case .nauru: self = [.english: "nauru"]
-        case .navajo: self = [.english: "navajo"]
-        case .ndonga: self = [.english: "ndonga"]
-        case .nepali: self = [.english: "nepali"]
-        case .northernNdebele: self = [.english: "northernNdebele"]
-        case .norwegian: self = [.english: "norwegian"]
-        case .norwegianBokmål: self = [.english: "norwegianBokmål"]
-        case .norwegianNynorsk: self = [.english: "norwegianNynorsk"]
-        case .occitan: self = [.english: "occitan"]
-        case .ojibwe: self = [.english: "ojibwe"]
-        case .oriya: self = [.english: "oriya"]
-        case .oromo: self = [.english: "oromo"]
-        case .ossetian: self = [.english: "ossetian"]
-        case .pāli: self = [.english: "pāli"]
-        case .persian: self = [.english: "persian"]
-        case .polish: self = [.english: "Polish", .polish: "Polski"]
-        case .portuguese: self = [.english: "Portuguese", .portuguese: "Português"]
-        case .punjabi: self = [.english: "punjabi"]
-        case .quechua: self = [.english: "quechua"]
-        case .romanian: self = [.english: "Romanian", .romanian: "Română"]
-        case .romansh: self = [.english: "romansh"]
-        case .russian: self = [.english: "Russian", .russian: "Pусский"]
-        case .sami: self = [.english: "sami"]
-        case .samoan: self = [.english: "samoan"]
-        case .sango: self = [.english: "sango"]
-        case .sanskrit: self = [.english: "sanskrit"]
-        case .serbian: self = [.english: "serbian"]
-        case .serboCroatian: self = [.english: "serboCroatian"]
-        case .sesotho: self = [.english: "sesotho"]
-        case .setswana: self = [.english: "setswana"]
-        case .shona: self = [.english: "shona"]
-        case .sindhi: self = [.english: "sindhi"]
-        case .sinhalese: self = [.english: "sinhalese"]
-        case .slovak: self = [.english: "Slovak", .slovak: "slovenský"]
-        case .slovenian: self = [.english: "Slovenian", .slovenian: "Slovenščina"]
-        case .somali: self = [.english: "somali"]
-        case .southernNdebele: self = [.english: "southernNdebele"]
-        case .spanish:
-            self = [
-                .dutch: "Spaans", .english: "Spanish", .french: "Espagnol", .german: "Spanisch",
-                .spanish: "Español",
-            ]
-        case .sundanese: self = [.english: "sundanese"]
-        case .swahili: self = [.english: "swahili"]
-        case .swati: self = [.english: "swati"]
-        case .swedish: self = [.english: "Swedish", .swedish: "Tvåds"]
-        case .tagalog: self = [.english: "tagalog"]
-        case .tahitian: self = [.english: "tahitian"]
-        case .tajik: self = [.english: "tajik"]
-        case .tamil: self = [.english: "tamil"]
-        case .tatar: self = [.english: "tatar"]
-        case .telugu: self = [.english: "telugu"]
-        case .thai: self = [.english: "thai"]
-        case .tibetan: self = [.english: "tibetan"]
-        case .tigrinya: self = [.english: "tigrinya"]
-        case .tonga: self = [.english: "tonga"]
-        case .tsonga: self = [.english: "tsonga"]
-        case .turkish: self = [.english: "Turkish", .turkish: "Türkçe"]
-        case .turkmen: self = [.english: "turkmen"]
-        case .twi: self = [.english: "twi"]
-        case .ukEnglish: self = [.english: "ukEnglish"]
-        case .ukrainian: self = [.english: "ukrainian"]
-        case .urdu: self = [.english: "urdu"]
-        case .usEnglish: self = [.english: "usEnglish"]
-        case .uyghur: self = [.english: "uyghur"]
-        case .uzbek: self = [.english: "uzbek"]
-        case .venda: self = [.english: "venda"]
-        case .vietnamese: self = [.english: "vietnamese"]
-        case .volapük: self = [.english: "volapük"]
-        case .wallon: self = [.english: "wallon"]
-        case .welsh: self = [.english: "welsh"]
-        case .westernFrisian: self = [.english: "westernFrisian"]
-        case .wolof: self = [.english: "wolof"]
-        case .xhosa: self = [.english: "xhosa"]
-        case .yoruba: self = [.english: "yoruba"]
-        case .zulu: self = [.english: "zulu"]
-        }
+        self = languageNames[language] ?? [.english: String(describing: language)]
     }
 }
 

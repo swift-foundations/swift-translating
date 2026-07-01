@@ -5,8 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 21/07/2024.
 //
 
-import Foundation
-import Translating
+public import Translating
 
 extension TranslatedString {
     public init<Bound>(_ closedRange: ClosedRange<Bound>) where Bound: CustomStringConvertible {

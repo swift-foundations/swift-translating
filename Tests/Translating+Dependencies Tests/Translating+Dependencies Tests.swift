@@ -6,25 +6,25 @@
 //
 
 import Dependencies
-import DependenciesTestSupport
+import Dependencies_Test_Support
 import Language
 import Testing
 import Translated
-import TranslatedString
+import Translated_String
 
 @testable import Translating_Dependencies
 
 @Suite(
     "Language Dependency Tests",
-    .dependency(\.locale, .english)
+    .dependency(\.language, .english)
 )
 struct LanguageDependencyTests {
 
     @Suite("Language Dependency Integration")
     struct LanguageDependencyIntegrationTests {
 
-        @Test("Language dependency returns current language")
-        func languageDependencyReturnsCurrentLanguage() {
+        @Test
+        func `Language dependency returns current language`() {
             withDependencies {
                 $0.language = .dutch
             } operation: {
@@ -40,28 +40,28 @@ struct LanguageDependencyTests {
             }
         }
 
-        @Test("Language dependency has correct default values")
-        func languageDependencyHasCorrectDefaultValues() {
+        @Test
+        func `Language dependency has correct default values`() {
             #expect(Language.liveValue == .english)
             #expect(Language.testValue == .english)
             #expect(Language.previewValue == .english)
         }
 
-        @Test("Languages dependency provides all languages by default")
-        func languagesDependencyProvidesAllLanguagesByDefault() {
+        @Test
+        func `Languages dependency provides all languages by default`() {
             withDependencies { _ in
                 // Using default dependency values
             } operation: {
                 @Dependency(\.languages) var languages
-                #expect(languages.count == Language.allCases.count)
+                #expect(languages.count == Set<Language>.supported.count)
                 #expect(languages.contains(.english))
                 #expect(languages.contains(.dutch))
                 #expect(languages.contains(.french))
             }
         }
 
-        @Test("Languages dependency can be overridden")
-        func languagesDependencyCanBeOverridden() {
+        @Test
+        func `Languages dependency can be overridden`() {
             let customLanguages: Set<Language> = [.dutch, .french]
 
             withDependencies {

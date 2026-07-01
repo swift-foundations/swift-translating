@@ -5,8 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import Foundation
-import Language
+public import Language
 
 extension Translated {
     public func map<B>(_ transform: (A) -> B) -> Translated<B> {

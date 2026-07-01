@@ -1,22 +1,22 @@
-// swift-tools-version:5.10.1
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version: 6.3.1
 
 import PackageDescription
 
 extension String {
-    static let dateFormattedLocalized: Self = "DateFormattedLocalized"
+    static let translatingPlatform: Self = "Translating Platform"
     static let language: Self = "Language"
     static let translatingDependencies: Self = "Translating+Dependencies"
-    static let singlePlural: Self = "SinglePlural"
+    static let singlePlural: Self = "Single Plural"
     static let translated: Self = "Translated"
-    static let translatedString: Self = "TranslatedString"
+    static let translatedString: Self = "Translated String"
     static let translating: Self = "Translating"
     static let translations: Self = "Translations"
-    static let translatingTestSupport: Self = "TranslatingTestSupport"
+    static let translatingTestSupport: Self = "Translating Test Support"
+    var tests: Self { self + " Tests" }
 }
 
 extension Target.Dependency {
-    static var dateFormattedLocalized: Self { .target(name: .dateFormattedLocalized) }
+    static var translatingPlatform: Self { .target(name: .translatingPlatform) }
     static var language: Self { .target(name: .language) }
     static var translatingDependencies: Self { .target(name: .translatingDependencies) }
     static var singlePlural: Self { .target(name: .singlePlural) }
@@ -28,37 +28,39 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
+    static var bcp47: Self { .product(name: "BCP 47", package: "swift-bcp-47") }
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
+    static var dependenciesTestSupport: Self { .product(name: "Dependencies Test Support", package: "swift-dependencies") }
 }
 
 let package = Package(
     name: "swift-translating",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v13),
-        .macCatalyst(.v16),
-        .tvOS(.v16),
-        .watchOS(.v9)
+        .macOS(.v26),
+        .iOS(.v26),
+        .tvOS(.v26),
+        .watchOS(.v26),
+        .visionOS(.v26),
     ],
     products: [
-        .library(
-            name: .translating,
-            targets: [.translating]
-        ),
+        .library(name: .translating, targets: [.translating]),
         .library(name: .language, targets: [.language]),
         .library(name: .translatingDependencies, targets: [.translatingDependencies]),
         .library(name: .singlePlural, targets: [.singlePlural]),
         .library(name: .translated, targets: [.translated]),
         .library(name: .translatedString, targets: [.translatedString]),
-        .library(name: .dateFormattedLocalized, targets: [.dateFormattedLocalized]),
+        .library(name: .translatingPlatform, targets: [.translatingPlatform]),
         .library(name: .translatingTestSupport, targets: [.translatingTestSupport]),
-        .library(name: .translations, targets: [.translations])
+        .library(name: .translations, targets: [.translations]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2")
+        .package(url: "https://github.com/swift-ietf/swift-bcp-47.git", branch: "main"),
+        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
     ],
     targets: [
+
+        // MARK: - Umbrella
+
         .target(
             name: .translating,
             dependencies: [
@@ -67,55 +69,71 @@ let package = Package(
                 .singlePlural,
                 .translated,
                 .translatedString,
-                .dateFormattedLocalized
             ]
         ),
         .testTarget(
             name: .translating.tests,
             dependencies: [
                 .translating,
-                .dependenciesTestSupport
+                .dependenciesTestSupport,
             ]
         ),
-        .target(name: .language),
+
+        // MARK: - Language
+
+        .target(
+            name: .language,
+            dependencies: [
+                .bcp47,
+            ]
+        ),
         .testTarget(
             name: .language.tests,
             dependencies: [
                 .language,
-                .dependenciesTestSupport
+                .dependenciesTestSupport,
             ]
         ),
+
+        // MARK: - Dependencies
+
         .target(
             name: .translatingDependencies,
             dependencies: [
                 .language,
                 .translated,
                 .translatedString,
-                .dependencies
+                .dependencies,
             ]
         ),
         .testTarget(
             name: .translatingDependencies.tests,
             dependencies: [
                 .translatingDependencies,
-                .dependenciesTestSupport
+                .dependenciesTestSupport,
             ]
         ),
+
+        // MARK: - Single Plural
+
         .target(
             name: .singlePlural,
             dependencies: [
                 .language,
                 .translated,
-                .translatedString
+                .translatedString,
             ]
         ),
         .testTarget(
             name: .singlePlural.tests,
             dependencies: [
                 .singlePlural,
-                .dependenciesTestSupport
+                .dependenciesTestSupport,
             ]
         ),
+
+        // MARK: - Translated
+
         .target(
             name: .translated,
             dependencies: [
@@ -126,48 +144,81 @@ let package = Package(
             name: .translated.tests,
             dependencies: [
                 .translated,
-                .dependenciesTestSupport
+                .dependenciesTestSupport,
             ]
         ),
+
+        // MARK: - Translated String
+
         .target(
             name: .translatedString,
             dependencies: [
-                .translated
+                .translated,
             ]
         ),
         .testTarget(
             name: .translatedString.tests,
             dependencies: [
                 .translatedString,
-                .dependenciesTestSupport
+                .translatingPlatform,
+                .dependenciesTestSupport,
             ]
         ),
+
+        // MARK: - Platform
+
         .target(
-            name: .dateFormattedLocalized,
+            name: .translatingPlatform,
             dependencies: [
                 .dependencies,
                 .language,
-                .translatingDependencies
+                .singlePlural,
+                .translated,
+                .translatedString,
+                .translating,
+                .translatingDependencies,
             ]
         ),
         .testTarget(
-            name: .dateFormattedLocalized.tests,
+            name: .translatingPlatform.tests,
             dependencies: [
-                .dateFormattedLocalized,
+                .translatingPlatform,
                 .dependenciesTestSupport,
-                .language
+                .language,
             ]
         ),
+
+        // MARK: - Test Support
+
         .target(name: .translatingTestSupport),
+
+        // MARK: - Translations
+
         .target(
             name: .translations,
             dependencies: [
-                .translating
+                .translating,
             ]
-        )
-    ]
+        ),
+    ],
+    swiftLanguageModes: [.v6]
 )
 
-extension String {
-    var tests: Self { "\(self) Tests" }
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
+    let ecosystem: [SwiftSetting] = [
+        .strictMemorySafety(),
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+        .enableExperimentalFeature("LifetimeDependence"),
+        .enableExperimentalFeature("Lifetimes"),
+        .enableExperimentalFeature("SuppressedAssociatedTypes"),
+        .enableUpcomingFeature("InferIsolatedConformances"),
+        .enableUpcomingFeature("LifetimeDependence"),
+    ]
+
+    let package: [SwiftSetting] = []
+
+    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }

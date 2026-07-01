@@ -1,16 +1,16 @@
 //
-//  File.swift
+//  String.swift
+//  swift-translating
 //
-//
-//  Created by Coen ten Thije Boonkkamp on 11/06/2024.
+//  Foundation-free string helpers for translation-adjacent operations.
 //
 
-import Foundation
-import Language
+public import Language
+
+// MARK: - Articles
 
 extension String {
     /// Returns the string with the appropriate indefinite article ("a" or "an") prepended.
-    /// Uses English grammar rules: "an" before vowel sounds, "a" before consonant sounds.
     public var any: Self {
         if let first = self.first {
             if Set<String>.vowels.contains(String(first).lowercased()) {
@@ -24,48 +24,27 @@ extension String {
 }
 
 extension Set where Element == String {
-    /// English vowels (including 'y' when it sounds like a vowel)
+    /// English vowels
     public static let vowels: Self = ["a", "e", "i", "o", "u"]
 
     /// English consonants
     public static let consonants: Self = [
         "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w",
-        "x",
-        "y", "z",
+        "x", "y", "z",
     ]
 }
 
+// MARK: - Non-Breaking Space
+
 extension String {
     public static let nonBreakingSpace: Self = "\u{00a0}"
-}
 
-// public extension String {
-//    func print()->Void {
-//        Swift.print(self)
-//    }
-// }
-
-extension String {
-    public func normalized() -> String {
-        //        let lowercased = self.lowercased()
-        let withoutDiacritics = self.folding(options: .diacriticInsensitive, locale: .current)
-        let withoutSpecialCharacters = withoutDiacritics.components(
-            separatedBy: CharacterSet.alphanumerics.inverted
-        ).joined()
-        let standardizedWhiteSpace = withoutSpecialCharacters.replacingOccurrences(
-            of: "\\s+",
-            with: " ",
-            options: .regularExpression
-        )
-        return standardizedWhiteSpace
-    }
-}
-
-extension String {
     public func withNonBreakingSpace() -> Self {
-        self.replacingOccurrences(of: " ", with: "\u{00a0}")
+        self.replacing(" ", with: "\u{00a0}")
     }
 }
+
+// MARK: - Conditional Append
 
 extension String {
     public func `if`(_ bool: Bool, append string: String) -> Self {
@@ -73,53 +52,7 @@ extension String {
     }
 }
 
-extension String {
-    public func write(
-        toFile url: URL,
-        atomically useAuxiliaryFile: Bool = true,
-        encoding: String.Encoding = .utf8,
-        withDirectoryCreation: Bool = true
-    ) throws {
-        let fileManager = FileManager.default
-
-        if withDirectoryCreation {
-            let directoryURL = url.deletingLastPathComponent()
-
-            if !fileManager.fileExists(atPath: directoryURL.path) {
-                try fileManager.createDirectory(
-                    at: directoryURL,
-                    withIntermediateDirectories: true,
-                    attributes: nil
-                )
-            }
-        }
-
-        try self.write(to: url, atomically: useAuxiliaryFile, encoding: encoding)
-    }
-}
-
-extension String {
-    public static func slug(for string: String) -> String {
-        string
-            .lowercased()
-            .replacingOccurrences(of: "[\\W]+", with: "-", options: .regularExpression)
-            .replacingOccurrences(of: "^-|-$", with: "", options: .regularExpression)
-    }
-
-    public func slug() -> String {
-        String.slug(for: self)
-    }
-}
-
-extension String {
-    public func plural<A: Collection>(_ plural: String, _ collection: A) -> Self {
-        collection.count == 1 ? self : plural
-    }
-
-    public func filePathSafe() -> Self {
-        self.trunc(length: 250, trailing: "...")
-    }
-}
+// MARK: - Punctuation
 
 extension String {
     public static func period(_ string: Self) -> Self {
@@ -152,33 +85,11 @@ extension String {
     }
 }
 
-extension Int {
-    public func toPostCodeString(withSize size: Int) -> String {
-        guard self >= 0 else { fatalError() }
-        let str = String(format: "%0\(size)d", self)
-        return String(str.suffix(size))
-    }
-}
-
-extension String {
-    public static func kvk(_ int: Int) -> Self {
-        switch int {
-        case 0...9: return "0000000\(int)"
-        case 10...99: return "000000\(int)"
-        case 100...999: return "00000\(int)"
-        case 1000...9999: return "0000\(int)"
-        case 10000...99999: return "000\(int)"
-        case 100000...999999: return "00\(int)"
-        case 1_000_000...9_999_999: return "0\(int)"
-        case 10_000_000...99_999_999: return "\(int)"
-        default: fatalError()
-        }
-    }
-}
+// MARK: - Case Transforms
 
 extension String {
     public func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
+        return prefix(1).uppercased() + dropFirst()
     }
 
     public mutating func capitalizeFirstLetter() {
@@ -192,7 +103,17 @@ extension String {
     public mutating func lowercaseFirstLetter() {
         self = self.lowercasingFirstLetter()
     }
+
+    public var uppercasingFirst: String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+
+    public var lowercasingFirst: String {
+        return prefix(1).lowercased() + dropFirst()
+    }
 }
+
+// MARK: - Placeholder
 
 extension String {
     public enum Placeholder {
@@ -220,15 +141,9 @@ extension String {
     }
 }
 
+// MARK: - Truncation
+
 extension String {
-
-    /*
-     Truncates the string to the specified length number of characters and appends an optional trailing string if longer.
-     - Parameter length: Desired maximum lengths of a string
-     - Parameter trailing: A 'String' that will be appended after the truncation.
-
-     - Returns: 'String' object.
-     */
     public func trunc(length: Int, trailing: String = "…") -> String {
         return (self.count > length) ? self.prefix(length) + trailing : self
     }
@@ -236,144 +151,7 @@ extension String {
     public func ifEmpty(_ string: String) -> String {
         return !(self.isEmpty) ? self : string
     }
-}
 
-extension String {
-    public var uppercasingFirst: String {
-        return prefix(1).uppercased() + dropFirst()
-    }
-
-    public var lowercasingFirst: String {
-        return prefix(1).lowercased() + dropFirst()
-    }
-
-    public var camelized: String {
-        guard !isEmpty else {
-            return ""
-        }
-
-        let parts = self.components(separatedBy: CharacterSet.alphanumerics.inverted)
-
-        let first = String(describing: parts.first!).lowercasingFirst
-        let rest = parts.dropFirst().map({ String($0).uppercasingFirst })
-
-        return ([first] + rest).joined(separator: "")
-    }
-}
-
-extension String {
-    public func isAlphanumeric() -> Bool {
-        return self.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) == nil && self != ""
-    }
-
-    public func isAlphanumeric(ignoreDiacritics: Bool = false) -> Bool {
-        if ignoreDiacritics {
-            return self.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil && self != ""
-        } else {
-            return self.isAlphanumeric()
-        }
-    }
-}
-
-extension String {
-    public func typeName() -> String {
-        let components = self.components(separatedBy: CharacterSet.whitespacesAndNewlines).map {
-            $0.normalized()
-        }
-
-        let transformedComponents = components.map { component -> String in
-            var transformedComponent = component.replacingOccurrences(
-                of: "[^a-zA-Z0-9]",
-                with: "",
-                options: .regularExpression
-            )
-            if let firstChar = transformedComponent.first {
-                transformedComponent =
-                    String(firstChar).capitalized + transformedComponent.dropFirst()
-            }
-            return transformedComponent
-        }
-
-        let transformedString = transformedComponents.joined()
-
-        let regex = try! NSRegularExpression(
-            pattern: "(\\p{Uppercase})(\\p{Uppercase}+)(?!\\p{Lowercase})"
-        )
-        let range = NSRange(location: 0, length: transformedString.utf16.count)
-        let updatedString = regex.stringByReplacingMatches(
-            in: transformedString,
-            options: [],
-            range: range,
-            withTemplate: "$1$2"
-        )
-
-        return updatedString
-    }
-}
-
-extension String {
-    public func variableName() -> String {
-        let normalizedString =
-            self
-            .folding(options: .diacriticInsensitive, locale: .current)
-            .replacingOccurrences(of: "-", with: "_")
-            .replacingOccurrences(of: " ", with: "_")
-        let allowedCharacterSet = CharacterSet(
-            charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
-        )
-        let filteredString = normalizedString
-            .unicodeScalars
-            .filter { allowedCharacterSet.contains($0) }
-            .map { Character($0) }
-            .map { String($0) }
-            .joined()
-        return filteredString.lowercased()
-    }
-}
-
-extension String {
-    /// Removes invalid characters and condenses whitespace
-    public func sanitized() -> String {
-        let invalidCharacters = CharacterSet(charactersIn: "\\/:*?\"<>|")
-            .union(.newlines)
-            .union(.illegalCharacters)
-            .union(.controlCharacters)
-
-        // Remove invalid characters
-        let sanitizedString = self.components(separatedBy: invalidCharacters).joined()
-
-        // Condense whitespace
-        let condensedString = sanitizedString.components(separatedBy: .whitespacesAndNewlines)
-            .filter { !$0.isEmpty }
-            .joined(separator: " ")
-
-        // Truncate to the maximum filename length
-        return condensedString
-    }
-
-    /// Sanitizes the string by removing invalid characters and condensing whitespace
-    public mutating func sanitize() {
-        self = self.sanitized()
-    }
-
-    /// Condenses whitespace in the string
-    public func whitespaceCondensed() -> String {
-        return self.components(separatedBy: .whitespacesAndNewlines)
-            .filter { !$0.isEmpty }
-            .joined(separator: " ")
-    }
-
-    /// Mutates the string by condensing whitespace
-    public mutating func condenseWhitespace() {
-        self = self.whitespaceCondensed()
-    }
-
-    public func fileName(maxFilenameLength: Int = 150) -> Self {
-        self.sanitized().truncated(maxFilenameLength: maxFilenameLength)
-    }
-}
-
-extension String {
     public func truncated(maxFilenameLength: Int, truncationIndicator: String = "[...]") -> String {
         guard self.count > maxFilenameLength else { return self }
 
@@ -391,31 +169,10 @@ extension String {
     }
 }
 
+// MARK: - Pluralization
+
 extension String {
-    public func importTitle() -> String {
-        let invalidCharacters = CharacterSet.alphanumerics.inverted
-        let sanitizedString = self.unicodeScalars.map {
-            invalidCharacters.contains($0) ? "_" : Character($0)
-        }.reduce("") { $0 + String($1) }
-        return sanitizedString
-    }
-}
-
-extension Numeric {
-
-    public func number_in_writing(
-        locale: Locale
-    ) -> String {
-        Self.number_in_writing(getal: self, locale: locale)
-    }
-
-    public static func number_in_writing(
-        getal: Self,
-        locale: Locale
-    ) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .spellOut
-        formatter.locale = locale
-        return formatter.string(for: getal)!
+    public func plural<A: Collection>(_ plural: String, _ collection: A) -> Self {
+        collection.count == 1 ? self : plural
     }
 }

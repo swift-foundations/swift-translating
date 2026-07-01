@@ -1,5 +1,4 @@
-import Foundation
-import Language
+public import Language
 
 /// A generic container for storing values that can be translated across multiple languages.
 ///
@@ -103,189 +102,191 @@ extension Translated {
     }
 
     private func getFallbackChain(for language: Language) -> [Language] {
-        switch language {
-        case .abkhazian: return [.russian, .georgian, .english]
-        case .afar: return [.amharic, .oromo, .somali, .tigrinya, .english]
-        case .afrikaans: return [.dutch, .english]
-        case .akan: return [.english]
-        case .albanian: return [.italian, .english]
-        case .amharic: return [.oromo, .somali, .tigrinya, .english]
-        case .arabic: return [.english]
-        case .aragonese: return [.spanish, .english]
-        case .armenian: return [.english]
-        case .assamese: return [.english]
-        case .auEnglish: return [.english]
-        case .avaric: return [.english]
-        case .avestan: return [.english]
-        case .aymara: return [.spanish, .english]
-        case .azerbaijani: return [.english]
-        case .bambara: return [.english]
-        case .bashkir: return [.english]
-        case .basque: return [.spanish, .french, .english]
-        case .belarusian: return [.russian, .english]
-        case .bengali: return [.english]
-        case .bihari: return [.english]
-        case .bislama: return [.english]
-        case .bosnian: return [.english]
-        case .breton: return [.french, .english]
-        case .bulgarian: return [.english]
-        case .burmese: return [.english]
-        case .catalan: return [.spanish, .french, .portuguese, .english]
-        case .caEnglish: return [.english]
-        case .chamorro: return [.english]
-        case .chechen: return [.english]
-        case .chinese: return [.english]
-        case .chuvash: return [.english]
-        case .cornish: return [.english]
-        case .corsican: return [.french, .english]
-        case .cree: return [.english]
-        case .croatian: return [.english]
-        case .czech: return [.english]
-        case .danish: return [.english]
-        case .dutch: return [.english]
-        case .dzongkha: return [.english]
-        case .english: return []
-        case .esperanto: return [.english]
-        case .estonian: return [.russian, .english]
-        case .ewe: return [.english]
-        case .faroese: return [.danish, .english]
-        case .fijian: return [.english]
-        case .finnish: return [.swedish, .english]
-        case .french: return [.english]
-        case .galician: return [.spanish, .english]
-        case .gaelicScottish: return [.english]
-        case .georgian: return [.russian, .english]
-        case .german: return [.english]
-        case .greek: return [.english]
-        case .guarani: return [.spanish, .english]
-        case .gujarati: return [.english]
-        case .haitianCreole: return [.french, .english]
-        case .hausa: return [.french, .english]
-        case .hebrew: return [.english]
-        case .herero: return [.english]
-        case .hindi: return [.english]
-        case .hiriMotu: return [.english]
-        case .hungarian: return [.english]
-        case .icelandic: return [.english]
-        case .ido: return [.english]
-        case .igbo: return [.english]
-        case .indonesian: return [.english]
-        case .interlingua: return [.english]
-        case .interlingue: return [.english]
-        case .inuktitut: return [.english]
-        case .inupiak: return [.english]
-        case .irish: return [.english]
-        case .italian: return [.english]
-        case .japanese: return [.english]
-        case .javanese: return [.indonesian, .english]
-        case .kannada: return [.english]
-        case .kanuri: return [.french, .english]
-        case .kashmiri: return [.english]
-        case .kazakh: return [.russian, .english]
-        case .khmer: return [.english]
-        case .kikuyu: return [.english]
-        case .kinyarwanda: return [.english]
-        case .kirundi: return [.english]
-        case .komi: return [.english]
-        case .kongo: return [.english]
-        case .korean: return [.english]
-        case .kurdish: return [.arabic, .english]
-        case .kwanyama: return [.portuguese, .english]
-        case .kyrgyz: return [.russian, .english]
-        case .lao: return [.english]
-        case .latin: return [.english]
-        case .latvian: return [.russian, .english]
-        case .limburgish: return [.dutch, .english]
-        case .lingala: return [.french, .english]
-        case .lithuanian: return [.russian, .english]
-        case .lugaKatanga: return [.english]
-        case .luxembourgish: return [.french, .german, .english]
-        case .macedonian: return [.english]
-        case .malagasy: return [.french, .english]
-        case .malay: return [.english]
-        case .malayalam: return [.english]
-        case .maltese: return [.english]
-        case .manx: return [.english]
-        case .maori: return [.english]
-        case .marathi: return [.english]
-        case .marshallese: return [.english]
-        case .moldavian: return [.russian, .english]
-        case .mongolian: return [.english]
-        case .nauru: return [.english]
-        case .navajo: return [.english]
-        case .ndonga: return [.english]
-        case .nepali: return [.english]
-        case .northernNdebele: return [.english]
-        case .norwegian: return [.english]
-        case .norwegianBokmål: return [.norwegian, .english]
-        case .norwegianNynorsk: return [.norwegian, .english]
-        case .occitan: return [.spanish, .english]
-        case .ojibwe: return [.english]
-        case .oriya: return [.english]
-        case .oromo: return [.english]
-        case .ossetian: return [.russian, .english]
-        case .pāli: return [.english]
-        case .persian: return [.arabic, .english]
-        case .polish: return [.english]
-        case .portuguese: return [.english]
-        case .punjabi: return [.english]
-        case .quechua: return [.spanish, .english]
-        case .romanian: return [.russian, .english]
-        case .romansh: return [.french, .italian, .german, .english]
-        case .russian: return [.english]
-        case .sami: return [.norwegian, .english]
-        case .samoan: return [.english]
-        case .sango: return [.french, .english]
-        case .sanskrit: return [.english]
-        case .serbian: return [.albanian, .english]
-        case .serboCroatian: return [.english]
-        case .sesotho: return [.english]
-        case .setswana: return [.english]
-        case .shona: return [.english]
-        case .sindhi: return [.urdu, .english]
-        case .sinhalese: return [.english]
-        case .slovak: return [.german, .english]
-        case .slovenian: return [.english]
-        case .somali: return [.english]
-        case .southernNdebele: return [.english]
-        case .spanish: return [.english]
-        case .sundanese: return [.english]
-        case .swahili: return [.english]
-        case .swati: return [.english]
-        case .swedish: return [.english]
-        case .tagalog: return [.english]
-        case .tahitian: return [.english]
-        case .tajik: return [.russian, .english]
-        case .tamil: return [.malay, .english]
-        case .tatar: return [.english]
-        case .telugu: return [.english]
-        case .thai: return [.english]
-        case .tibetan: return [.chinese, .english]
-        case .tigrinya: return [.arabic, .italian, .english]
-        case .tonga: return [.english]
-        case .tsonga: return [.afrikaans, .english]
-        case .turkish: return [.english]
-        case .turkmen: return [.russian, .english]
-        case .twi: return [.english]
-        case .ukEnglish: return [.english]
-        case .ukrainian: return [.english]
-        case .urdu: return [.english]
-        case .usEnglish: return [.english]
-        case .uyghur: return [.chinese, .english]
-        case .uzbek: return [.english]
-        case .venda: return [.english]
-        case .vietnamese: return [.english]
-        case .volapük: return [.english]
-        case .wallon: return [.french, .english]
-        case .welsh: return [.english]
-        case .westernFrisian: return [.dutch, .english]
-        case .wolof: return [.french, .arabic, .english]
-        case .xhosa: return [.english]
-        case .yoruba: return [.english]
-        case .zulu: return [.english]
-        }
+        languageFallbackChains[language] ?? [.english]
     }
 }
+
+private let languageFallbackChains: [Language: [Language]] = [
+        .abkhazian: [.russian, .georgian, .english],
+        .afar: [.amharic, .oromo, .somali, .tigrinya, .english],
+        .afrikaans: [.dutch, .english],
+        .akan: [.english],
+        .albanian: [.italian, .english],
+        .amharic: [.oromo, .somali, .tigrinya, .english],
+        .arabic: [.english],
+        .aragonese: [.spanish, .english],
+        .armenian: [.english],
+        .assamese: [.english],
+        .auEnglish: [.english],
+        .avaric: [.english],
+        .avestan: [.english],
+        .aymara: [.spanish, .english],
+        .azerbaijani: [.english],
+        .bambara: [.english],
+        .bashkir: [.english],
+        .basque: [.spanish, .french, .english],
+        .belarusian: [.russian, .english],
+        .bengali: [.english],
+        .bihari: [.english],
+        .bislama: [.english],
+        .bosnian: [.english],
+        .breton: [.french, .english],
+        .bulgarian: [.english],
+        .burmese: [.english],
+        .catalan: [.spanish, .french, .portuguese, .english],
+        .caEnglish: [.english],
+        .chamorro: [.english],
+        .chechen: [.english],
+        .chinese: [.english],
+        .chuvash: [.english],
+        .cornish: [.english],
+        .corsican: [.french, .english],
+        .cree: [.english],
+        .croatian: [.english],
+        .czech: [.english],
+        .danish: [.english],
+        .dutch: [.english],
+        .dzongkha: [.english],
+        .english: [],
+        .esperanto: [.english],
+        .estonian: [.russian, .english],
+        .ewe: [.english],
+        .faroese: [.danish, .english],
+        .fijian: [.english],
+        .finnish: [.swedish, .english],
+        .french: [.english],
+        .galician: [.spanish, .english],
+        .gaelicScottish: [.english],
+        .georgian: [.russian, .english],
+        .german: [.english],
+        .greek: [.english],
+        .guarani: [.spanish, .english],
+        .gujarati: [.english],
+        .haitianCreole: [.french, .english],
+        .hausa: [.french, .english],
+        .hebrew: [.english],
+        .herero: [.english],
+        .hindi: [.english],
+        .hiriMotu: [.english],
+        .hungarian: [.english],
+        .icelandic: [.english],
+        .ido: [.english],
+        .igbo: [.english],
+        .indonesian: [.english],
+        .interlingua: [.english],
+        .interlingue: [.english],
+        .inuktitut: [.english],
+        .inupiak: [.english],
+        .irish: [.english],
+        .italian: [.english],
+        .japanese: [.english],
+        .javanese: [.indonesian, .english],
+        .kannada: [.english],
+        .kanuri: [.french, .english],
+        .kashmiri: [.english],
+        .kazakh: [.russian, .english],
+        .khmer: [.english],
+        .kikuyu: [.english],
+        .kinyarwanda: [.english],
+        .kirundi: [.english],
+        .komi: [.english],
+        .kongo: [.english],
+        .korean: [.english],
+        .kurdish: [.arabic, .english],
+        .kwanyama: [.portuguese, .english],
+        .kyrgyz: [.russian, .english],
+        .lao: [.english],
+        .latin: [.english],
+        .latvian: [.russian, .english],
+        .limburgish: [.dutch, .english],
+        .lingala: [.french, .english],
+        .lithuanian: [.russian, .english],
+        .lugaKatanga: [.english],
+        .luxembourgish: [.french, .german, .english],
+        .macedonian: [.english],
+        .malagasy: [.french, .english],
+        .malay: [.english],
+        .malayalam: [.english],
+        .maltese: [.english],
+        .manx: [.english],
+        .maori: [.english],
+        .marathi: [.english],
+        .marshallese: [.english],
+        .moldavian: [.russian, .english],
+        .mongolian: [.english],
+        .nauru: [.english],
+        .navajo: [.english],
+        .ndonga: [.english],
+        .nepali: [.english],
+        .northernNdebele: [.english],
+        .norwegian: [.english],
+        .norwegianBokmål: [.norwegian, .english],
+        .norwegianNynorsk: [.norwegian, .english],
+        .occitan: [.spanish, .english],
+        .ojibwe: [.english],
+        .oriya: [.english],
+        .oromo: [.english],
+        .ossetian: [.russian, .english],
+        .pāli: [.english],
+        .persian: [.arabic, .english],
+        .polish: [.english],
+        .portuguese: [.english],
+        .punjabi: [.english],
+        .quechua: [.spanish, .english],
+        .romanian: [.russian, .english],
+        .romansh: [.french, .italian, .german, .english],
+        .russian: [.english],
+        .sami: [.norwegian, .english],
+        .samoan: [.english],
+        .sango: [.french, .english],
+        .sanskrit: [.english],
+        .serbian: [.albanian, .english],
+        .serboCroatian: [.english],
+        .sesotho: [.english],
+        .setswana: [.english],
+        .shona: [.english],
+        .sindhi: [.urdu, .english],
+        .sinhalese: [.english],
+        .slovak: [.german, .english],
+        .slovenian: [.english],
+        .somali: [.english],
+        .southernNdebele: [.english],
+        .spanish: [.english],
+        .sundanese: [.english],
+        .swahili: [.english],
+        .swati: [.english],
+        .swedish: [.english],
+        .tagalog: [.english],
+        .tahitian: [.english],
+        .tajik: [.russian, .english],
+        .tamil: [.malay, .english],
+        .tatar: [.english],
+        .telugu: [.english],
+        .thai: [.english],
+        .tibetan: [.chinese, .english],
+        .tigrinya: [.arabic, .italian, .english],
+        .tonga: [.english],
+        .tsonga: [.afrikaans, .english],
+        .turkish: [.english],
+        .turkmen: [.russian, .english],
+        .twi: [.english],
+        .ukEnglish: [.english],
+        .ukrainian: [.english],
+        .urdu: [.english],
+        .usEnglish: [.english],
+        .uyghur: [.chinese, .english],
+        .uzbek: [.english],
+        .venda: [.english],
+        .vietnamese: [.english],
+        .volapük: [.english],
+        .wallon: [.french, .english],
+        .welsh: [.english],
+        .westernFrisian: [.dutch, .english],
+        .wolof: [.french, .arabic, .english],
+        .xhosa: [.english],
+        .yoruba: [.english],
+        .zulu: [.english],
+]
 
 extension Translated {
     var allCases: [A] {
