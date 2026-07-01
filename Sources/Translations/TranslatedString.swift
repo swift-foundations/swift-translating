@@ -5,8 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 25/07/2025.
 //
 
-import Foundation
-import Translating
+public import Translating
 
 extension TranslatedString {
     public static let male: Self =

@@ -1,17 +1,16 @@
 //
-//  File.swift
-//
+//  Language.swift
+//  swift-translating
 //
 //  Created by Coen ten Thije Boonkkamp on 17-12-2023.
 //
 
-import Dependencies
-import Foundation
-import Language
-import Translated
-import TranslatedString
+public import Dependencies
+public import Language
+public import Translated
+public import Translated_String
 
-extension DependencyValues {
+extension Dependency.Values {
     /// The current language to use for localization and translation.
     ///
     /// This dependency determines which language is used when:
@@ -33,34 +32,31 @@ extension DependencyValues {
     /// }
     /// ```
     ///
-    /// - Note: Automatically derived from the current locale dependency
+    /// - Note: Defaults to English. Install a Platform resolver for system language detection.
     public var language: Language {
         get { self[Language.self] }
         set { self[Language.self] = newValue }
     }
 }
 
-/// Conformance to DependencyKey allows Language to be used as a dependency.
+/// Conformance to Dependency.Key allows Language to be used as a dependency.
 ///
-/// The language is automatically derived from the current locale in all contexts,
-/// ensuring consistency between locale-aware APIs and language-specific translations.
-extension Language: DependencyKey {
-    /// Live value derives language from the current locale
+/// Defaults to English as a safe fallback. For system language detection based on
+/// locale, install the resolver from the `Translating Platform` module.
+extension Language: Dependency.Key {
+    /// Live value defaults to English as the fallback language
     public static var liveValue: Self {
-        @Dependency(\.locale) var locale
-        return .init(locale: locale)
+        .english
     }
 
-    /// Test value derives language from the test locale
+    /// Test value defaults to English for deterministic tests
     public static var testValue: Self {
-        @Dependency(\.locale) var locale
-        return .init(locale: locale)
+        .english
     }
 
-    /// Preview value derives language from the preview locale
+    /// Preview value defaults to English
     public static var previewValue: Self {
-        @Dependency(\.locale) var locale
-        return .init(locale: locale)
+        .english
     }
 }
 

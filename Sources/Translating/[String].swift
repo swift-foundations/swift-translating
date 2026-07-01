@@ -5,10 +5,9 @@
 //  Created by Coen ten Thije Boonkkamp on 25/07/2025.
 //
 
-import Foundation
-import Language
-import Translated
-import TranslatedString
+public import Language
+public import Translated
+public import Translated_String
 
 // MARK: - String Array Formatting Extensions
 

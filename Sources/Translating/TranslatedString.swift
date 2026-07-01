@@ -1,13 +1,10 @@
 //
-//  File.swift
+//  TranslatedString.swift
 //  swift-translating
 //
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
 
-import Foundation
-import Language
-import Translated
+public import Language
+public import Translated
 
 extension TranslatedString {
 
@@ -36,15 +33,7 @@ extension TranslatedString {
     }
 
     public var capitalized: Self {
-        self.map(\.capitalized)
-    }
-
-    public func capitalized(with locale: Locale? = nil) -> Self {
-        self.map { $0.capitalized(with: locale) }
-    }
-
-    public func uppercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.uppercased(with: locale) }
+        self.map { $0.capitalizingFirstLetter() }
     }
 
     @available(*, deprecated, message: "Renamed to capitalizingFirstLetter()")
@@ -53,23 +42,10 @@ extension TranslatedString {
     }
 
     public func capitalizingFirstLetter() -> Self {
-
-        self.map { $0.prefix(1).capitalized + $0.dropFirst() }
+        self.map { $0.prefix(1).uppercased() + $0.dropFirst() }
     }
 
     public func firstLetter(_ closure: (String) -> String) -> Self {
-
         self.map { closure(String($0.prefix(1))) + $0.dropFirst() }
-
-    }
-
-    public func lowercased(with locale: Locale? = nil) -> Self {
-        self.map { $0.lowercased(with: locale) }
-    }
-}
-
-extension Translated<String> {
-    public func slug() -> TranslatedString {
-        self.map { $0.slug() }
     }
 }

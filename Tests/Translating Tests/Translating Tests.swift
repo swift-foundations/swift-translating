@@ -6,7 +6,7 @@
 //
 
 import Dependencies
-import DependenciesTestSupport
+import Dependencies_Test_Support
 import Foundation
 import Testing
 
@@ -14,15 +14,15 @@ import Testing
 
 @Suite(
     "Translating Tests",
-    .dependency(\.locale, .english)
+    .dependency(\.language, .english)
 )
 struct TranslatingTests {
 
     @Suite("Closure-based Initializer with Dependencies")
     struct ClosureBasedInitializerTests {
 
-        @Test("Closure initializer uses languages dependency")
-        func closureInitializerUsesLanguagesDependency() {
+        @Test
+        func `Closure initializer uses languages dependency`() {
             let customLanguages: Set<Language> = [.dutch, .french, .german]
 
             withDependencies {
@@ -55,7 +55,7 @@ struct TranslatingTests {
                 $0.languages = limitedLanguages
             } operation: {
                 let translated = Translated<String> { language in
-                    "Content for \(language.rawValue)"
+                    "Content for \(language)"
                 }
 
                 #expect(translated[.dutch] == "Content for nl")  // Has Dutch translation
@@ -69,8 +69,8 @@ struct TranslatingTests {
     @Suite("Mass Initializer with Dependencies")
     struct MassInitializerDependenciesTests {
 
-        @Test("Mass initializer respects languages dependency")
-        func massInitializerRespectsLanguagesDependency() {
+        @Test
+        func `Mass initializer respects languages dependency`() {
             let customLanguages: Set<Language> = [.dutch, .french]
 
             withDependencies {
@@ -92,8 +92,8 @@ struct TranslatingTests {
             }
         }
 
-        @Test("Mass initializer with no matching languages")
-        func massInitializerWithNoMatchingLanguages() {
+        @Test
+        func `Mass initializer with no matching languages`() {
             let customLanguages: Set<Language> = [.italian, .portuguese]
 
             withDependencies {
@@ -118,8 +118,8 @@ struct TranslatingTests {
     @Suite("CustomStringConvertible with Dependencies")
     struct CustomStringConvertibleTests {
 
-        @Test("Description uses current language dependency")
-        func descriptionUsesCurrentLanguageDependency() {
+        @Test
+        func `Description uses current language dependency`() {
             let translated = Translated(
                 "Default",
                 dutch: "Hallo",
@@ -150,8 +150,8 @@ struct TranslatingTests {
     @Suite("Comparable with Dependencies")
     struct ComparableWithDependenciesTests {
 
-        @Test("Comparison uses current language dependency")
-        func comparisonUsesCurrentLanguageDependency() {
+        @Test
+        func `Comparison uses current language dependency`() {
             let translated1 = Translated(
                 "Apple",
                 dutch: "Appel",
@@ -183,130 +183,18 @@ struct TranslatingTests {
         }
     }
 
-    @Suite("Slug Functionality")
-    struct SlugFunctionalityTests {
-
-        @Test("Slug with default language dependency")
-        func slugWithDefaultLanguageDependency() {
-            let translated = Translated<String> { language in
-                switch language {
-                case .english: return "Hello World"
-                case .dutch: return "Hallo Wereld"
-                case .french: return "Bonjour Monde"
-                default: return "Hello World"
-                }
-            }
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug().description == "hello-world")
-            }
-
-            withDependencies {
-                $0.language = .dutch
-            } operation: {
-                #expect(translated.slug().description == "hallo-wereld")
-            }
-
-            withDependencies {
-                $0.language = .french
-            } operation: {
-                #expect(translated.slug().description == "bonjour-monde")
-            }
-        }
-
-        @Test("Slug with specific language parameter")
-        func slugWithSpecificLanguageParameter() {
-            let translated = Translated<String> { language in
-                switch language {
-                case .english: return "Test String"
-                case .spanish: return "Cadena de Prueba"
-                default: return "Test String"
-                }
-            }
-
-            withDependencies {
-                $0.language = .spanish
-            } operation: {
-                #expect(translated.slug().description == "cadena-de-prueba")
-            }
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug().description == "test-string")
-            }
-        }
-
-        @Test("Slug with special characters")
-        func slugWithSpecialCharacters() {
-            let translated: Translated<String> = "Hello! World@123 #Test"
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug() == "hello-world-123-test")
-            }
-        }
-
-        @Test("Slug with leading trailing spaces")
-        func slugWithLeadingTrailingSpaces() {
-            let translated: Translated<String> = "  Hello World  "
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug() == "hello-world")
-            }
-        }
-
-        @Test("Slug with multiple spaces")
-        func slugWithMultipleSpaces() {
-            let translated: Translated<String> = "Hello    World    Test"
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug() == "hello-world-test")
-            }
-        }
-
-        @Test("Slug with empty string")
-        func slugWithEmptyString() {
-            let translated = Translated<String>("")
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug() == "")
-            }
-        }
-
-        @Test("Slug with only special characters")
-        func slugWithOnlySpecialCharacters() {
-            let translated = Translated<String>("!@#$%^&*()")
-
-            withDependencies {
-                $0.language = .english
-            } operation: {
-                #expect(translated.slug() == "")
-            }
-        }
-    }
-
     @Suite("Edge Cases with Dependencies")
     struct EdgeCasesWithDependenciesTests {
 
-        @Test("Empty languages dependency")
-        func emptyLanguagesDependency() {
+        @Test
+        func `Empty languages dependency`() {
             let emptyLanguages: Set<Language> = []
 
             withDependencies {
                 $0.languages = emptyLanguages
             } operation: {
                 let translated = Translated<String> { language in
-                    "Content for \(language.rawValue)"
+                    "Content for \(language)"
                 }
 
                 #expect(translated[.french] == "Content for en")  // Falls back to default
@@ -315,8 +203,8 @@ struct TranslatingTests {
             }
         }
 
-        @Test("Single language dependency")
-        func singleLanguageDependency() {
+        @Test
+        func `Single language dependency`() {
             let singleLanguage: Set<Language> = [.french]
 
             withDependencies {
@@ -335,8 +223,8 @@ struct TranslatingTests {
             }
         }
 
-        @Test("Dependency changes don't affect existing instances")
-        func dependencyChangesDontAffectExistingInstances() {
+        @Test
+        func `Dependency changes don't affect existing instances`() {
             var translated: Translated<String>!
 
             withDependencies {

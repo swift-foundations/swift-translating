@@ -5,9 +5,8 @@
 //  Created by Coen ten Thije Boonkkamp on 25/07/2025.
 //
 
-import Foundation
-import Translated
-import TranslatedString
+public import Translated
+public import Translated_String
 
 extension [TranslatedString] {
     public func joined(separator: [String].Separator) -> TranslatedString {
