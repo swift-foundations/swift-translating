@@ -1,6 +1,6 @@
 # .github/metadata.yaml
 # Triaged by AI-assisted bulk pass (2026-04-29).
-description: "Translating for Swift."
+description: "Type-safe internationalization and localization — 180+ languages, plural forms, and locale-aware formatting — for Swift."
 topics:
   - foundations
   - translating
