@@ -201,7 +201,7 @@ extension Translated {
 
         // Use a closure to reduce code duplication and improve performance
         let addIfIncluded = { (language: Language, value: A?) in
-            if let value = value, languages.contains(language) {
+            if let value, languages.contains(language) {
                 dictionary[language] = value
             }
         }

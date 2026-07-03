@@ -35,7 +35,8 @@ extension TranslatedString {
         ]
 
     public init(_ dateComponents: DateComponents) {
-        let dutchValue = Self.timeUnits.dutch
+        let dutchValue =
+            Self.timeUnits.dutch
             .compactMap { keyPath, unit -> String? in
                 guard let value = dateComponents[keyPath: keyPath], value != 0 else {
                     return nil
@@ -46,7 +47,8 @@ extension TranslatedString {
             .joined(separator: " ")
             .nilIfEmpty ?? "0 seconden"
 
-        let englishValue = Self.timeUnits.english
+        let englishValue =
+            Self.timeUnits.english
             .compactMap { keyPath, unit -> String? in
                 guard let value = dateComponents[keyPath: keyPath], value != 0 else {
                     return nil

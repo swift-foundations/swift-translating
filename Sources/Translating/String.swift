@@ -130,7 +130,10 @@ extension String {
         return String(repeating: string, count: characters)
     }
 
-    public static func placeholder(_ size: String.Placeholder.Size, _ string: String = .space)
+    public static func placeholder(
+        _ size: String.Placeholder.Size,
+        _ string: String = .space
+    )
         -> String
     {
         switch size {

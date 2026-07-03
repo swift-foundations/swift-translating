@@ -15,12 +15,18 @@ extension [String] {
     public func formattedItems(with sign: String = "and") -> [String] {
         return self.enumerated().map { index, item in
             let trimChars: Set<Character> = [";", ".", ","]
-            let trimmedItem = String(item.drop(while: { trimChars.contains($0) }).reversed().drop(while: { trimChars.contains($0) }).reversed())
+            let trimmedItem = String(
+                item.drop(while: { trimChars.contains($0) }).reversed().drop(while: {
+                    trimChars.contains($0)
+                }).reversed()
+            )
             switch index {
             case count - 1:
                 return "\(trimmedItem)."
+
             case count - 2:
                 return "\(trimmedItem); \(sign)"
+
             default:
                 return "\(trimmedItem);"
             }
@@ -50,7 +56,10 @@ extension [String] {
     }
 
     /// Creates a comprehensive numbered and signed list with proper formatting
-    public func numberedAndSigned(startingAt start: Int = 1, conjunction: String = "and")
+    public func numberedAndSigned(
+        startingAt start: Int = 1,
+        conjunction: String = "and"
+    )
         -> [String]
     {
         return

@@ -7,15 +7,15 @@
 
 extension String {
     public static func mockFirstName() -> Self { mockVoornaam() }
-    public static func mockVoornaam() -> Self { [String].voornamen.randomElement()! }
+    public static func mockVoornaam() -> Self { [Self].voornamen.randomElement()! }
 
     public static func mockSurname() -> Self { mockAchternaam() }
-    public static func mockAchternaam() -> Self { [String].achternamen.randomElement()! }
+    public static func mockAchternaam() -> Self { [Self].achternamen.randomElement()! }
 }
 
 extension String {
     public static func mockPersonName() -> Self {
-        String.mockFirstName() + " " + .mockSurname()
+        Self.mockFirstName() + " " + .mockSurname()
     }
 
     public static func mockDutchPhone() -> Self {

@@ -37,11 +37,13 @@ extension Date {
         @Dependency(\.languages) var languages
 
         let format: (Language) -> String = { language in
-            self.formatted(Date.FormatStyle(
-                date: date,
-                time: time,
-                locale: language.locale
-            ))
+            self.formatted(
+                Self.FormatStyle(
+                    date: date,
+                    time: time,
+                    locale: language.locale
+                )
+            )
         }
 
         return .init(

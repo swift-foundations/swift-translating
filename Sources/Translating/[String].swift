@@ -57,8 +57,10 @@ extension [String] {
             switch separator {
             case .and:
                 return self.formattedItems(with: "and")  // TODO: Use proper localized "and"
+
             case .or:
                 return self.formattedItems(with: "or")  // TODO: Use proper localized "or"
+
             case .individual:
                 return self.formattedItems(with: "")
             }
