@@ -52,12 +52,14 @@ extension Date? {
                 } else {
                     return Date.placeholder()(language)
                 }
+
             case (.none, _):
                 if let date = self {
                     return date.description(dateStyle: dateStyle, timeStyle: timeStyle)(language)
                 } else {
                     return "__:__))"
                 }
+
             default:
                 if let date = self {
                     return date.description(dateStyle: dateStyle, timeStyle: timeStyle)(language)

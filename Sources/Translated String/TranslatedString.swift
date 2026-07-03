@@ -88,7 +88,7 @@ extension TranslatedString {
     /// - Parameter elements: Key-value pairs representing language-translation mappings
     public init(dictionaryLiteral elements: (Language, String)...) {
         if elements.isEmpty {
-            self = TranslatedString.empty
+            self = Self.empty
         } else {
             let dictionary = Dictionary(uniqueKeysWithValues: elements)
             // Prefer English as default if available, otherwise use the first provided value

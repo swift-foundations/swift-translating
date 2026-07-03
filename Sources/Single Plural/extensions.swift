@@ -115,7 +115,10 @@ extension Int? {
 }
 
 extension Int {
-    fileprivate func timeUnitString(single: TranslatedString, multiple: TranslatedString)
+    fileprivate func timeUnitString(
+        single: TranslatedString,
+        multiple: TranslatedString
+    )
         -> TranslatedString
     {
         if self == 1 {

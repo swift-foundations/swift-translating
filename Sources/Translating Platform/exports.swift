@@ -7,4 +7,4 @@
 //  plus Foundation integration.
 //
 
-public import Translating
+@_exported public import Translating

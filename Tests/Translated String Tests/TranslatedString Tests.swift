@@ -5,9 +5,9 @@
 //  Created by Coen ten Thije Boonkkamp on 25/07/2025.
 //
 
-import Translating_Platform
 import Foundation
 import Testing
+import Translating_Platform
 
 @testable import Language
 @testable import Translated
@@ -23,10 +23,10 @@ struct TranslatedStringTests {
         func `TranslatedString allows empty dictionary literal`() {
             let empty: TranslatedString = .empty
 
-            #expect(empty.default == "")
-            #expect(empty[.english] == "")
-            #expect(empty[.dutch] == "")
-            #expect(empty[.german] == "")
+            #expect(empty.default.isEmpty)
+            #expect(empty[.english].isEmpty)
+            #expect(empty[.dutch].isEmpty)
+            #expect(empty[.german].isEmpty)
         }
 
         @Test
@@ -83,8 +83,8 @@ struct TranslatedStringTests {
         func `Empty string literal`() {
             let translated: TranslatedString = ""
 
-            #expect(translated.default == "")
-            #expect(translated[.english] == "")
+            #expect(translated.default.isEmpty)
+            #expect(translated[.english].isEmpty)
             #expect(translated == .empty)
         }
 

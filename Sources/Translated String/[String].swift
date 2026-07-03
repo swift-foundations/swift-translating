@@ -29,8 +29,10 @@ extension TranslatedString {
         switch separator {
         case .and:
             self = [.english: "and"]  // TODO: Add proper localized "and" translations
+
         case .or:
             self = [.english: "or"]  // TODO: Add proper localized "or" translations
+
         case .andOr:
             self = [.english: "and/or"]  // TODO: Add proper localized "and/or" translations
         }
