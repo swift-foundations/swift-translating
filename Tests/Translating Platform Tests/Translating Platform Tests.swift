@@ -156,7 +156,8 @@ struct TranslatingPlatformTests {
 
         @Test
         func `TranslatedString uses dependency language - English`() {
-            let date = Date(timeIntervalSince1970: 1_641_024_000)  // January 1, 2022 12:00:00 AM UTC
+            // January 1, 2022 12:00:00 AM UTC
+            let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .long, time: .omitted, translated: true)
 
             withDependencies {
@@ -212,7 +213,8 @@ struct TranslatingPlatformTests {
 
         @Test
         func `TranslatedString with time formatting`() {
-            let date = Date(timeIntervalSince1970: 1_641_067_200)  // January 1, 2022 12:00:00 PM UTC
+            // January 1, 2022 12:00:00 PM UTC
+            let date = Date(timeIntervalSince1970: 1_641_067_200)
             let formatted = date.formatted(date: .omitted, time: .shortened, translated: true)
 
             withDependencies {
@@ -229,7 +231,8 @@ struct TranslatingPlatformTests {
 
         @Test
         func `TranslatedString with date and time formatting`() {
-            let date = Date(timeIntervalSince1970: 1_641_067_200)  // January 1, 2022 12:00:00 PM UTC
+            // January 1, 2022 12:00:00 PM UTC
+            let date = Date(timeIntervalSince1970: 1_641_067_200)
             let formatted = date.formatted(date: .numeric, time: .shortened, translated: true)
 
             withDependencies {
@@ -338,7 +341,8 @@ struct TranslatingPlatformTests {
 
         @Test
         func `Formatting with different time styles produces different precision`() {
-            let date = Date(timeIntervalSince1970: 1_641_067_200)  // January 1, 2022 12:00:00 PM UTC
+            // January 1, 2022 12:00:00 PM UTC
+            let date = Date(timeIntervalSince1970: 1_641_067_200)
 
             withDependencies {
                 $0.language = .english

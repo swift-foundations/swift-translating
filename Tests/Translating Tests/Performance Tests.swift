@@ -154,7 +154,8 @@ struct PerformanceTests {
 
             let result = clock.measure {
                 withDependencies {
-                    $0.languages = Set(Array(Set<Language>.supported).prefix(20))  // Realistic subset
+                    // Realistic subset
+                    $0.languages = Set(Array(Set<Language>.supported).prefix(20))
                 } operation: {
                     var translatedStrings: [Translated<String>] = []
                     translatedStrings.reserveCapacity(stringCount)

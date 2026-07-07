@@ -197,7 +197,8 @@ extension Translated {
         // Build dictionary efficiently by only checking non-nil parameters
         // and using direct dictionary construction instead of compactMapValues
         var dictionary: [Language: A] = [:]
-        dictionary.reserveCapacity(min(languages.count, 180))  // Pre-allocate for better performance
+        // Pre-allocate for better performance
+        dictionary.reserveCapacity(min(languages.count, 180))
 
         // Use a closure to reduce code duplication and improve performance
         let addIfIncluded = { (language: Language, value: A?) in
