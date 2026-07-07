@@ -19,9 +19,11 @@ extension [String] {
         case and
         case or
         case andOr
-
-        public static let orSeparator: Self = .or
     }
+}
+
+extension [String].Separator {
+    public static let orSeparator: Self = .or
 }
 
 extension TranslatedString {

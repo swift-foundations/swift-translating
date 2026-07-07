@@ -116,13 +116,7 @@ extension String {
 // MARK: - Placeholder
 
 extension String {
-    public enum Placeholder {
-        public enum Size {
-            case large
-            case medium
-            case small
-        }
-    }
+    public enum Placeholder {}
 
     public static let placeholder: String = String.placeholder(.medium)
 
@@ -141,6 +135,14 @@ extension String {
         case .medium: return String(repeating: string, count: 22)
         case .small: return String(repeating: string, count: 10)
         }
+    }
+}
+
+extension String.Placeholder {
+    public enum Size {
+        case large
+        case medium
+        case small
     }
 }
 
