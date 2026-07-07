@@ -4,3 +4,7 @@
 parent_config: https://raw.githubusercontent.com/swift-foundations/.github/main/.swiftlint.yml
 
 # Package-specific overrides (if needed)
+disabled_rules:
+  # BCP47.LanguageTag+StaticAccessors.swift is auto-generated (Scripts/generate-
+  # language-constants.swift) and uses try! on provably-valid static ISO-639 tags.
+  - force_try

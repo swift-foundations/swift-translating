@@ -59,7 +59,8 @@ struct TranslatingTests {
                 }
 
                 #expect(translated[.dutch] == "Content for nl")  // Has Dutch translation
-                #expect(translated[.english] == "Content for en")  // Has English translation (also the default)
+                // Has English translation (also the default)
+                #expect(translated[.english] == "Content for en")
                 #expect(translated[.french] == "Content for en")  // Falls back to default
                 #expect(translated[.german] == "Content for en")  // Falls back to default
             }

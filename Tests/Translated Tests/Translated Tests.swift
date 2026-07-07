@@ -127,14 +127,18 @@ struct TranslatedTests {
             )
 
             // Both subscript and property should give same results with fallback chains
-            #expect(translated[.afrikaans] == translated.afrikaans)  // Should both be "Hallo" (via Dutch)
-            #expect(translated[.basque] == translated.basque)  // Should both be "Hola" (via Spanish)
+            // Should both be "Hallo" (via Dutch)
+            #expect(translated[.afrikaans] == translated.afrikaans)
+            // Should both be "Hola" (via Spanish)
+            #expect(translated[.basque] == translated.basque)
             #expect(translated[.dutch] == translated.dutch)  // Should both be "Hallo" (direct)
-            #expect(translated[.german] == translated.german)  // Should both be "Hello" (via English)
+            // Should both be "Hello" (via English)
+            #expect(translated[.german] == translated.german)
 
             // Verify the actual fallback values
             #expect(translated[.afrikaans] == "Hallo")  // afrikaans -> dutch -> english -> default
-            #expect(translated[.basque] == "Hola")  // basque -> spanish -> french -> english -> default
+            // basque -> spanish -> french -> english -> default
+            #expect(translated[.basque] == "Hola")
             #expect(translated[.german] == "Hello")  // german -> english -> default
         }
     }
