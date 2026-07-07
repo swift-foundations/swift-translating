@@ -75,6 +75,7 @@ let package = Package(
             name: .translating.tests,
             dependencies: [
                 .translating,
+                .translatingPlatform,
                 .dependenciesTestSupport,
             ]
         ),
