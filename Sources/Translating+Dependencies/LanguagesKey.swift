@@ -12,7 +12,9 @@ public import Language
 ///
 /// This key defines which languages should be included when creating translated content,
 /// allowing fine-grained control over which translations are generated and cached.
-private enum LanguagesKey: Dependency.Key {
+private enum LanguagesKey: Dependency.Key {}
+
+extension LanguagesKey {
     /// Live value includes all supported languages
     static let liveValue: Swift.Set<Language> = .supported
 
