@@ -13,13 +13,12 @@ import Testing
 @testable import Translating
 
 @Suite(
-    "Translating Tests",
     .dependency(\.language, .english)
 )
-struct TranslatingTests {
+struct `Translating Tests` {
 
-    @Suite("Closure-based Initializer with Dependencies")
-    struct ClosureBasedInitializerTests {
+    @Suite
+    struct `Closure Based Initializer` {
 
         @Test
         func `Closure initializer uses languages dependency`() {
@@ -65,8 +64,8 @@ struct TranslatingTests {
         }
     }
 
-    @Suite("Mass Initializer with Dependencies")
-    struct MassInitializerDependenciesTests {
+    @Suite
+    struct `Mass Initializer Dependencies` {
 
         @Test
         func `Mass initializer respects languages dependency`() {
@@ -114,8 +113,8 @@ struct TranslatingTests {
         }
     }
 
-    @Suite("CustomStringConvertible with Dependencies")
-    struct CustomStringConvertibleTests {
+    @Suite
+    struct `Custom String Convertible` {
 
         @Test
         func `Description uses current language dependency`() {
@@ -146,8 +145,8 @@ struct TranslatingTests {
         }
     }
 
-    @Suite("Comparable with Dependencies")
-    struct ComparableWithDependenciesTests {
+    @Suite
+    struct `Comparable With Dependencies` {
 
         @Test
         func `Comparison uses current language dependency`() {
@@ -182,8 +181,8 @@ struct TranslatingTests {
         }
     }
 
-    @Suite("Edge Cases with Dependencies")
-    struct EdgeCasesWithDependenciesTests {
+    @Suite
+    struct `Edge Cases With Dependencies` {
 
         @Test
         func `Empty languages dependency`() {

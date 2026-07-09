@@ -13,8 +13,8 @@ import Testing
 @Suite
 struct `Translated Tests` {
 
-    @Suite("Basic Functionality")
-    struct BasicFunctionalityTests {
+    @Suite
+    struct `Basic Functionality` {
 
         @Test
         func `Creates translated value with default`() {
@@ -58,7 +58,7 @@ struct `Translated Tests` {
     }
 
     @Suite("Initializer Tests")
-    struct InitializerTests {
+    struct Initializer {
 
         @Test
         func `Simple dictionary literal initializer`() {
@@ -70,8 +70,8 @@ struct `Translated Tests` {
         }
     }
 
-    @Suite("Language Fallback System")
-    struct LanguageFallbackTests {
+    @Suite
+    struct `Language Fallback` {
 
         @Test
         func `Dutch falls back to English`() {
@@ -143,8 +143,8 @@ struct `Translated Tests` {
         }
     }
 
-    @Suite("String Concatenation")
-    struct StringConcatenationTests {
+    @Suite
+    struct `String Concatenation` {
 
         @Test
         func `Concatenates two translated strings preserving all languages`() {
@@ -207,8 +207,8 @@ struct `Translated Tests` {
         }
     }
 
-    @Suite("Protocol Conformances")
-    struct ProtocolConformanceTests {
+    @Suite
+    struct `Protocol Conformance` {
 
         @Test
         func `Equatable conformance works correctly`() {
@@ -230,8 +230,8 @@ struct `Translated Tests` {
         }
     }
 
-    @Suite("ExpressibleByDictionaryLiteral")
-    struct ExpressibleByDictionaryLiteralTests {
+    @Suite
+    struct `Expressible By Dictionary Literal` {
 
         @Test
         func `Creates translated value from dictionary literal with English priority`() {
@@ -291,8 +291,8 @@ struct `Translated Tests` {
 
     }
 
-    @Suite("Edge Cases")
-    struct EdgeCaseTests {
+    @Suite
+    struct `Edge Case` {
 
         @Test
         func `Empty translation dictionary`() {
