@@ -14,13 +14,12 @@ import Testing
 @testable import Translating_Platform
 
 @Suite(
-    "Translating Platform Tests",
     .dependency(\.language, .english)
 )
-struct TranslatingPlatformTests {
+struct `Translating Platform Tests` {
 
-    @Suite("Language.preferred")
-    struct PreferredLanguageTests {
+    @Suite
+    struct `Preferred Language` {
 
         @Test
         func `Language.preferred returns a valid language`() {
@@ -37,8 +36,8 @@ struct TranslatingPlatformTests {
         }
     }
 
-    @Suite("numberInWriting")
-    struct NumberInWritingTests {
+    @Suite
+    struct `Number In Writing` {
 
         @Test
         func `Integer spell-out in English`() {
@@ -73,8 +72,8 @@ struct TranslatingPlatformTests {
         }
     }
 
-    @Suite("Date.formatted Extension")
-    struct DateFormattedExtensionTests {
+    @Suite
+    struct `Date Formatted Extension` {
 
         @Test
         func `Creates FormattedDate with date and time styles`() {
@@ -151,8 +150,8 @@ struct TranslatingPlatformTests {
         }
     }
 
-    @Suite("TranslatedString Property")
-    struct TranslatedStringPropertyTests {
+    @Suite
+    struct `Translated String Property` {
 
         @Test
         func `TranslatedString uses dependency language - English`() {
@@ -273,8 +272,8 @@ struct TranslatingPlatformTests {
         }
     }
 
-    @Suite("Various Date Scenarios")
-    struct VariousDateScenariosTests {
+    @Suite
+    struct `Various Date Scenarios` {
 
         @Test
         func `Formatting historical dates`() {
@@ -370,8 +369,8 @@ struct TranslatingPlatformTests {
         }
     }
 
-    @Suite("Edge Cases")
-    struct EdgeCasesTests {
+    @Suite
+    struct `Edge Cases` {
 
         @Test
         func `Formatting epoch date (Unix timestamp 0)`() {

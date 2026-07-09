@@ -15,13 +15,12 @@ import Translated_String
 @testable import Translating_Dependencies
 
 @Suite(
-    "Language Dependency Tests",
     .dependency(\.language, .english)
 )
-struct LanguageDependencyTests {
+struct `Language Dependency Tests` {
 
-    @Suite("Language Dependency Integration")
-    struct LanguageDependencyIntegrationTests {
+    @Suite
+    struct `Language Dependency Integration` {
 
         @Test
         func `Language dependency returns current language`() {

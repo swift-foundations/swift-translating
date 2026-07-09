@@ -16,8 +16,8 @@ import Translating_Platform
 @Suite
 struct `TranslatedString Tests` {
 
-    @Suite("ExpressibleByDictionaryLiteral")
-    struct ExpressibleByDictionaryLiteralTests {
+    @Suite
+    struct `Expressible By Dictionary Literal` {
 
         @Test
         func `TranslatedString allows empty dictionary literal`() {
@@ -67,8 +67,8 @@ struct `TranslatedString Tests` {
         }
     }
 
-    @Suite("String Literal Conformances")
-    struct StringLiteralTests {
+    @Suite
+    struct `String Literal` {
 
         @Test
         func `TranslatedString from string literal`() {
@@ -98,7 +98,7 @@ struct `TranslatedString Tests` {
     }
 
     @Suite("Punctuation and Formatting")
-    struct PunctuationTests {
+    struct Punctuation {
 
         @Test
         func `Static punctuation constants`() {
@@ -119,8 +119,8 @@ struct `TranslatedString Tests` {
         }
     }
 
-    @Suite("Separator Functionality")
-    struct SeparatorTests {
+    @Suite
+    struct `Separator Functionality` {
 
         @Test
         func `And separator initialization`() {
@@ -154,8 +154,8 @@ struct `TranslatedString Tests` {
         }
     }
 
-    @Suite("Language Array Extensions")
-    struct LanguageArrayTests {
+    @Suite
+    struct `Language Array` {
 
         @Test
         func `Language array sorting`() {
@@ -170,8 +170,8 @@ struct `TranslatedString Tests` {
         }
     }
 
-    @Suite("Date Extensions")
-    struct DateExtensionTests {
+    @Suite
+    struct `Date Extension` {
 
         @Test
         func `Date placeholder functionality`() {
@@ -182,8 +182,8 @@ struct `TranslatedString Tests` {
         }
     }
 
-    @Suite("String Array Formatting")
-    struct StringArrayFormattingTests {
+    @Suite
+    struct `String Array Formatting` {
 
         @Test
         func `Formatted items with default conjunction`() {
@@ -268,8 +268,8 @@ struct `TranslatedString Tests` {
         }
     }
 
-    @Suite("Core Functionality")
-    struct CoreFunctionalityTests {
+    @Suite
+    struct `Core Functionality` {
 
         @Test
         func `Map functionality`() {

@@ -8,8 +8,8 @@ import Translated_String
 import Translating
 import Translating_Platform
 
-@Suite("README Verification")
-struct ReadmeVerificationTests {
+@Suite
+struct `Readme Verification` {
 
     // MARK: - Quick Start Example
 

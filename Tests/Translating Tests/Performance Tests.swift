@@ -21,13 +21,12 @@ import Testing
     .serialized,
     .disabled("Enable for performance testing")
 )
-struct PerformanceTests {
+struct Performance {
 
     @Suite(
-        "Closure-Based Initialization Performance",
         .serialized
     )
-    struct ClosureBasedInitializationTests {
+    struct `Closure Based Initialization` {
 
         @Test
         func `All languages dependency - Current Implementation`() throws {
@@ -191,10 +190,9 @@ struct PerformanceTests {
     }
 
     @Suite(
-        "Dictionary Literal vs Closure Performance",
         .serialized
     )
-    struct DictionaryVsClosureTests {
+    struct `Dictionary Vs Closure` {
 
         @Test
         func `Dictionary literal initialization performance`() throws {
@@ -286,10 +284,9 @@ struct PerformanceTests {
     }
 
     @Suite(
-        "Memory Usage Analysis",
         .serialized
     )
-    struct MemoryUsageTests {
+    struct `Memory Usage` {
 
         @Test
         func `Memory comparison - All languages vs Limited languages`() throws {
