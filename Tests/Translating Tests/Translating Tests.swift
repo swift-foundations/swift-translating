@@ -45,10 +45,8 @@ struct TranslatingTests {
             }
         }
 
-        @Test(
-            "Closure initializer with limited languages dependency"
-        )
-        func closureInitializerWithLimitedLanguagesDependency() {
+        @Test
+        func `Closure initializer with limited languages dependency`() {
             let limitedLanguages: Set<Language> = [.dutch, .english]
 
             withDependencies {
