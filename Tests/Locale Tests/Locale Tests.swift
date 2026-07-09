@@ -8,7 +8,7 @@
 import Foundation
 import Testing
 
-@Test func localeLanguageIdentifiers() {
+@Test func `locale Language Identifiers`() {
 
     Locale.isoLanguageCodes.sorted(by: <).forEach { code in
         print(code)
