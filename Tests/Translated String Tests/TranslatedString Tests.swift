@@ -13,8 +13,8 @@ import Translating_Platform
 @testable import Translated
 @testable import Translated_String
 
-@Suite("TranslatedString Tests")
-struct TranslatedStringTests {
+@Suite
+struct `TranslatedString Tests` {
 
     @Suite("ExpressibleByDictionaryLiteral")
     struct ExpressibleByDictionaryLiteralTests {
