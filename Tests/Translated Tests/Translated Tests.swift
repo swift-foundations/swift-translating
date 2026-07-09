@@ -10,8 +10,8 @@ import Testing
 @testable import Language
 @testable import Translated
 
-@Suite("Translated Tests")
-struct TranslatedTests {
+@Suite
+struct `Translated Tests` {
 
     @Suite("Basic Functionality")
     struct BasicFunctionalityTests {
