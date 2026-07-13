@@ -5,7 +5,6 @@ import PackageDescription
 extension String {
     static let translatingPlatform: Self = "Translating Platform"
     static let language: Self = "Language"
-    static let translatingDependencies: Self = "Translating+Dependencies"
     static let singlePlural: Self = "Single Plural"
     static let translated: Self = "Translated"
     static let translatedString: Self = "Translated String"
@@ -18,7 +17,6 @@ extension String {
 extension Target.Dependency {
     static var translatingPlatform: Self { .target(name: .translatingPlatform) }
     static var language: Self { .target(name: .language) }
-    static var translatingDependencies: Self { .target(name: .translatingDependencies) }
     static var singlePlural: Self { .target(name: .singlePlural) }
     static var translated: Self { .target(name: .translated) }
     static var translatedString: Self { .target(name: .translatedString) }
@@ -45,7 +43,6 @@ let package = Package(
     products: [
         .library(name: .translating, targets: [.translating]),
         .library(name: .language, targets: [.language]),
-        .library(name: .translatingDependencies, targets: [.translatingDependencies]),
         .library(name: .singlePlural, targets: [.singlePlural]),
         .library(name: .translated, targets: [.translated]),
         .library(name: .translatedString, targets: [.translatedString]),
@@ -65,18 +62,9 @@ let package = Package(
             name: .translating,
             dependencies: [
                 .language,
-                .translatingDependencies,
                 .singlePlural,
                 .translated,
                 .translatedString,
-            ]
-        ),
-        .testTarget(
-            name: .translating.tests,
-            dependencies: [
-                .translating,
-                .translatingPlatform,
-                .dependenciesTestSupport,
             ]
         ),
 
@@ -98,22 +86,6 @@ let package = Package(
 
         // MARK: - Dependencies
 
-        .target(
-            name: .translatingDependencies,
-            dependencies: [
-                .language,
-                .translated,
-                .translatedString,
-                .dependencies,
-            ]
-        ),
-        .testTarget(
-            name: .translatingDependencies.tests,
-            dependencies: [
-                .translatingDependencies,
-                .dependenciesTestSupport,
-            ]
-        ),
 
         // MARK: - Single Plural
 
@@ -177,7 +149,6 @@ let package = Package(
                 .translated,
                 .translatedString,
                 .translating,
-                .translatingDependencies,
             ]
         ),
         .testTarget(
