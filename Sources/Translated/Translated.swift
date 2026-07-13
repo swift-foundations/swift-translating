@@ -45,11 +45,23 @@ public struct Translated<A> {
     /// Cache for memoized fallback results to avoid recomputation
     private var fallbackCache: [Language: A] = [:]
 
-    /// Creates a new Translated instance with a default value and translation dictionary
+    /// Creates a new Translated instance with a default value and translation dictionary.
+    ///
+    /// This is the memberwise form of construction: the dictionary is stored as
+    /// authored, without filtering. It is the runtime-dictionary counterpart of
+    /// the `ExpressibleByDictionaryLiteral` conformance.
+    ///
+    /// ```swift
+    /// let greeting = Translated(
+    ///     default: "Hello",
+    ///     dictionary: [.english: "Hello", .dutch: "Hallo"]
+    /// )
+    /// ```
+    ///
     /// - Parameters:
     ///   - default: The fallback value to use when no translation exists
     ///   - dictionary: A dictionary mapping languages to their translated values
-    package init(
+    public init(
         `default`: A,
         dictionary: [Language: A]
     ) {
