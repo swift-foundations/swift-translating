@@ -60,7 +60,7 @@ extension Translated<SinglePlural<String>> {
     public static let second: Self = [
         .dutch: .init(single: "seconde", plural: "seconden"),
         .english: .init(single: "second", plural: "seconds"),
-        .french: .init(single: "minute", plural: "minutes"),
+        .french: .init(single: "seconde", plural: "secondes"),
         .german: .init(single: "Sekunde", plural: "Sekunden"),
         .spanish: .init(single: "segundo", plural: "segundos"),
     ]
