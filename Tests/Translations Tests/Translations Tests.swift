@@ -36,4 +36,16 @@ struct Tests {
             #expect(phrase[.english] == "1 up to and including 5")
         }
     }
+
+    @Suite
+    struct `Phrase Content Integrity` {
+
+        /// Regression: fable-448 F-006. The French entry for `in_progress`
+        /// was "fini" ("done") instead of "en cours".
+        @Test
+        func `in progress translates to en cours in French, distinct from done`() {
+            #expect(TranslatedString.in_progress[.french] == "en cours")
+            #expect(TranslatedString.in_progress[.french] != TranslatedString.done[.french])
+        }
+    }
 }

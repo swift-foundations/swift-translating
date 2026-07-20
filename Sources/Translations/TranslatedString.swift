@@ -325,7 +325,7 @@ extension TranslatedString {
             dictionary: [
                 .dutch: "bezig",
                 .english: "in progress",
-                .french: "fini",
+                .french: "en cours",
                 .german: "im Gange",
                 .spanish: "en curso",
             ]
