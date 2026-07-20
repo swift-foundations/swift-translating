@@ -172,6 +172,13 @@ let package = Package(
                 .translating,
             ]
         ),
+        .testTarget(
+            name: .translations.tests,
+            dependencies: [
+                .translations,
+                .dependenciesTestSupport,
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )

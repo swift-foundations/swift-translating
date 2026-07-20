@@ -194,9 +194,3 @@ extension TranslatedString {
         self.init(default: translations[.english]!, dictionary: translations)
     }
 }
-
-extension ClosedRange where Bound: CustomStringConvertible {
-    public var description: String {
-        "\(TranslatedString(self))"
-    }
-}
