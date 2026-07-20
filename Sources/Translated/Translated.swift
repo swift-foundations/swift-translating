@@ -42,8 +42,14 @@ public struct Translated<A> {
     /// Internal dictionary storing language-specific translations
     internal var dictionary: [Language: A]
 
-    /// Cache for memoized fallback results to avoid recomputation
-    private var fallbackCache: [Language: A] = [:]
+    /// Explicit wire format: only `default` and `dictionary` are encoded.
+    ///
+    /// Legacy payloads that still carry the removed `fallbackCache` key
+    /// decode tolerantly, since keyed decoding ignores unknown keys.
+    private enum CodingKeys: String, CodingKey {
+        case `default`
+        case dictionary
+    }
 
     /// Creates a new Translated instance with a default value and translation dictionary.
     ///
@@ -84,19 +90,11 @@ extension Translated {
                 return value
             }
 
-            // Check cache for already computed fallback
-            if let cachedValue = fallbackCache[language] {
-                return cachedValue
-            }
-
-            // Compute fallback chain and cache result
-            // Note: We can't mutate cache in getter due to value semantics
+            // Compute the fallback chain
             return computeFallback(for: language)
         }
         set {
             dictionary[language] = newValue
-            // Clear cache for this language since we have a direct translation now
-            fallbackCache.removeValue(forKey: language)
         }
     }
 
