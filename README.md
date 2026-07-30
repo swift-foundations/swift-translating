@@ -8,7 +8,7 @@ Type-safe string translation and pluralization for Swift.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-foundations/swift-translating.git", from: "0.1.1")
+    .package(url: "https://github.com/swift-foundations/swift-translating.git", from: "0.3.0")
 ]
 ```
 
