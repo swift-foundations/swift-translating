@@ -38,14 +38,18 @@ struct Tests {
         encoder.outputFormatting = [.sortedKeys]
         let encoded = try encoder.encode(value)
         let expected = try encoder.encode(Fixture(default: "Hello", dictionary: [.dutch: "Hallo"]))
-        #expect(String(decoding: encoded, as: UTF8.self) == String(decoding: expected, as: UTF8.self))
+        #expect(
+            String(decoding: encoded, as: UTF8.self) == String(decoding: expected, as: UTF8.self)
+        )
     }
 
     /// Regression: fable-448 F-002. Payloads containing only `default` and
     /// `dictionary` must decode.
     @Test
     func `Decodes a payload containing only default and dictionary`() throws {
-        let fixture = try JSONEncoder().encode(Fixture(default: "Hello", dictionary: [.dutch: "Hallo"]))
+        let fixture = try JSONEncoder().encode(
+            Fixture(default: "Hello", dictionary: [.dutch: "Hallo"])
+        )
         let value = try JSONDecoder().decode(Translated<String>.self, from: fixture)
         #expect(value.default == "Hello")
         #expect(value[.dutch] == "Hallo")
@@ -66,7 +70,10 @@ struct Tests {
     /// Round trip stays lossless for the supported wire format.
     @Test
     func `Round trip preserves default and dictionary`() throws {
-        let value = Translated<String>(default: "Hello", dictionary: [.dutch: "Hallo", .french: "Bonjour"])
+        let value = Translated<String>(
+            default: "Hello",
+            dictionary: [.dutch: "Hallo", .french: "Bonjour"]
+        )
         let decoded = try JSONDecoder().decode(
             Translated<String>.self,
             from: JSONEncoder().encode(value)
