@@ -1316,6 +1316,7 @@ extension Translated {
         }
     }
 
+    // swift-format-ignore: IdentifiersMustBeASCII
     public var norwegianBokmål: A {
         get {
             self[.norwegianBokmål]
@@ -1379,6 +1380,7 @@ extension Translated {
         }
     }
 
+    // swift-format-ignore: IdentifiersMustBeASCII
     public var pāli: A {
         get {
             self[.pāli]
@@ -1838,6 +1840,7 @@ extension Translated {
         }
     }
 
+    // swift-format-ignore: IdentifiersMustBeASCII
     public var volapük: A {
         get {
             self[.volapük]

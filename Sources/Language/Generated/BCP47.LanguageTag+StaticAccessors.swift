@@ -8,7 +8,14 @@
 // To update: modify the script or JSON data then run:
 //   swift Scripts/generate-language-constants.swift
 
+// The accessors below name languages as their speakers write them, so a
+// handful carry non-ASCII letters, and each tag is a compile-time constant
+// that a stored property initializer cannot propagate a failure from.
+// swift-format-ignore-file: IdentifiersMustBeASCII
+
 public import BCP_47
+
+// swiftlint:disable force_try
 
 // MARK: - ISO 639-1 Language Tags
 
@@ -594,3 +601,5 @@ extension BCP47.LanguageTag {
     public static let usEnglish = try! BCP47.LanguageTag("en-US")
 
 }
+
+// swiftlint:enable force_try
