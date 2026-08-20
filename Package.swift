@@ -1,4 +1,4 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
@@ -28,17 +28,19 @@ extension Target.Dependency {
 extension Target.Dependency {
     static var bcp47: Self { .product(name: "BCP 47", package: "swift-bcp-47") }
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var dependenciesTestSupport: Self { .product(name: "Dependencies Test Support", package: "swift-dependencies") }
+    static var dependenciesTestSupport: Self {
+        .product(name: "Dependencies Test Support", package: "swift-dependencies")
+    }
 }
 
 let package = Package(
     name: "swift-translating",
     platforms: [
-        .macOS("27"),
-        .iOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
-        .visionOS("27"),
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
+        .visionOS(.v27),
     ],
     products: [
         .library(name: .translating, targets: [.translating]),
@@ -52,7 +54,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swift-ietf/swift-bcp-47.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-foundations/swift-dependencies.git",
+            branch: "main"
+        ),
     ],
     targets: [
 
@@ -73,7 +78,7 @@ let package = Package(
         .target(
             name: .language,
             dependencies: [
-                .bcp47,
+                .bcp47
             ]
         ),
         .testTarget(
@@ -85,7 +90,6 @@ let package = Package(
         ),
 
         // MARK: - Dependencies
-
 
         // MARK: - Single Plural
 
@@ -110,7 +114,7 @@ let package = Package(
         .target(
             name: .translated,
             dependencies: [
-                .language,
+                .language
             ]
         ),
         .testTarget(
@@ -126,7 +130,7 @@ let package = Package(
         .target(
             name: .translatedString,
             dependencies: [
-                .translated,
+                .translated
             ]
         ),
         .testTarget(
@@ -169,7 +173,7 @@ let package = Package(
         .target(
             name: .translations,
             dependencies: [
-                .translating,
+                .translating
             ]
         ),
         .testTarget(
