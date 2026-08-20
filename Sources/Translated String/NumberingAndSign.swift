@@ -1,4 +1,4 @@
-public import Language
+import Language
 
 // MARK: - List Separator Enum
 

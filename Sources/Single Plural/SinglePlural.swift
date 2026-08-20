@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 29/04/2022.
 //
 
-public import Language
+import Language
 public import Translated
 public import Translated_String
 

@@ -3,7 +3,7 @@
 //  swift-translating
 //
 
-public import Language
+import Language
 public import Translated
 
 extension TranslatedString {

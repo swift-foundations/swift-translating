@@ -6,7 +6,7 @@
 //
 
 public import Language
-public import Translated
+import Translated
 
 extension [Language] {
     /// Sorts the array of languages alphabetically by their string representation

@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 24/11/2020.
 //
 
-public import Language
+import Language
 
 extension [String] {
 

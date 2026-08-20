@@ -5,7 +5,7 @@
 //  Foundation-free string helpers for translation-adjacent operations.
 //
 
-public import Language
+import Language
 
 // MARK: - Articles
 
