@@ -1,10 +1,3 @@
-//
-//  TranslatedString Tests.swift
-//  swift-translating
-//
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
-
 import Foundation
 import Testing
 import Translating_Platform
@@ -51,7 +44,7 @@ struct `TranslatedString Tests` {
                 .german: "Hallo",
             ]
 
-            #expect(translated.default == "Hola")  // First provided
+            #expect(translated.default == "Hola")
             #expect(translated[.spanish] == "Hola")
             #expect(translated[.dutch] == "Hallo")
             #expect(translated[.german] == "Hallo")
@@ -63,7 +56,7 @@ struct `TranslatedString Tests` {
 
             #expect(translated.default == "Ciao")
             #expect(translated[.italian] == "Ciao")
-            #expect(translated[.english] == "Ciao")  // Falls back to default
+            #expect(translated[.english] == "Ciao")
         }
     }
 
@@ -127,7 +120,7 @@ struct `TranslatedString Tests` {
             let separator = TranslatedString(.and)
 
             #expect(separator[.english] == "and")
-            // Note: These are currently TODO items in the implementation
+
         }
 
         @Test
@@ -162,7 +155,6 @@ struct `TranslatedString Tests` {
             let languages: [Language] = [.spanish, .english, .dutch, .french]
             let sorted = languages.sort()
 
-            // Should be sorted alphabetically by tag string representation
             let sortedStrings = sorted.map { "\($0)" }
             let expectedSorted = ["en", "es", "fr", "nl"]
 
@@ -222,7 +214,7 @@ struct `TranslatedString Tests` {
 
             #expect(withBreaks[0] == "first\n")
             #expect(withBreaks[1] == "second\n")
-            #expect(withBreaks[2] == "third")  // Last item has no line break
+            #expect(withBreaks[2] == "third")
         }
 
         @Test
@@ -248,7 +240,6 @@ struct `TranslatedString Tests` {
             let items = ["first item", "second item", "third item"]
             let result = items.numberedAndSigned()
 
-            // This combines numberedList + formattedItems + withLineBreaks
             #expect(result.count == 3)
             #expect(result[0].contains("1.\tfirst item"))
             #expect(result[1].contains("2.\tsecond item"))

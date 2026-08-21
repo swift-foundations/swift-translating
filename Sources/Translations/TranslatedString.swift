@@ -1,19 +1,3 @@
-//
-//  TranslatedString.swift
-//  swift-translating
-//
-//  Translation vocabulary constants.
-//
-//  These constants construct via `Translated.init(default:dictionary:)` — the
-//  authored dictionaries are stored as written. They previously rode the
-//  \.languages-filtering mass initializer, which made each `static let`'s
-//  content permanently dependent on whichever dependency context touched it
-//  FIRST (lazy static initialization baked the ambient filter — a race dressed
-//  as a constant). That first-access-baking defect was removed in the W3
-//  decomposition; the filtering initializer now lives in
-//  swift-translating-dependencies.
-//
-
 public import Translating
 
 extension TranslatedString {
@@ -41,7 +25,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let non_binary: Self =
         .init(
             default: "non binary",
@@ -114,7 +97,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let your_name: Self =
         .init(
             default: "your name",
@@ -127,7 +109,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let your_gender: Self =
         .init(
             default: "your gender",
@@ -140,7 +121,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let select_an_option: Self =
         .init(
             default: "select an option",
@@ -323,7 +303,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let in_progress: Self =
         .init(
             default: "in progress",
@@ -372,7 +351,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let allow_changes: Self =
         .init(
             default: "allow changes",
@@ -385,7 +363,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let choose_true_or_false: Self =
         .init(
             default: "Choose true or false",
@@ -395,7 +372,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let cannot_undo: Self =
         .init(
             default: "you cannot undo this action",
@@ -408,7 +384,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let text_color: Self =
         .init(
             default: "text color",
@@ -421,7 +396,6 @@ extension TranslatedString {
             ]
         )
 
-    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static let background_color: Self =
         .init(
             default: "background color",

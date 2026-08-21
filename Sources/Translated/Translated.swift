@@ -1,72 +1,16 @@
 public import Language
 
-/// A generic container for storing values that can be translated across multiple languages.
-///
-/// `Translated<A>` provides a type-safe way to store language-specific variants of any value type `A`,
-/// with intelligent fallback mechanisms when specific translations are not available.
-///
-/// ## Usage
-///
-/// ```swift
-/// // Create a translated string
-/// let greeting = Translated<String>(
-///     default: "Hello",
-///     dictionary: [
-///         .english: "Hello",
-///         .spanish: "Hola",
-///         .french: "Bonjour"
-///     ]
-/// )
-///
-/// // Access translations
-/// let spanishGreeting = greeting[.spanish] // "Hola"
-/// let germanGreeting = greeting[.german]   // "Hello" (falls back to default)
-/// ```
-///
-/// ## Fallback Behavior
-///
-/// Each language has a predefined fallback chain that follows linguistic and geographical relationships.
-/// For example:
-/// - `.dutch` → `.english` → `default`
-/// - `.afrikaans` → `.dutch` → `.english` → `default`
-/// - `.basque` → `.spanish` → `.french` → `.english` → `default`
-///
-/// This ensures users always see meaningful content even when specific translations aren't available.
-///
-/// - Parameters:
-///   - A: The type of value being translated (commonly `String`, but can be any type)
 public struct Translated<A> {
-    /// The default value used when no translation is available for a requested language
+
     package var `default`: A
 
-    /// Internal dictionary storing language-specific translations
     internal var dictionary: [Language: A]
 
-    /// Explicit wire format: only `default` and `dictionary` are encoded.
-    ///
-    /// Legacy payloads that still carry the removed `fallbackCache` key
-    /// decode tolerantly, since keyed decoding ignores unknown keys.
     private enum CodingKeys: String, CodingKey {
         case `default`
         case dictionary
     }
 
-    /// Creates a new Translated instance with a default value and translation dictionary.
-    ///
-    /// This is the memberwise form of construction: the dictionary is stored as
-    /// authored, without filtering. It is the runtime-dictionary counterpart of
-    /// the `ExpressibleByDictionaryLiteral` conformance.
-    ///
-    /// ```swift
-    /// let greeting = Translated(
-    ///     default: "Hello",
-    ///     dictionary: [.english: "Hello", .dutch: "Hallo"]
-    /// )
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - default: The fallback value to use when no translation exists
-    ///   - dictionary: A dictionary mapping languages to their translated values
     public init(
         `default`: A,
         dictionary: [Language: A]
@@ -85,12 +29,11 @@ extension Translated {
 extension Translated {
     public subscript(language: Language) -> A {
         get {
-            // Fast path: check dictionary first
+
             if let value = dictionary[language] {
                 return value
             }
 
-            // Compute the fallback chain
             return computeFallback(for: language)
         }
         set {
@@ -1316,7 +1259,6 @@ extension Translated {
         }
     }
 
-    // swift-format-ignore: IdentifiersMustBeASCII
     public var norwegianBokmål: A {
         get {
             self[.norwegianBokmål]
@@ -1380,7 +1322,6 @@ extension Translated {
         }
     }
 
-    // swift-format-ignore: IdentifiersMustBeASCII
     public var pāli: A {
         get {
             self[.pāli]
@@ -1840,7 +1781,6 @@ extension Translated {
         }
     }
 
-    // swift-format-ignore: IdentifiersMustBeASCII
     public var volapük: A {
         get {
             self[.volapük]
@@ -1919,33 +1859,10 @@ extension Translated: Sendable where A: Sendable {}
 extension Translated: Equatable where A: Equatable {}
 extension Translated: Hashable where A: Hashable {}
 
-/// ExpressibleByDictionaryLiteral conformance allows creating Translated instances with dictionary literal syntax
-///
-/// This enables elegant initialization syntax such as:
-/// ```swift
-/// let greeting: Translated<String> = [
-///     .english: "Hello",
-///     .dutch: "Hallo",
-///     .french: "Bonjour"
-/// ]
-/// ```
-///
-/// For non-String types, the dictionary must contain at least one translation.
-/// The default value is selected in this priority order:
-/// 1. English (if present)
-/// 2. The first language in the dictionary literal order
 extension Translated: ExpressibleByDictionaryLiteral {
     public typealias Key = Language
     public typealias Value = A
 
-    /// Creates a Translated instance from a dictionary literal.
-    ///
-    /// The default value is selected in this priority order:
-    /// 1. English (if present)
-    /// 2. The first language in the dictionary literal order
-    /// If the dictionary is empty, this initializer will cause a runtime error.
-    ///
-    /// - Parameter elements: Key-value pairs representing language-translation mappings
     public init(dictionaryLiteral elements: (Language, A)...) {
         let dictionary = Dictionary(uniqueKeysWithValues: elements)
 
@@ -1953,35 +1870,14 @@ extension Translated: ExpressibleByDictionaryLiteral {
             fatalError("Dictionary literal must contain at least one translation")
         }
 
-        // Prefer English as default if available, otherwise use the first provided value
         let defaultValue = dictionary[.english] ?? elements.first!.1
 
         self.init(default: defaultValue, dictionary: dictionary)
     }
 }
 
-/// String concatenation operators for Translated<String> (including TranslatedString)
-///
-/// These operators enable concatenating translated strings while preserving all language
-/// translations. The concatenation works across ALL supported languages, not just a subset.
 extension Translated<String> {
-    /// Concatenates two Translated<String> instances, preserving all language translations.
-    ///
-    /// This operator combines translations from both operands for every language present in either.
-    /// If a language exists in only one operand, an empty string is used as the fallback for the missing translation.
-    ///
-    /// - Parameters:
-    ///   - lhs: The left-hand translated string
-    ///   - rhs: The right-hand translated string
-    /// - Returns: A new Translated<String> with concatenated translations for all languages
-    ///
-    /// ## Example
-    /// ```swift
-    /// let greeting = TranslatedString(english: "Hello", french: "Bonjour")
-    /// let name = TranslatedString(english: " World", spanish: " Mundo")
-    /// let result = greeting + name
-    /// // Result contains: english: "Hello World", french: "Bonjour", spanish: " Mundo"
-    /// ```
+
     public static func + (lhs: Self, rhs: Self) -> Self {
         let allKeys = Set(lhs.dictionary.keys).union(rhs.dictionary.keys)
 
@@ -1997,23 +1893,11 @@ extension Translated<String> {
         )
     }
 
-    /// Concatenates a regular string to all translations in a Translated<String>.
-    ///
-    /// - Parameters:
-    ///   - lhs: The translated string
-    ///   - rhs: The string to append to all translations
-    /// - Returns: A new Translated<String> with the string appended to all translations
     public static func + (lhs: Self, rhs: String) -> Self {
         let newTranslations = lhs.dictionary.mapValues { $0 + rhs }
         return Self(default: lhs.default + rhs, dictionary: newTranslations)
     }
 
-    /// Concatenates a regular string to the beginning of all translations in a Translated<String>.
-    ///
-    /// - Parameters:
-    ///   - lhs: The string to prepend to all translations
-    ///   - rhs: The translated string
-    /// - Returns: A new Translated<String> with the string prepended to all translations
     public static func + (lhs: String, rhs: Self) -> Self {
         let newTranslations = rhs.dictionary.mapValues { lhs + $0 }
         return Self(default: lhs + rhs.default, dictionary: newTranslations)

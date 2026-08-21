@@ -1,10 +1,3 @@
-//
-//  File 2.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 24/11/2020.
-//
-
 import Language
 
 extension [String] {
@@ -30,13 +23,13 @@ extension TranslatedString {
     public init(_ separator: [String].Separator) {
         switch separator {
         case .and:
-            self = [.english: "and"]  // TODO: Add proper localized "and" translations
+            self = [.english: "and"]
 
         case .or:
-            self = [.english: "or"]  // TODO: Add proper localized "or" translations
+            self = [.english: "or"]
 
         case .andOr:
-            self = [.english: "and/or"]  // TODO: Add proper localized "and/or" translations
+            self = [.english: "and/or"]
         }
     }
 }

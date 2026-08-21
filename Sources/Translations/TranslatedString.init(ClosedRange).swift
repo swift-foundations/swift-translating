@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 21/07/2024.
-//
-
 public import Translating
 
 extension TranslatedString {

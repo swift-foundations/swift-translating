@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 19/07/2024.
-//
-
 public import Translating
 
 private let languageNames: [Language: TranslatedString] = [

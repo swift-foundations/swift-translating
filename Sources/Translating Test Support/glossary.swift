@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 21/07/2024.
-//
-
 extension String {
     public static func mockFirstName() -> Self { mockVoornaam() }
     public static func mockVoornaam() -> Self { [Self].voornamen.randomElement()! }

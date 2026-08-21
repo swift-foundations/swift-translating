@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-translating
-//
-//  Created by Coen ten Thije Boonkkamp on 31/07/2025.
-//
-
 public import Foundation
 import Language
 import Single_Plural

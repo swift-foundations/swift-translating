@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-translating
-//
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
-
 extension String {
     public static let period: Self = "."
     public static let comma: Self = ","

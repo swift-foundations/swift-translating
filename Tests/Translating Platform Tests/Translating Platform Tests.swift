@@ -1,10 +1,3 @@
-//
-//  Translating Platform Tests.swift
-//  swift-translating
-//
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
-
 import Dependencies
 import Dependencies_Test_Support
 import Foundation
@@ -22,7 +15,7 @@ struct `Translating Platform Tests` {
         @Test
         func `Language.preferred returns a valid language`() {
             let preferred = Language.preferred
-            // Should return some language (depends on system locale)
+
             #expect(!String(describing: preferred).isEmpty)
         }
 
@@ -46,7 +39,7 @@ struct `Translating Platform Tests` {
         @Test
         func `Integer spell-out in Dutch`() {
             let result = 42.numberInWriting(language: .dutch)
-            // NumberFormatter may insert soft hyphens (U+00AD) in Dutch
+
             let normalized = result.replacingOccurrences(of: "\u{00AD}", with: "")
             #expect(normalized == "tweeënveertig")
         }

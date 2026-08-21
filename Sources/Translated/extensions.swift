@@ -1,10 +1,3 @@
-//
-//  File 3.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 19/07/2024.
-//
-
 public import Language
 
 extension Translated {

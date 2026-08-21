@@ -1,11 +1,3 @@
-//
-//  Numeric+NumberInWriting.swift
-//  swift-translating
-//
-//  Spell-out formatting for numbers using Foundation's NumberFormatter.
-//  Lives in Translating Platform because it requires Foundation.
-//
-
 import Foundation
 public import Language
 

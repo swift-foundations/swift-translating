@@ -61,8 +61,6 @@ let package = Package(
     ],
     targets: [
 
-        // MARK: - Umbrella
-
         .target(
             name: .translating,
             dependencies: [
@@ -72,8 +70,6 @@ let package = Package(
                 .translatedString,
             ]
         ),
-
-        // MARK: - Language
 
         .target(
             name: .language,
@@ -88,10 +84,6 @@ let package = Package(
                 .dependenciesTestSupport,
             ]
         ),
-
-        // MARK: - Dependencies
-
-        // MARK: - Single Plural
 
         .target(
             name: .singlePlural,
@@ -109,8 +101,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Translated
-
         .target(
             name: .translated,
             dependencies: [
@@ -124,8 +114,6 @@ let package = Package(
                 .dependenciesTestSupport,
             ]
         ),
-
-        // MARK: - Translated String
 
         .target(
             name: .translatedString,
@@ -141,8 +129,6 @@ let package = Package(
                 .dependenciesTestSupport,
             ]
         ),
-
-        // MARK: - Platform
 
         .target(
             name: .translatingPlatform,
@@ -164,11 +150,7 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Test Support
-
         .target(name: .translatingTestSupport),
-
-        // MARK: - Translations
 
         .target(
             name: .translations,

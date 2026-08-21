@@ -1,8 +1,3 @@
-//
-//  TranslatedString.swift
-//  swift-translating
-//
-
 import Language
 public import Translated
 

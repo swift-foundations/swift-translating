@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 19/07/2024.
-//
-
 import Language
 public import Translated
 public import Translated_String
@@ -146,17 +139,3 @@ extension Int {
         }
     }
 }
-
-// extension Date.Time {
-//    public func description() -> TranslatedString {
-//        switch self {
-//        case let .seconds(int): return int.seconds
-//        case let .hours(int): return int.hours
-//        case let .minutes(int): return int.minutes
-//        case let .days(int): return int.days
-//        case let .weeks(int): return int.weeks
-//        case let .months(int): return int.months
-//        case let .years(int): return int.years
-//        }
-//    }
-// }

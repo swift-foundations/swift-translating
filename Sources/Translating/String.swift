@@ -1,16 +1,7 @@
-//
-//  String.swift
-//  swift-translating
-//
-//  Foundation-free string helpers for translation-adjacent operations.
-//
-
 import Language
 
-// MARK: - Articles
-
 extension String {
-    /// Returns the string with the appropriate indefinite article ("a" or "an") prepended.
+
     public var any: Self {
         if let first = self.first {
             if Set<String>.vowels.contains(String(first).lowercased()) {
@@ -24,17 +15,14 @@ extension String {
 }
 
 extension Set where Element == String {
-    /// English vowels
+
     public static let vowels: Self = ["a", "e", "i", "o", "u"]
 
-    /// English consonants
     public static let consonants: Self = [
         "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w",
         "x", "y", "z",
     ]
 }
-
-// MARK: - Non-Breaking Space
 
 extension String {
     public static let nonBreakingSpace: Self = "\u{00a0}"
@@ -44,15 +32,11 @@ extension String {
     }
 }
 
-// MARK: - Conditional Append
-
 extension String {
     public func `if`(_ bool: Bool, append string: String) -> Self {
         bool ? self + string : self
     }
 }
-
-// MARK: - Punctuation
 
 extension String {
     public static func period(_ string: Self) -> Self {
@@ -85,8 +69,6 @@ extension String {
     }
 }
 
-// MARK: - Case Transforms
-
 extension String {
     public func capitalizingFirstLetter() -> String {
         return prefix(1).uppercased() + dropFirst()
@@ -112,8 +94,6 @@ extension String {
         return prefix(1).lowercased() + dropFirst()
     }
 }
-
-// MARK: - Placeholder
 
 extension String {
     public enum Placeholder {}
@@ -146,8 +126,6 @@ extension String.Placeholder {
     }
 }
 
-// MARK: - Truncation
-
 extension String {
     public func trunc(length: Int, trailing: String = "…") -> String {
         return (self.count > length) ? self.prefix(length) + trailing : self
@@ -173,8 +151,6 @@ extension String {
         return "\(firstPart)\(truncationIndicator)\(secondPart)"
     }
 }
-
-// MARK: - Pluralization
 
 extension String {
     public func plural<A: Collection>(_ plural: String, _ collection: A) -> Self {
